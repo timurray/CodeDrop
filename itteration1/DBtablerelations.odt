@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE abiword PUBLIC "-//ABISOURCE//DTD AWML 1.0 Strict//EN" "http://www.abisource.com/awml.dtd">
+<abiword template="false" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:svg="http://www.w3.org/2000/svg" xid-max="215" xmlns:dc="http://purl.org/dc/elements/1.1/" fileformat="1.1" xmlns:math="http://www.w3.org/1998/Math/MathML" xmlns:awml="http://www.abisource.com/awml.dtd" xmlns="http://www.abisource.com/awml.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" version="2.8.6" xml:space="preserve" props="dom-dir:ltr; document-footnote-restart-section:0; document-endnote-type:numeric; document-endnote-place-enddoc:1; document-endnote-initial:1; lang:en-CA; document-endnote-restart-section:0; document-footnote-restart-page:0; document-footnote-type:numeric; document-footnote-initial:1; document-endnote-place-endsection:0">
+<!-- ======================================================================== -->
+<!-- This file is an AbiWord document.                                        -->
+<!-- AbiWord is a free, Open Source word processor.                           -->
+<!-- More information about AbiWord is available at http://www.abisource.com/ -->
+<!-- You should not edit this file by hand.                                   -->
+<!-- ======================================================================== -->
+
+<metadata>
+<m key="dc.format">application/x-abiword</m>
+<m key="abiword.generator">AbiWord</m>
+<m key="dc.date">2016-01-25T09:04:00</m>
+<m key="abiword.date_last_changed">2016-01-25T11:16:39</m>
+</metadata>
+<history version="7" edit-time="3277" last-saved="1454679960" uid="4ba9a3d8-c8de-11e5-9419-de50513d32f6">
+<version id="1" started="1454331774" uid="1badeb2a-c8e4-11e5-9419-de50513d32f6" auto="0" top-xid="38"/>
+<version id="5" started="1454331848" uid="d23c4688-c8e5-11e5-9827-affe7a440774" auto="0" top-xid="209"/>
+<version id="6" started="1454332612" uid="0f38361e-c8e6-11e5-956c-bcaefd9faa2a" auto="0" top-xid="215"/>
+<version id="7" started="1454679960" uid="ca58b006-cc0e-11e5-9bc5-ac036821e715" auto="0" top-xid="215"/>
+</history>
+<styles>
+<s type="P" name="Normal" followedby="Current Settings" props="font-family:Times New Roman; margin-top:0pt; default-tab-interval:1.251cm; font-variant:normal; margin-left:0pt; text-position:normal; widows:2; font-style:normal; text-indent:0in; margin-bottom:0pt; margin-right:0pt; bgcolor:transparent; line-height:1.0; font-size:12pt; text-decoration:none; color:000000; font-weight:normal; text-align:left; font-stretch:normal"/>
+<s type="P" name="Heading" basedon="Normal" followedby="Text body" props="margin-top:0.423cm; keep-with-next:yes; margin-bottom:0.212cm; font-family:Arial; font-size:14pt"/>
+<s type="P" name="Text body" basedon="Normal" followedby="Text body" props="margin-bottom:0.212cm; margin-top:0cm"/>
+<s type="P" name="Caption" basedon="Normal" followedby="Caption" props="margin-top:0.212cm; font-size:12pt; margin-bottom:0.212cm; font-style:italic"/>
+<s type="C" name="Reference" props="font-size:10pt"/>
+</styles>
+<pagesize pagetype="A4" orientation="portrait" width="210.000000" height="297.000000" units="mm" page-scale="1.000000"/>
+<section xid="39" props="page-margin-right:2cm; page-width:210.000000mm; page-margin-left:2cm; page-orientation:portrait; page-margin-bottom:2cm; page-margin-top:2cm; page-height:297.000000mm">
+<p style="Normal" xid="40" props="font-family:Times New Roman; font-size:13pt">Tables for the database:</p>
+<p style="Normal" xid="41" props="font-family:Times New Roman; font-size:13pt">Primary keys are bold and underlined</p>
+<p style="Normal" xid="23" props="font-family:Times New Roman; font-size:13pt">Foreign Keys are just underlined</p>
+<p style="Normal" xid="210" props="font-family:Times New Roman; font-size:13pt">Tables are in BCNF</p>
+<p style="Normal" xid="43" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="44" props="font-family:Times New Roman; font-size:13pt">Student</p>
+<table xid="45" props="table-column-props:2.461cm/2.422cm/2.461cm/2.42cm/2.422cm/2.422cm/2.42cm/; table-column-leftpos:-0.025cm; table-rel-column-props:1395*/1373*/1395*/1372*/1373*/1372*/; table-width:17.028000cm; table-row-heights:/">
+<cell xid="46" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="47" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Student ID</p>
+</cell>
+<cell xid="48" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="49" props="font-family:Times New Roman; font-size:13pt">First Name</p>
+</cell>
+<cell xid="50" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="51" props="font-family:Times New Roman; font-size:13pt">Last Name</p>
+</cell>
+<cell xid="52" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:4; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:3; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="53" props="font-family:Times New Roman; font-size:13pt">Address</p>
+</cell>
+<cell xid="54" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:5; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:4; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="55" props="font-family:Times New Roman; font-size:13pt">Email</p>
+</cell>
+<cell xid="56" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:6; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:5; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="57" props="font-family:Times New Roman; font-size:13pt">Phone</p>
+</cell>
+<cell xid="58" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:7; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:6; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="59" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">User ID</c><c props="text-decoration:none"></c></p>
+</cell>
+</table>
+<p style="Normal" xid="60" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="61" props="font-family:Times New Roman; font-size:13pt">Marker</p>
+<table xid="62" props="table-column-props:2.429cm/2.429cm/2.429cm/2.429cm/2.429cm/2.429cm/2.429cm/; table-row-heights:/; table-rel-column-props:9361*/9362*/9361*/; table-width:17.003000cm">
+<cell xid="63" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="64" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Marker ID</p>
+</cell>
+<cell xid="65" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="66" props="font-family:Times New Roman; font-size:13pt">First Name</p>
+</cell>
+<cell xid="67" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="68" props="font-family:Times New Roman; font-size:13pt">Last Name</p>
+</cell>
+<cell xid="69" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:4; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:3; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="70" props="font-family:Times New Roman; font-size:13pt">Address</p>
+</cell>
+<cell xid="71" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:5; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:4; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="72" props="font-family:Times New Roman; font-size:13pt">Email</p>
+</cell>
+<cell xid="73" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:6; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:5; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="74" props="font-family:Times New Roman; font-size:13pt">Phone</p>
+</cell>
+<cell xid="75" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:7; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:6; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="76" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">User ID</c><c props="text-decoration:none"></c></p>
+</cell>
+</table>
+<p style="Normal" xid="77" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="78" props="font-family:Times New Roman; font-size:13pt">Instructor</p>
+<table xid="79" props="table-column-props:0.9375in/0.7500in/0.8125in/0.8125in/0.8125in/0.8125in/0.8125in/0.8125in/; table-row-heights:/; table-rel-column-props:1333*/1076*/1205*/1204*/1205*/; table-width:16.998000cm">
+<cell xid="80" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="81" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Instructor ID</p>
+</cell>
+<cell xid="82" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="83" props="font-family:Times New Roman; font-size:13pt">First Name</p>
+</cell>
+<cell xid="84" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="85" props="font-family:Times New Roman; font-size:13pt">Last Name</p>
+</cell>
+<cell xid="86" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:4; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:3; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="87" props="font-family:Times New Roman; font-size:13pt">Address</p>
+</cell>
+<cell xid="88" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:5; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:4; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="89" props="font-family:Times New Roman; font-size:13pt">Email</p>
+</cell>
+<cell xid="90" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:6; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:5; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="91" props="font-family:Times New Roman; font-size:13pt">Phone</p>
+</cell>
+<cell xid="92" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:7; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:6; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="93" props="font-family:Times New Roman; font-size:13pt">Office Number</p>
+</cell>
+<cell xid="94" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:8; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:7; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="95" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">User ID</c><c props="text-decoration:none"></c></p>
+</cell>
+</table>
+<p style="Normal" xid="96" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="97" props="font-family:Times New Roman; font-size:13pt">Admin</p>
+<table xid="98" props="table-column-props:0.8125in/0.8125in/0.8125in/0.8125in/0.8125in/0.8125in/0.8125in/0.8750in/; table-row-heights:/; table-rel-column-props:8191*/8192*/8191*/; table-width:17.000000cm">
+<cell xid="99" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="100" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Admin ID</p>
+</cell>
+<cell xid="101" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="102" props="font-family:Times New Roman; font-size:13pt">First Name</p>
+</cell>
+<cell xid="103" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="104" props="font-family:Times New Roman; font-size:13pt">Last Name</p>
+</cell>
+<cell xid="105" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:4; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:3; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="106" props="font-family:Times New Roman; font-size:13pt">Address</p>
+</cell>
+<cell xid="107" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:5; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:4; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="108" props="font-family:Times New Roman; font-size:13pt">Email</p>
+</cell>
+<cell xid="109" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:6; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:5; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="110" props="font-family:Times New Roman; font-size:13pt">Phone</p>
+</cell>
+<cell xid="111" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:7; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:6; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="112" props="font-family:Times New Roman; font-size:13pt">Work Phone</p>
+</cell>
+<cell xid="113" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:8; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:7; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="114" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">User ID</c><c props="text-decoration:none"></c></p>
+</cell>
+</table>
+<p style="Normal" xid="115" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="116" props="font-family:Times New Roman; font-size:13pt">Office</p>
+<table xid="117" props="table-column-props:5.667cm/5.667cm/5.667cm/; table-row-heights:/; table-rel-column-props:21845*/; table-width:17.001000cm">
+<cell xid="118" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="119" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Office Number</p>
+</cell>
+<cell xid="120" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="121" props="font-family:Times New Roman; font-size:13pt">Phone</p>
+</cell>
+<cell xid="122" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="123" props="font-family:Times New Roman; font-size:13pt">Location</p>
+</cell>
+</table>
+<p style="Normal" xid="124" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="125" props="font-family:Times New Roman; font-size:13pt">User</p>
+<table xid="126" props="table-column-props:1.6875in/1.6875in/1.7500in/; table-row-heights:/; table-rel-column-props:16383*/16384*/16383*/; table-width:17.000000cm; list-tag:1">
+<cell xid="127" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="128" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">User ID</p>
+</cell>
+<cell xid="129" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="130" props="font-family:Times New Roman; font-size:13pt">Password</p>
+</cell>
+<cell xid="131" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; bot-color:#000000; left-attach:2; top-attach:0; bot-attach:1; left-style:solid; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="132" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">File Storage ID</c><c props="text-decoration:none"></c></p>
+</cell>
+</table>
+<p style="Normal" xid="133" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="134" props="font-family:Times New Roman; font-size:13pt">Course</p>
+<table xid="135" props="table-column-props:1.1250in/1.1250in/1.1250in/1.1250in/1.1250in/1.1250in/; table-row-heights:/; table-rel-column-props:1284*/1276*/1600*/1760*/1733*/1985*/; table-width:6.562500in; list-tag:1">
+<cell xid="136" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="137" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Course ID</p>
+</cell>
+<cell xid="138" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="139" props="font-family:Times New Roman; font-size:13pt">Name</p>
+</cell>
+<cell xid="140" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="141" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">Work ID</c><c props="text-decoration:none"></c></p>
+</cell>
+<cell xid="142" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:4; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:3; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="143" props="text-decoration:underline; font-family:Times New Roman; font-size:13pt"><c props="text-decoration:none">Instructor ID</c><c props="text-decoration:none"></c></p>
+</cell>
+<cell xid="144" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.72pt; right-attach:5; top-thickness:0.72pt; right-color:#000000; top-color:#000000; top-attach:0; left-attach:4; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.72pt; right-style:solid; top-style:solid">
+<p style="Normal" xid="145">File Storage ID</p>
+</cell>
+<cell xid="211" props="bot-attach:1; left-attach:5; right-attach:6; top-attach:0">
+<p xid="212">Section Number</p>
+</cell>
+</table>
+<p style="Normal" xid="146" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="147" props="font-family:Times New Roman; font-size:13pt">Work</p>
+<table xid="148" props="table-column-props:6.375cm/6.375cm/4.251cm/; table-row-heights:/; table-rel-column-props:24574*/24575*/16383*/; table-width:17.001000cm">
+<cell xid="149" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="150" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Work ID</p>
+</cell>
+<cell xid="151" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="152" props="font-family:Times New Roman; font-size:13pt">Due Date</p>
+</cell>
+<cell xid="153" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="154" props="font-family:Times New Roman; font-size:13pt">Grade</p>
+</cell>
+</table>
+<p style="Normal" xid="155" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="156" props="font-family:Times New Roman; font-size:13pt">File Storage</p>
+<table xid="157" props="table-row-heights:/; table-rel-column-props:21845*/; table-width:17.001000cm; list-tag:1">
+<cell xid="158" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="159" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">File Storage ID</p>
+</cell>
+<cell xid="160" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="161" props="font-family:Times New Roman; font-size:13pt">Capacity</p>
+</cell>
+</table>
+<p style="Normal" xid="162" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="163" props="font-family:Times New Roman; font-size:13pt">File</p>
+<table xid="164" props="table-row-heights:0.2500in/; list-tag:1; table-width:5.625000in; left-color:000000; bot-style:1; bg-style:1; right-color:000000; table-rel-column-props:21845*/; top-color:000000; left-style:0; bot-color:000000; right-style:1; top-style:1">
+<cell xid="165" props="bot-attach:1; left-attach:0; right-attach:1; top-attach:0">
+<p style="Normal" xid="166" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">File Name</p>
+</cell>
+<cell xid="36" props="bot-attach:1; left-attach:1; right-attach:2; top-attach:0">
+<p xid="37">File Storage ID</p>
+</cell>
+<cell xid="167" props="bot-attach:1; left-attach:2; right-attach:3; top-attach:0">
+<p style="Normal" xid="168" props="font-family:Times New Roman; font-size:13pt">Size</p>
+</cell>
+<cell xid="169" props="bot-attach:1; left-attach:3; right-attach:4; top-attach:0">
+<p style="Normal" xid="170" props="font-family:Times New Roman; font-size:13pt">Type</p>
+</cell>
+<cell xid="171" props="bot-attach:1; left-attach:4; right-attach:5; top-attach:0">
+<p style="Normal" xid="172">Contents</p>
+</cell>
+</table>
+<p style="Normal" xid="173" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="174" props="font-family:Times New Roman; font-size:13pt">Grade</p>
+<table xid="175" props="table-column-props:5.667cm/5.667cm/5.667cm/; table-row-heights:/; table-rel-column-props:21845*/; table-width:17.001000cm">
+<cell xid="176" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:1; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:0; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="177" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold">Student ID</p>
+</cell>
+<cell xid="178" props="right-thickness:0.72pt; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:2; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:1; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="179" props="font-size:13pt; text-decoration:underline; font-family:Times New Roman; font-weight:bold"><c props="text-decoration:underline">Course ID</c><c props="text-decoration:underline"></c></p>
+</cell>
+<cell xid="180" props="right-thickness:0.002cm; left-color:#000000; bot-style:solid; bot-thickness:0.002cm; right-attach:3; top-thickness:0.002cm; right-color:#000000; top-color:#000000; top-attach:0; left-attach:2; left-style:solid; bot-attach:1; bot-color:#000000; left-thickness:0.002cm; right-style:solid; top-style:solid">
+<p style="Normal" xid="181" props="font-family:Times New Roman; font-size:13pt">Mark</p>
+</cell>
+</table>
+<p style="Normal" xid="182" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="183" props="font-family:Times New Roman; font-size:13pt">Register</p>
+<table xid="2" props="list-tag:1">
+<cell xid="6" props="bot-attach:1; left-attach:0; right-attach:1; top-attach:0">
+<p style="Normal" xid="7"><c props="text-decoration:underline">Course ID</c><c props="text-decoration:underline"></c></p>
+</cell>
+<cell xid="9" props="bot-attach:1; left-attach:1; right-attach:2; top-attach:0">
+<p style="Normal" xid="10">Student ID</p>
+</cell>
+</table>
+<p style="Normal" xid="184" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="208" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="209" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+<p style="Normal" xid="185" props="font-family:Times New Roman; font-size:13pt">Marks</p>
+<table xid="15">
+<cell xid="16" props="bot-attach:1; left-attach:0; right-attach:1; top-attach:0">
+<p style="Normal" xid="17"><c props="text-decoration:underline">Course ID</c><c props="text-decoration:underline"></c></p>
+</cell>
+<cell xid="19" props="bot-attach:1; left-attach:1; right-attach:2; top-attach:0">
+<p style="Normal" xid="20">Marker ID</p>
+</cell>
+</table>
+<p style="Normal" xid="186" props="font-family:Times New Roman; font-size:13pt"><c></c></p>
+</section>
+</abiword>
