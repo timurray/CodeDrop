@@ -1,0 +1,103 @@
+<html>
+<head>
+<style>
+body {
+	background-color:#252525;
+	color: #CCC;
+}
+
+.cmd {
+	font-weight: bold;
+	color: #CC5;
+}
+
+.admin .cmd {
+	color:#C55;
+}
+.inst .cmd {
+	color: #5C5;
+}	
+
+.comment{
+	color: #999;
+	font-style: italic;
+}
+
+.params {
+	margin-left: 16px;
+	margin-bottom: 16px;
+}
+
+.details {
+	margin-left: 16px;
+	margin-bottom:16px;
+}
+</style>
+</head>
+<body>
+<i style="color:#999;">Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</i>
+<h1>CodeDrop Client-Server API</h1>
+
+<p>
+The methods in the API are referenced through the url (subject to change http://www.codedrop.something/api/[method_name]
+<br/>
+The methods parameters are passed in an encoded JSON object, and the calls are made using HTTP POST method.
+<br/>
+All methods return an encode JSON object containing the requested information, or a success status for the save methods.
+</p>
+
+<div class="cmd">getCourses(sessionId)</div>
+<div class="details">gets the Users course listing.</div>
+<div class="params">sessionId: unique ID associated with the users session</div>
+
+<div class="cmd">getAssignmentList(sessionId, courseId)</div>
+<div class="details">gets a list of assignments for a course.</div>
+<div class="params">sessionId: unique ID associated with the users session<br/>courseId: unique ID for the course</div>
+
+<div class="cmd">getDirectory(sessionId, assignmentId)</div>
+<div class="details">gets the Users file directory for a specified assignment.</div>
+<div class="params">sessionId: unique ID associated with the user's session<br/>assignmentId: unique ID associated with the assignment/solution</div>
+
+<div class="cmd">getFile(sessionId, fileId)</div>
+<div class="details">gets a single file from an assignment.</div>
+<div class="params">sessionId: unique ID associated with the user's session<br/>fileId: unique ID associated with the file.</div>
+
+<div class="cmd">saveFile(sessionId, fileId, file)</div>
+<div class="details">saves changes to a file for the user.</div>
+<div class="params">sessionId: unique ID associated with the users session<br/>fileId: unique ID for the file.<br/>file: the updated file.</div>
+
+<div class="cmd">saveDirectory(sessionId, assignmentId, directory)</div>
+<div class="details">saves changes to an assignment directory.</div>
+<div class="params">sessionId: unique ID associated with the users session<br/>assignmentId: unique ID for the assignment.<br/>directory: the updated directory</div>
+
+<div class="inst">
+<br/>
+<h2>Instructor Specific Methods</h2>
+
+<div class="cmd">saveMarks(sessionId, assignmentId, userId)</div>
+<div class="details">submits a students mark for an assignment solution.</div>
+<div class="params">sessionId: unique ID associated with the session.<br/>assignmentId: unique ID associated with the assignment<br/>userId: unique ID associated with the assignment</div>
+
+</div>
+
+<div class="admin">
+<br/>
+<h2>Admin Specific Methods</h2>
+
+<div class="comment">Admins can get courses using the getCourses method</div>
+<div class="cmd">saveCourses(sessionId, courses)</div>
+<div class="details">allows an administrative user to save the list of available courses.</div>
+<div class="params">sessionId: unique ID associated with the users session.<br/>courses: the list of courses to save.</div>
+
+<div class="cmd">getUsers(sessionId)</div>
+<div class="details">gets a list of user accounts for an administrative user.</div>
+<div class="params">sessionId: unique ID associated with the users session</div>
+
+<div class="cmd">saveUsers(sessionId, users)</div>
+<div class="details">allows an administrator to save changes to the user list.</div>
+<div class="params">sessionId: unique ID associated with the users session</div>
+
+</div>
+
+</table>
+</html>
