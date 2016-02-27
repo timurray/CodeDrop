@@ -38,6 +38,12 @@ body {
 	margin-left: 16px;
 	margin-bottom:16px;
 }
+
+.example {
+	tab-size: 4;
+}
+
+
 </style>
 </head>
 <body>
@@ -64,9 +70,36 @@ All methods take in a <i><b>sessionId</b></i> parameter, which is unique and gen
 <div class="details">gets the Users course listing.</div>
 </div>
 
+<div class="example">
+<ul><li> A List of courses in the form: </li></ul>
+<pre>
+{
+	"course": {
+		"course-id": 1,
+		"course-name": "COMP4770",
+		"course-section": 1
+	}
+}
+</pre>
+</div>
+
 <div class="cmd">getAssignmentList(courseId)
 <div class="details">gets a list of assignments for a course.</div>
 <div class="params">courseId: unique ID for the course</div>
+</div>
+
+<div class="example">
+<ul><li> A list of assignments in the form: </li></ul>
+<pre>
+{
+	"assignment": {
+		"assignment-id": 0,
+		"type": ???,
+		"due-date": "10/21/16",
+		"mark": NA
+	}
+}
+</pre>
 </div>
 
 <div class="cmd">getDirectory(assignmentId)
@@ -79,21 +112,64 @@ All methods take in a <i><b>sessionId</b></i> parameter, which is unique and gen
 <div class="params">fileId: unique ID associated with the file.</div>
 </div>
 
+<div class="example"> 
+<ul><li> A single file of the form: </li></ul>
+<pre>
+{
+	"file": {
+		"file-name": "example.txt",
+		"size": 100,
+		"type": ???,
+		"contents": &lt;BLOB&gt;
+	}
+}
+</pre>
+</div>
+
 <div class="cmd">saveFile(fileId, file)
 <div class="details">saves changes to a file for the user.</div>
 <div class="params">fileId: unique ID for the file.<br/>file: the updated file.</div>
 </div>
-
+<div class="example">
+<pre>
+{
+	"save": {
+		"success": true,
+		"saved-file-id": 1337
+	}
+}
+</pre>
+</div>
 <div class="cmd">downloadFile(fileId)
 <div class="details">submits a download request for a file.</div>
 <div class="params">fileId: unique ID for the file.</div>
 </div>
 
+<div class="example">
+<pre>
+{
+	"download": {
+		"success": true,
+		"downloaded-file-id": 80
+	}
+}
+</pre>
+</div>
 <div class="cmd">saveDirectory(assignmentId, directory)
 <div class="details">saves changes to an assignment directory.</div>
 <div class="params">assignmentId: unique ID for the assignment.<br/>directory: the updated directory</div>
 </div>
 
+<div class="example">
+<pre>
+{
+	"save": {
+		"success": true,
+		"saved-directory-id": 1
+	}
+}
+</pre>
+</div>
 
 <div class="inst">
 <br/>
@@ -102,6 +178,16 @@ All methods take in a <i><b>sessionId</b></i> parameter, which is unique and gen
 <div class="cmd">saveMarks(assignmentId, userId)
 <div class="details">submits a students mark for an assignment solution.</div>
 <div class="params">assignmentId: unique ID associated with the assignment<br/>userId: unique ID associated with the assignment</div>
+</div>
+<div class="example">
+<pre>
+{
+	"save": {
+		"success": false,
+		"work-id": 111
+	}
+}
+</pre>
 </div>
 
 </div>
@@ -115,10 +201,34 @@ All methods take in a <i><b>sessionId</b></i> parameter, which is unique and gen
 <div class="details">allows an administrative user to save the list of available courses.</div>
 <div class="params">courses: the list of courses to save.</div>
 </div>
+<div class="example">
+<pre>
+{
+	"save": {
+		"success": true,
+	}
+}
+</pre>
+</div>
 
 
 <div class="cmd">getUsers();
 <div class="details">gets a list of user accounts for an administrative user.</div>
+</div>
+<div class="example">
+<ul><li>A list of users in the form:</li></ul>
+<pre>
+{
+	"user": {
+		"id": 3,
+		"first-name": "Philip",
+		"last-name": "St. Croix",
+		"address": "XXX Some Street, St.John's",
+		"email": "pmsc73@mun.ca",
+		"phone': "1-800-555-1738"
+	}
+}
+</pre>
 </div>
 
 <div class="cmd">saveUsers(users)
@@ -126,12 +236,30 @@ All methods take in a <i><b>sessionId</b></i> parameter, which is unique and gen
 <div class="params">users: list of users to save</div>
 </div>
 
+<div class="example">
+<ul><li>A list of saves (for each user) in the form: </li></ul>
+<pre>
+{
+	"save": {
+		"success": true,
+		"user-id": 3
+	}
+}
+</pre>
+</div>
+
 </div>
 
 <script>
+
+
 var divs = document.getElementsByClassName("params");
 for(var i = 0; i < divs.length; i++) {
 	divs[i].innerHTML = "<b>Parameters:</b><br/><div style=\"margin-left:16px;\">" + divs[i].innerHTML + "</div>";
+}
+divs = document.getElementsByClassName("example");
+for(var i =0; i < divs.length; i++) {
+	divs[i].innerHTML = "<b>Example JSON returned:</b>" + divs[i].innerHTML;
 }
 </script>
 
