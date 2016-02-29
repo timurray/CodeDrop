@@ -1,0 +1,16 @@
+//function toggleCourse(String id)
+{
+   //alert(id);
+   //var id2 = "#".concat(id.concat("div"));           
+   //$(id2).toggle();
+}
+
+//function foo(var id)
+{
+   //alert(id);
+}
+
+function foo()
+{
+   alert("in");
+}

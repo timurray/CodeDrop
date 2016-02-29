@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Edit the assignment below.</title>
+      <link type="text/css" rel="stylesheet" href="main.css">
+      <script src="js/assignedit.js"></script>
+   </head>
+   <body>
+      <div class="header">
+         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
+      </div>
+      <br><br>
+      <form id="asigneditform" method="POST" action="">
+      <div class="main">
+         <div id="title">
+            <div class="left">
+               <!-- Script makes this-->
+            </div>
+            <div class="right">
+               <input class="button" type="submit" value="SAVE">
+               <form type="submit" action="">
+                  <input class="button" type="submit" value="Cancel">
+               </form>
+            </div>
+         </div>
+         <br>
+         <div id="description">
+            <div class="labeltopleft">
+               Description:
+            </div>
+            <div  class="labeltopright">
+               <textarea form="asigneditform" id="descinputbox" type="text" name="desc"></textarea>
+            </div>
+         </div>
+         <br>
+         <br>
+         <br>
+         <br>
+         <br>
+         <br>
+         <br>
+         <div id="tests">
+            Test :
+            <table>
+               <tr>
+                  <td>Input:</td><td><input class="singlelineinput" type="text" name="testinput1"></td>
+               </tr>
+               <tr>
+                  <td>Output:</td><td><input class="singlelineinput" type="text" name="testoutput1"></td>
+               </tr>
+               <tr>
+                  <td>Code:</td><td><input class="singlelineinput" type="text" name="testcode1"></td>
+               </tr>
+               <tr>
+                  <td>Runs:</td><td><input class="singlelineinput" type="text" name="testruns1"></td>
+               </tr>
+            </table>
+         </div>
+         <input type="button" onclick="addtest()" value="Add Test">
+         <br>
+         <div id="uploaddiv">
+         <form id="uploadform" method="POST" action="">
+            Upload Default File:
+            <input type="file" name="fileup" size="40">
+         </form> 
+         </div>
+         </br>
+         <table id="asigndate">
+            <tr>
+               <td>
+                  Start Date:
+               </td>
+               <td>
+                  <input class="singlelineinput" type="text" name="startdate">
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  Start Time:
+               </td>
+               <td>
+                  <input class="singlelineinput" type="text" name="starttime">
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  End Date:
+               </td>
+               <td>
+                  <input class="singlelineinput" type="text" name="enddate">
+               </td>
+            </tr>
+            <tr>
+               <td>
+                  End Time:
+               </td>
+               <td>
+                  <input class="singlelineinput" type="text" name="endtime">
+               </td>
+            </tr>
+         </table>
+      </div>
+      </form>
+   </body>
+</html>

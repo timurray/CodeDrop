@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Set the parameters below!</title>
+      <link type="text/css" rel="stylesheet" href="main.css">
+   </head>
+   <body>
+      <div class="header">
+         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
+      </div>
+      <br><br>
+      <div class="main">
+       <form id="admincourseedit">
+            <table class="centertable">
+               <colgroup>
+                  <col class="labelcol" span="1">
+               </colgroup>
+               <tr>
+                  <td><span class="right">Course Name:</span></td><td><input name="cname" type="text"></td>
+               </tr>
+               <tr>
+                  <td><span class="right">Course Number:</span></td><td><input name="cnum" type="text"></td>
+               </tr>
+               <tr>
+                  <td><span class="right">Start Date:</span></td><td><input name="sdate" type="text"></td>
+               </tr>
+               <tr>
+                  <td><span class="right">End Date:</span></td><td><input name="edate" type="text"></td>
+               </tr>
+               <tr class="bigrows">
+                  <td><span class="right">Course Info:</span></td><td><textarea form="admincourseedit" id="courseinfo" name="cinfo" rows="30"></textarea></td>
+               </tr>
+               <tr class="bigrows">
+                  <td><span class="right">Users:</span></td><td><textarea form="admincourseedit" id="userlist" name="users" rows="30"></textarea></td>
+               </tr>
+            </table>
+            <div class="centerbox">
+               <input class="button" type="submit" name="save" value="Save">
+               <input class="button" type="button" name="cancel" value="Cancel">
+            </div>
+         </div>
+      </form>
+   </body>
+</html>

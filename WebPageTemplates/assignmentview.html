@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Write Code Below.</title>
+      <link type="text/css" rel="stylesheet" href="main.css">
+      <!-- Import for CodeMirror-->
+      <link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
+      <script src="CodeMirror/lib/codemirror.js"></script>
+      <style>
+      .CodeMirror 
+      {
+           height: 100%;
+      }
+      </style>
+   </head>
+   </head>
+   <body>
+      <div class="header">
+         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
+      </div>
+      <form id="gradecodeform">
+         <div id="maincode">
+            <div class="left" id="leftcontainerstucode">
+               <div id="filebrowser">
+                  <span>File Browser:</span>
+                  <br> 
+               </div>
+               <div id="commandbuttons">
+                  <span>Buttons</span>
+                  <br>
+                  <input class="button" name="compile" value="Compile" type="button" onclick="">
+                  <br>
+                  <input class="button" name="run" value="Run" type="button" onclick="">
+                  <br>
+                  <input class="button" name="save" value="Save" type="button" onclick="">
+               
+               </div>
+            </div>
+            <div id="codeeditor">
+               <textarea id="codeeditarea" form="stucodeform" name="codeeditarea"></textarea>
+            </div>
+         </div>
+      </form>
+      <div id="gradediv">
+         <textarea id="gradingarea" form="stucodeform" name="gradingarea"></textarea>
+      </div>
+      <div id="consolediv">
+            
+      </div>
+
+      <!-- Code mirror Script-->
+      <script>
+            window.onload = function() {
+                CodeMirror.fromTextArea(codeeditarea, {
+                    mode: "java",
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    tabindex:3,
+                    viewportMargin:Infinity,
+                });
+                CodeMirror.fromTextArea(gradingarea, {
+                  
+                    lineWrapping: true,
+                    tabindex:3,
+                    viewportMargin:Infinity,
+                });
+
+            };
+        </script>
+        
+      
+   </body>
+</html>

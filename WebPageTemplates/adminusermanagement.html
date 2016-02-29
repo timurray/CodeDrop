@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Select what to edit below.</title>
+      <link type="text/css" rel="stylesheet" href="main.css">
+   </head>
+   <body>
+      <div class="header">
+         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
+      </div>
+      <br>
+      <div class="main">
+         <form>
+            <div id="details">
+               <table>
+                  <tr>
+                     <td>System ID:</td><td><span id="systemid"></span></td>
+                  </tr>
+                  <tr>
+                     <td>First Name:</td><td><input id="fnameinput" type="text"></td>
+                  </tr>
+                  <tr>
+                     <td>Last Name:</td><td><input id="lnameinput" type="text"></td>
+                  </tr>
+                  <tr>
+                     <td>ID#:</td><td><input id="useridinput" type="text"></td>
+                  </tr>
+                  <tr>
+                     <td>E-Mail:</td><td><Input id="emailinput" type="text"></td>
+                  </tr>
+               </table>
+            </div>
+            <div id="registeredcourses">
+               Enroled in:
+               <br>
+               <!-- Script makes this part -->
+            </div>
+
+            <input type="submit" value="OK" id="okbutton">
+            <input type="button" value="Cancel" id="cancelbutton">
+         </form>
+      </div>
+
+   </body>
+</html>
