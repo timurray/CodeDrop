@@ -11,10 +11,11 @@ apt-cache policy docker-engine
 apt-get install -y linux-image-extra-$(uname -r)
 apt-get install -y apparmor
 apt-get install -y docker-engine
+apt-get install -y npm
 #need to add docker to its own group to run without sudo?
 service dockert start
 docker run hello-world
 #at this point, the hello-world docket runs, to confirm successful installation
-apt-get install -y pm2 nginx
+apt-get install -y nginx
 npm install express httpdispatcher
-
+npm install pm2 -g
