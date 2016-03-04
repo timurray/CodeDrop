@@ -52,15 +52,14 @@
       <!-- Code mirror Script-->
       <script>
             window.onload = function() {
-                CodeMirror.fromTextArea(codeeditarea, {
+                window.editor = CodeMirror.fromTextArea(codeeditarea, {
                     mode: "java",
                     lineNumbers: true,
                     lineWrapping: true,
                     tabindex:3,
                     viewportMargin:Infinity,
                 });
-                CodeMirror.fromTextArea(gradingarea, {
-                  
+                window.comments = CodeMirror.fromTextArea(gradingarea, {
                     lineWrapping: true,
                     tabindex:3,
                     viewportMargin:Infinity,
