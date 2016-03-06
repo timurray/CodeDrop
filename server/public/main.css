@@ -1,0 +1,230 @@
+@CHARSET "ISO-8859-1";
+
+body
+{
+   background-color:#C90017;
+}
+textarea
+{
+   padding:0px;
+   margin:0px;
+}
+.main
+{
+   background-color:#E6B469;
+   border-style:solid;
+}
+
+
+.header
+{
+   background-color:#E6B469;
+	padding :5px;
+	width:97%;
+	margin:auto;
+	border-style:solid;
+	text-align:center;
+}
+.left
+{
+   float:left;
+
+}
+.right
+{
+   float:right;
+
+}
+.labeltopright
+{
+   float:right;
+   width:80%;
+   position:absolute;
+   top:0px;
+   left:100px;
+}
+.labeltopleft
+{
+   width:100px;
+   float left;
+   position:absolute;
+   top:0px;
+   left:0px;
+}
+#home
+{
+	float:left;
+}
+#signout
+{
+	float:right;
+}
+#title
+{
+	padding :auto;
+	margin:auto;
+	text-align:center;
+	overflow:auto;
+}
+.centerbox
+{
+   margin:auto;
+   text-align:center;
+   overflow:auto;
+}
+.contactdiv
+{
+   background-color:#E6B469;
+   border-style:solid;
+   width:40%;
+   margin:auto;
+   padding:auto;
+}
+
+.contact
+{
+   margin:20px;
+   border: 1px solid black;
+
+}
+#contact
+{
+   height:500px;
+   width:90%;
+   text-align:center;
+}
+#testtable
+{
+   width:100%;
+   margin:auto;
+}
+.button
+{
+   width:150px;
+   height:50px;
+}
+#description
+{
+   overflow:auto;
+   width:1800px;
+   height:120px;
+   position:absolute;
+   margin:auto;
+   padding:auto;
+}
+.singlelineinput
+{
+   height:18px;
+   margin-left:100px;
+   clear:left
+}
+.date
+{
+
+}
+#descinputbox
+{
+
+   width:100%;
+   height:100px;
+   margin:auto;
+}
+.centertable
+{
+   width:100%;
+   margin:auto;
+}
+.labelcol
+{
+   width:120px;
+}
+.bigrows
+{
+   height:100px;
+}
+#maincode
+{
+   position:relative;
+   height:1000px;
+   margin:5px;
+   padding:5px;
+
+}
+#leftcontainerstucode
+{
+   height:100%;
+   width:20%;
+   min-width:200px;
+   padding-left:5px;
+
+
+}
+#codeeditor
+{
+   height:99%;
+   max-height:1250px;
+   min-height:800px;
+   width:auto;
+   margin-left:21%;
+   margin-bottom:40px;
+   position:relative;
+   padding:0px;
+   overflow:auto;
+      border-style:solid;
+}
+#filebrowser
+{
+   height:80%;
+   max-height:1000px;
+   border-style:solid;
+   margin-bottom:5px;
+   background-color:black;
+   color:white;
+}
+#commandbuttons
+{
+   height:auto;
+   border-style:solid;
+   padding:5px;
+   overflow:auto;
+   text-align:center;
+   background-color:black;
+   color:white;
+}
+#maintest
+{
+   text-align:center;
+ 
+}
+#consolediv
+{
+   height:auto;
+   min-height:200px;
+   max-height:900px;
+   width:auto;
+   margin:auto;
+   border-style:solid;
+}
+#gradediv
+{
+   position:relative;
+   overflow:auto;
+   height:300px;
+   width:auto;
+   margin:auto;
+   margin-bottom:10px;
+   border-style:solid;
+}
+#tests
+{
+   overflow:auto;
+}
+#courseinfo
+{
+   width:100%;
+}
+#userlist
+{
+   width:100%;
+}
+
