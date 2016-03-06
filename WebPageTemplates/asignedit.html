@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html>
    <head>
+	
+	<link rel="icon" href="favicon.ico"/>
       <meta charset="utf-8">
       <title>Edit the assignment below.</title>
-      <link type="text/css" rel="stylesheet" href="main.css">
+      <link type="text/css" rel="stylesheet" href="default.css">
       <script src="js/assignedit.js"></script>
    </head>
    <body>
-      <div class="header">
-         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
-      </div>
-      <br><br>
+   <div id="wrapper">
+		
+		<div id="header-wrapper"> <div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#"><img src="favicon.ico" alt=""/>Codedrop</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="index.html#" accesskey="1" title="">Home</a></li>
+					<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
+					<li><a href="login.html#" accesskey="3" title="">Sign In</a></li>
+				</ul>
+			</div>
+		</div></div>
+	<div class="container"><div class="title">
+		<h1 style="margin-top:.5em; margin-bottom: -1em;">CourseX > AssignmentY</h1>
+		</div>
+	</div>
+	<div class="container">
+	<div class="scroll">
       <form id="asigneditform" method="POST" action="">
       <div class="main">
          <div id="title">
             <div class="left">
                <!-- Script makes this-->
             </div>
-            <div class="right">
-               <input class="button" type="submit" value="SAVE">
-               <form type="submit" action="">
-                  <input class="button" type="submit" value="Cancel">
-               </form>
-            </div>
+            
          </div>
          <br>
          <div id="description">
             <div class="labeltopleft">
                Description:
             </div>
-            <div  class="labeltopright">
+            <div class="labeltopright">
                <textarea form="asigneditform" id="descinputbox" type="text" name="desc"></textarea>
             </div>
          </div>
-         <br>
-         <br>
-         <br>
-         <br>
-         <br>
-         <br>
-         <br>
+
          <div id="tests">
             Test :
             <table>
@@ -102,5 +109,16 @@
          </table>
       </div>
       </form>
-   </body>
+	</div>
+	</div>
+	<div style="text-align: center">
+		<div style="display: inline-block;">
+			<a href="#" class="button">Save </a>
+			<a style="margin-bottom:1em;" href="main.html"class="button">Cancel </a>		
+		</div>
+	</div>
+	
+	</div>
+	<p style="margin-top:1em;text-align:center">Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
+	</body>
 </html>

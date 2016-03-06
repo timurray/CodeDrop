@@ -643,3 +643,12 @@ img {
 	display: inline;
 }
 
+.scroll {
+	border: 1px solid black;
+	height: 30em;
+	overflow-x: hidden;
+	overflow-y: auto;
+	margin-bottom: 1em;	
+}
+
+

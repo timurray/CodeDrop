@@ -1,38 +1,79 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>Please enter user name and login below.</title>
-      <link type="text/css" rel="stylesheet" href="login.css">
-   </head>
-   <body>
-   <div id="main">
-      <!--validation is done in back end -->
-      <form method="POST" action="main.html">
-         <h1>CodeDrop!</h1>
-         <br>
-         <br>
-         <div id="loginfields">
-         	<div id="left">
-         	User Name : 
-         	<br>
-         	Password :  
-         	</div>
-         	<div id="right">
-         	<input type="text" name="loginName" placeholder="UserName" required>
-         	<br>
-         	<input type="password" name="password" placeholder="Password" required>
-         	</div>
-         	
-         </div>
-         <br><br><br><br><br><br>
-         <input id="submitlogin" type="submit" value="Login">
-         <br><br><br><br>
-         
-      </form>
-      </div>
-      <div class="footer">
-         	<a href="contact.html">Contact Us!</a>
-         </div>
-   </body>
+	<head>
+	<link rel="icon" href="favicon.ico"/>
+		<meta charset="utf-8">
+		<title>Please enter user name and login below.</title>
+		<link type="text/css" rel="stylesheet" href="default.css">
+		<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+
+		
+	</head>
+	<body>
+	<div id="wrapper">
+		
+		<div id="header-wrapper"> <div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#"><img src="favicon.ico" alt=""/>Codedrop</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="index.html#" accesskey="1" title="">Home</a></li>
+					<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
+					<li><a href="login.html#" accesskey="3" title="">Sign In</a></li>
+				</ul>
+			</div>
+		</div></div>
+		<div id="banner">
+			<div class="container">
+				<div class="title">
+					<h2>Welcome to Code Drop!</h2>
+					<span class="byline">The one-stop shop for all your coding needs</span>
+				</div>
+				<ul class="actions">
+					<li><a href="login.html" class="button">Sign In With Existing Account</a></li>
+					
+					<li><a href="#" class="button">Register a New Account</a><li>
+				</ul>
+			</div>
+		</div>
+		<div id="extra" class="container">
+			<div class="title">
+				<h2>What is Code Drop?</h2>
+				<span class="byline">CodeDrop! is a versatile web-based application providing a one-stop shop for students, instructors, and markers to dead with Computer Programming assignments in primary, secondary, and post-secondary education.</span>
+			</div>
+			<div id="three-column">
+				<div class="boxA">
+					<div class="box"> <span class="fa fa-cloud-download"></span>
+						<p> Download and Upload files from the Cloud!</p>
+					</div>
+				</div>
+				<div class="boxB">
+					<div class="box"> <span class="fa fa-edit"></span>
+						<p> Write, compile, run, and test your code, all from the comfort of your browser!</p>
+					</div>
+				</div>
+				
+				<div class="boxC">
+					<div class="box"> <span class="fa fa-comments-o"></span>
+						<p> Give feedback and grade your students work!</p>
+					</div>
+				</div>
+				
+				
+			</div>
+			
+		</div>
+		
+	</div>
+	<div id="main">
+		<!--validation is done in back end -->
+		<form method="POST" action="/main">
+		</form>
+	</div>
+	<div id="copyright" class="container">
+	<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
+	</div>
+
+	</body>
 </html>
