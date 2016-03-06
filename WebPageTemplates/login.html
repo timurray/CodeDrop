@@ -1,38 +1,54 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>Please enter user name and login below.</title>
-      <link type="text/css" rel="stylesheet" href="login.css">
-   </head>
-   <body>
-   <div id="main">
-      <!--validation is done in back end -->
-      <form method="POST" action="/main">
-         <h1>CodeDrop!</h1>
-         <br>
-         <br>
-         <div id="loginfields">
-         	<div id="left">
-         	User Name : 
-         	<br>
-         	Password :  
-         	</div>
-         	<div id="right">
-         	<input type="text" name="loginName" placeholder="UserName" required>
-         	<br>
-         	<input type="password" name="password" placeholder="Password" required>
-         	</div>
-         	
-         </div>
-         <br><br><br><br><br><br>
-         <input id="submitlogin" type="submit" value="Login">
-         <br><br><br><br>
-         
-      </form>
-      </div>
-      <div class="footer">
-         	<a href="contact.html">Contact Us!</a>
-         </div>
-   </body>
+<head>
+<link rel="icon" href="favicon.ico"/>
+<title>Login to CodeDrop!</title>
+<link type="text/css" rel="stylesheet" href="default.css"/>
+<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+</head>
+
+<body>
+<div id="wrapper">
+		
+	<div id="header-wrapper"> <div id="header" class="container">
+		<div id="logo">
+			<h1><img src="favicon.ico" alt=""/> <a href="#">Codedrop</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li><a href="index.html#" accesskey="1" title="">Home</a></li>
+				<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
+				<li class="current_page_item"><a href="login.html#" accesskey="3" title="">Sign In</a></li>
+			</ul>
+		</div>
+	</div>
+	</div>
+	<div id="banner">
+		<div class="container">
+			<div class="title">
+			
+			
+				<h2>Enter your login information</h2>
+			</div>
+				<div class="field">
+					<input id="name" placeholder="Username or email address"> </input>
+				</div>
+				<div class="field">
+					<input type="password" id="pass" placeholder="Password"> </input>
+				</div>
+				<div style="margin-top:-3em">
+				<div class="field">
+					<a href="#" class="button">Sign In </a>
+					<a href="#"class="button">Register </a>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<div id="copyright" class="container">
+	<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
+</div>
+</body>
 </html>

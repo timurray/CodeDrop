@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <title>Welcome to CodeDrop!.</title>
-      <link type="text/css" rel="stylesheet" href="main.css">
-      <script src="js/jquery-1.12.1.min.js"></script>
-      <script src="js/togglecourse.js"></script>
-   </head>
-   <body>
-      <div class="header">
-         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
-      </div>
-      <br>
-      <div id="main" class="main">
-         <span id="example" class="togglecourse">(+)</span>Example course
-         <br>
-         <div id="examplediv">
-         <a href="/stucode">Assignment 1</a>
-         <br>
-         [Upload] or [Download]
-         <br>
-         Grade:(12\67)
-         <br>
-         Due: feb 31 2962
-         </div>
-         <span id="example2" class="togglecourse">(+)</span>Example course 2
-         <br>
-         <div id="example2div">
-         <a href="/stucode">Assignment 1</a>
-         <br>
-         [Upload] or [Download]
-         <br>
-         Grade:(79\67)
-         <br>
-         Due: feb 23 2963
-         <br>
-         <a href="/stucode">Assignment 2</a>
-         <br>
-         [Upload] or [Download]
-         <br>
-         Grade:(79\67)
-         <br>
-         Due: feb 23 2963
-         </div>
+	<head>
+	<link rel="icon" href="favicon.ico"/>
+	<meta charset="utf-8">
+		<title>Welcome to CodeDrop!.</title>
+		<link type="text/css" rel="stylesheet" href=	"default.css">
+		<script src="js/jquery-1.12.1.min.js"></script>
+		<script src="js/togglecourse.js"></script>
+	</head>
+   
+   
+	<body>
+	<div id="wrapper">
+		
+	
+	<div id="header-wrapper"> <div id="header" class="container">
+		<div id="logo">
+			<h1><img src="favicon.ico" alt=""/> <a href="#">Code Drop!</a></h1>
+		</div>
+		<div id="menu">
+			<ul>
+				<li class="current_page_item"><a href="#" accesskey="0">My Courses</a></li>
+				<li><a href="index.html#" accesskey="1" title="">Home</a></li>
+				<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
+				<li><a href="login.html#" accesskey="3" title="">Sign Out</a></li>
+			</ul>
+		</div>
+	</div>
+	</div>
+	<div id="extra" class="container">
+		<div class="title">
+			<h2>Course 1</h2>
+			<a href="course1ass1" class="byline">Assignment 1</a><br>
+			<a href="course1ass2" class="byline">Assignment 2</a>
+			<h2>Course 2</h2>
+			<a href="course2ass1" class="byline">Assignment 1</a><br>
+			<a href="course2ass2" class="byline">Assignment 2</a>
+		</div>
+	</div>
+     
          <!-- Script makes this part -->
-      </div>
-      
-   </body>
+    </div>
+	
+	<div id="copyright" class="container">
+	<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
+	</div>
+</body>
 </html>
