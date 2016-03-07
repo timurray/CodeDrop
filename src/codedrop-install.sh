@@ -19,3 +19,6 @@ docker run hello-world
 apt-get install -y nginx
 npm install express httpdispatcher
 npm install pm2 -g
+npm install formidable
+npm install express
+

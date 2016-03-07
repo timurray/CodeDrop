@@ -1,0 +1,51 @@
+Group: C
+
+Domain Model:  Absent.
+
+Data Dictionary:  Absent.
+
+
+Advice:  As a desk check of the domatin model and the data dictionary, go through user stories and use cases and underline each noun and verb. For each one consider whether it should be included in the domain model and or data dictionary.  At the same time, ensure that everything in the DM & DD actually belongs there and that you are using the same word each time for the same concept and no word for more than one concept.
+
+DM & DD:  0 / 30  Supply the missing work and this mark will go up.
+
+User stories: 
+
+Generally good.  Can the instructor do all the thing the students can do?  Can they create files, eedit them, compile them, run them?
+
+ My answers to your queries:
+   -- [Query: should students be informed when assignment is uploaded?]
+   I'll leave that to you. It would be nice to have an indication when the student logs in of whether there are any assignments in their classes that they haven't started working on. E.g. "You have 3 new assignments and 2 that you have started and have not submitted."
+   -- [Query: Will groups be contacted by external email or an internal chat/messaging system?]
+   Certainly not necessary, but it might be nice.
+   -- [Q: external email or internal system?]
+   Again, I'll leave that to you.  Really this is a low priority feature, as this need
+   can be met with existing systems. (E.g. plain old email.)
+
+Use cases: Ok.  
+    Understandability of the use cases would be improved by having a data dictionary and domain model
+
+State Chart:  I would suggest using use cases as transitions rather than user stories.  User stories are expressions of needs; they don't take one from one state to another. Otherwise, very nice.
+
+US, UC, SC:  22 /30
+
+Wireframes: Good.
+
+9 / 10
+
+Test plan/Technology selection: 
+
+   Test plan missing?
+
+5 / 10
+
+Workplan: Missing.
+
+0 / 10
+
+Presentation:
+
+9 / 10
+
+
+45 / 100  -- Supply the missing part for iteration 1 and this mark will increase dramatically. From the user stories and use cases, it is clear some good work has gone in to the the project, but it is not well expressed in your submission.
