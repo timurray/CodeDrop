@@ -651,4 +651,27 @@ img {
 	margin-bottom: 1em;	
 }
 
+#codeeditor
+{
+	height: 100%;
+	max-height:450px;
+	min-height:450px;
+	width:80%;
+	margin-left: 40px;
+	margin-bottom:40px;
+	padding:0px;
+	overflow:auto;
+    border-style:solid;
+}
 
+.browser-area {
+	height: 20em;
+	border: 3px solid #666;
+	width: 100%;
+	padding-top:1em;
+	overflow: auto;
+	
+}
+#filebrowser {
+
+}

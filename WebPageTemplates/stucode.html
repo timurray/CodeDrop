@@ -14,6 +14,7 @@
       <style>
       .CodeMirror 
       {
+		
            height: 100%;
       }
       </style>
@@ -33,15 +34,18 @@
 				</ul>
 			</div>
 		</div></div>
-      <div class="header">
-         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
-      </div>
+	
+    
       <form id="stucodeform">
-         <div id="maincode">
+	  
+	      <div id="maincode">
+		  <table style="width:100%;"> <tr> 
+		  <td style="width: 5%">
             <div class="left" id="leftcontainerstucode">
                <div id="filebrowser">
                   <span>File Browser:</span>
-                  <br>
+                  <textarea class="browser-area">
+				  </textarea>
                </div>
                <div id="commandbuttons">
                   <span>Upload File </span><input type="file" id="fileup" onchange="uploadfileevent(event,'fileup')">
@@ -54,10 +58,16 @@
                
                </div>
             </div>
+			</td>
+			<td>
             <div id="codeeditor">
                <textarea id="codeeditarea" form="stucodeform" name="codeeditarea" rows="100"></textarea>
             </div>
+			</td>
+		</tr>
+		</table>
          </div>
+
       </form>
       <div id="consolediv">
             
@@ -82,6 +92,8 @@
             }
             
         </script>
+	</tr>
+	</table>
     </div>
    </body>
 </html>
