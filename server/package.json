@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "~4.13.4",
     "formidable": "~1.0.17",
-    "httpdispatcher": "~1.0.0"
+    "httpdispatcher": "~1.0.0",
+    "pg": "^4.5.1"
   },
   "devDependencies": {},
   "scripts": {
