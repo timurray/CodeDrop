@@ -7,10 +7,9 @@ var pgp = require('pg-promise');
 var conn = {
 	host: 'codedrop.microhex.net',
 	port: 8081,
-	database: 'codedrop_db',
-	user: 'postgres',
+	database: 'codedropdb',
+	user: 'codedrop_user',
 	password: '12345'
-
 };
 
 var db = pgp(conn);
@@ -33,9 +32,11 @@ router.get('/', function(req, res) {
  ****************************************************/
  
 // GENERAL API METHODS
+//var query = db.query('SELECT * FROM courses');
 
-router.post('/get_courses', function(req, res) {
+router.get('/get_courses', function(req, res) {
   res.sendFile('public/test.json', {root: __dirname });
+  // res.send(query);
 });
 
 router.get('/get_assignment_list', function(req, res) {
