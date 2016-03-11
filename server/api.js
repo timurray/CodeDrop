@@ -2,9 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 // database config
-var pgp = require('pg-promise');
+//var pgp = require('pg-promise');
 
-var conn = {
+/*var conn = {
 	host: 'codedrop.microhex.net',
 	port: 8081,
 	database: 'codedropdb',
@@ -12,7 +12,7 @@ var conn = {
 	password: '12345'
 };
 
-var db = pgp(conn);
+var db = pgp(conn);*/
 
 // define the home page route
 router.get('/', function(req, res) {
