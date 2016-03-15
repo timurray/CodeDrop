@@ -2,18 +2,17 @@ var express = require('express');
 var router = express.Router();
 
 // database config
-var pgp = require('pg-promise');
+//var pgp = require('pg-promise');
 
-var conn = {
+/*var conn = {
 	host: 'codedrop.microhex.net',
 	port: 8081,
-	database: 'codedrop_db',
-	user: 'postgres',
+	database: 'codedropdb',
+	user: 'codedrop_user',
 	password: '12345'
-
 };
 
-var db = pgp(conn);
+var db = pgp(conn);*/
 
 // define the home page route
 router.get('/', function(req, res) {
@@ -33,9 +32,11 @@ router.get('/', function(req, res) {
  ****************************************************/
  
 // GENERAL API METHODS
+//var query = db.query('SELECT * FROM courses');
 
 router.get('/get_courses', function(req, res) {
   res.sendFile('public/test.json', {root: __dirname });
+  // res.send(query);
 });
 
 router.get('/get_assignment_list', function(req, res) {
