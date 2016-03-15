@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
  
 // GENERAL API METHODS
 
-router.post('/get_courses', function(req, res) {
+router.get('/get_courses', function(req, res) {
   res.sendFile('public/test.json', {root: __dirname });
 });
 
