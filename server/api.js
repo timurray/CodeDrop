@@ -1,5 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var pg = require('pg');
+
+var connectionString = "pg://codedrop_user:12345@codedrop.microhex.net:8081/codedropdb";
+
+var client = new pg.Client(connectionString);
+client.connect();
 
 // database config
 //var pgp = require('pg-promise');
@@ -35,8 +41,18 @@ router.get('/', function(req, res) {
 //var query = db.query('SELECT * FROM courses');
 
 router.get('/get_courses', function(req, res) {
-  res.sendFile('public/test.json', {root: __dirname });
-  // res.send(query);
+  //var query = client.query("SELECT * FROM courses");
+  //res.sendFile('public/test.json', {root: __dirname });
+  //res.send();
+  var query = client.query("SELECT * FROM courses");
+  query.on("row", function (row, result) {
+    result.addRow(row);
+  });
+
+  query.on("end", function (result) {
+    res.send(JSON.stringify(result.rows, null, "    "));
+    client.end();
+  });
 });
 
 router.get('/get_assignment_list', function(req, res) {
