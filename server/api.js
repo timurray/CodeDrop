@@ -1,21 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-// database config
-//var pgp = require('pg-promise');
-
-/*var conn = {
-	host: 'codedrop.microhex.net',
-	port: 8081,
-	database: 'codedropdb',
-	user: 'codedrop_user',
-	password: '12345'
-};
-
-var db = pgp(conn);*/
 
 // define the home page route
-router.get('/', function(req, res) {
+router.get('api/', function(req, res) {
   res.sendFile('public/api.html', {root: __dirname });
 });
 
