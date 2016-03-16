@@ -57,10 +57,12 @@ function getSolution(work_id, user_id) {
 // GENERAL API METHODS
 
 var resBody = "";
+var userId = 0;
+var workId = 0; 
 
 router.get('/get_courses', function(req, res) {
    db.serialize(function() {
-        db.each("SELECT * FROM courses", function(err, row) {
+        db.each(getCourses(userId), function(err, row) {
               resBody  = resBody.concat(JSON.stringify(row) + "<br>");
         });
    });
@@ -70,17 +72,28 @@ router.get('/get_courses', function(req, res) {
 });
 
 router.get('/get_assignment_list', function(req, res) {
-  res.send('Sample assignment list');
+  db.serialize(function() {
+        db.each(getAssignments(userId), function(err, row) {
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
+        });
+   });
+   res.send(resBody);
+   resBody = "";
 });
 
-router.get('/get_directory', function(req, res) {
-  res.send('Sample directory');
+
+router.get('/get_files', function(req, res) {
+	db.serialize(function() {
+        db.each(getFiles(userId), function(err, row) {
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
+        });
+   });
+   res.send(resBody);
+   resBody = "";
 });
 
-router.get('/get_file', function(req, res) {
-  res.send('Sample file');
-});
 
+//XXX TODO later
 router.get('/save_file', function(req, res) {
   res.send('Sample save success/fail');
 });
@@ -89,8 +102,25 @@ router.get('/download_file', function(req, res) {
   res.send('Sample download success/fail statement');
 });
 
+router.get('/get_directory', function(req, res) {
+  res.send('Sample directory');
+});
+
 router.get('/save_directory', function(req, res) {
   res.send('Sample assignment list');
+});
+
+
+// STUDENT SPECIFIC
+
+router.get('/get_solutions', function(req, res) {
+  db.serialize(function() {
+        db.each(getSolution(userId, workId), function(err, row) {
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
+        });
+   });
+   res.send(resBody);
+   resBody = "";
 });
 
 
@@ -107,7 +137,13 @@ router.get('/save_courses', function(req, res) {
 });
 
 router.get('/get_users', function(req, res) {
-  res.send('Sample users list');
+	db.serialize(function() {
+        db.each(getUsers(), function(err, row) {
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
+        });
+   });
+   res.send(resBody);
+   resBody = "";
 });
 
 router.get('/save_users', function(req, res) {
