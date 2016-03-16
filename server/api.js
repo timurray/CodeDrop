@@ -3,12 +3,6 @@ var router = express.Router();
 var sqlite = require('sqlite3').verbose();
 
 var db = new sqlite.Database("codedrop.db");
-/*db.serialize(function() {
-        db.each("SELECT * FROM courses", function(err, row) {
-                console.log(row.name);//.id + ": " + row.cname);
-        });
-});*/
-//db.close();
 
 // define the home page route
 router.get('/', function(req, res) {
@@ -28,20 +22,18 @@ router.get('/', function(req, res) {
  ****************************************************/
  
 // GENERAL API METHODS
-//var query = db.query('SELECT * FROM courses');
-var c = "";
+
+var resBody = "";
+
 router.get('/get_courses', function(req, res) {
-  //res.sendFile('public/test.json', {root: __dirname });
-  //res.send("pippppppy");
-  // var c = "";
    db.serialize(function() {
         db.each("SELECT * FROM courses", function(err, row) {
-                //res.send(row.name);//.id + ": " + row.cname);
-              c  = c.concat(row.name + "\n");
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
         });
    });
-   res.send(c);
-   //db.close();
+   res.send(resBody);
+   resBody = "";
+  // db.close();
 });
 
 router.get('/get_assignment_list', function(req, res) {
