@@ -1,15 +1,38 @@
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
+var sqlite = require('sqlite3');
 
-var connectionString = "pg://codedrop_user:12345@codedrop.microhex.net:8081/codedropdb";
+//var db = new sqlite.Database('~/teamproj/codedrop_db.db');
+/*db.serialize(function() {
+	db.each("SELECT course_id AS id, cname FROM courses", function(err, row) {
+		console.log(row.id + ": " + row.cname);
+	});
+}); 
+db.close();
+*/
+//var pg = require('pg');
 
-var client = new pg.Client(connectionString);
-client.connect();
+//var connectionString = "pg://codedrop_user:12345@codedrop.microhex.net:8081/codedropdb";
 
+//var client = new pg.Client(connectionString);
+/*client.connect(function (err) {
+    if (err) { 
+	return console.error('couldnt connect:', err);
+    } });
+
+//var query = client.query("SELECT * FROM courses");
+var shit = "";
+query.on("row", function (row, result) {
+   result.addRow(row);
+});
+
+query.on("end", function (result) {
+    shit = shit.concat(JSON.stringify(result.rows, null, "    "));
+    done();
+});*/
 
 // define the home page route
-router.get('api/', function(req, res) {
+router.get('/', function(req, res) {
   res.sendFile('public/api.html', {root: __dirname });
 });
 
@@ -31,16 +54,10 @@ router.get('api/', function(req, res) {
 router.get('/get_courses', function(req, res) {
   //var query = client.query("SELECT * FROM courses");
   //res.sendFile('public/test.json', {root: __dirname });
-  //res.send();
-  var query = client.query("SELECT * FROM courses");
-  query.on("row", function (row, result) {
-    result.addRow(row);
-  });
-
-  query.on("end", function (result) {
-    res.send(JSON.stringify(result.rows, null, "    "));
-    client.end();
-  });
+  //console.log("piss");
+  //console.log(shit);
+  //res.send(shit + 'shit again');
+  res.send("pippppppy");
 });
 
 router.get('/get_assignment_list', function(req, res) {
