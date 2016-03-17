@@ -5,6 +5,8 @@
 <title>Login to CodeDrop!</title>
 <link type="text/css" rel="stylesheet" href="default.css"/>
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+<meta name="google-signin-client_id" content="525150621968-9h7q64n4j8htluq1p4ssjguj3khflv6h.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
@@ -41,6 +43,7 @@
 					<a href="#" class="button">Sign In </a>
 					<a href="#"class="button">Register </a>
 				</div>
+				<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			</div>
 		</div>
 	</div>
@@ -50,5 +53,19 @@
 <div id="copyright" class="container">
 	<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
 </div>
+<script>
+      function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log("Name: " + profile.getName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      };
+</script>
 </body>
 </html>
