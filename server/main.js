@@ -16,5 +16,9 @@ router.get('/contact', function(req, res) {
   res.sendFile('public/contact.html', {root: __dirname });
 });
 
+router.get('/courses', function(req, res) {
+	res.sendFile('public/main.html', {root: __dirname });
+});
+
 //router.get('
 module.exports = router;
