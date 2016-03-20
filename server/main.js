@@ -17,22 +17,28 @@ router.get('/contact', function(req, res) {
   res.sendFile('public/contact.html', {root: __dirname });
 });
 
-router.get('/courses', function(req, res) {
 
-	db.serialize(function() {
-		fs.readFile('public/main.html', function (err, data) {
-			if(err) {
-				res.send(404);
-			}
-			else {
-				var result = "";
-				db.each(getCourses(userId), function(err, row) {
-					result  = result.concat(JSON.stringify(row) + "<br>");	
-				});
-			}
-			res.send(data + "<br><br>" + result);
-		});
+function getCourses(user_id) {
+	return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.course_id AND R.user_id = " + user_id;
+}
+
+router.get('/courses', function(req, res) {
+	var file = "";
+	var resBody = "";
+	fs.readFile('public/main.html', function (err, data) {
+		if(err) {
+			res.send(404);
+		}
+		else {
+			file = data;
+		}
 	});
+	db.serialize(function() {
+        db.each(getCourses(userId), function(err, row) {
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");	
+        });
+   });
+   res.send(resBody + file);
 			
 });
 
