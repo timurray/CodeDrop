@@ -62,31 +62,35 @@ router.get('/courses', function(req, res) {
    });
 	
 	for(var r in register) {
+		if(register[r].user_id == userId) {
 		for(var i in courses) {
+			if(register[r].course_id== courses[i].course_id) {
 			resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
 		
 			for(var j in assigns) {
 				if(courses[i].course_id == assigns[j].course_id) {
 				
 					resBody = resBody.concat("<li>"+assigns[j].title);
-					if(reg[r].role == 1) {
+					if(register[r].role == 1) {
 						resBody = resBody.concat("<a href='mark?course="+courses[i].course_id+"'>View Student Submissions</a>");
 					}
-					else if(reg[r].role == 0) {
+					else if(register[r].role == 0) {
 						resBody = resBody.concat("<a href='edit?course="+courses[i].course_id+"'>View Your Solution</a>");
 					}
 					resBody = resBody.concat("</li>");
 				}
 			}
 			resBody = resBody.concat("</ul>");
+			}
 
-		}
+		}}
 	}
 	res.send(resBody);
 	
    resBody = "";
    courses = [];
    assigns = [];
+	register = [];
   // db.close();
 });
 //router.get('
