@@ -44,7 +44,7 @@ router.get('/courses', function(req, res) {
    res.send(resBody + file);*/
    
    db.serialize(function() {
-        db.each(getUsers(), function(err, row) {
+        db.each(getCourses(0), function(err, row) {
               resBody  = resBody.concat(JSON.stringify(row) + "<br>");
         });
    });
