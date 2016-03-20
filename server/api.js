@@ -64,9 +64,15 @@ router.get('/get_courses', function(req, res) {
 	var courses = [];
    db.serialize(function() {
         db.each(getCourses(userId), function(err, row) {
-		resBody = resBody.concat(JSON.stringify(row));
-		courses.push(row);
+			resBody = resBody.concat(JSON.stringify(row) + "<br>");
+			courses.push(row);
         });
+		
+		db.each(getAssignments(userId), function(err, row) {
+            resBody  = resBody.concat(JSON.stringify(row) + "<br>");
+        });
+		
+		
    });
    res.send(resBody + "<br>" + courses[0].name);
    resBody = "";
