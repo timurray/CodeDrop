@@ -21,21 +21,41 @@ router.get('/contact', function(req, res) {
 function getCourses(user_id) {
 	return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.course_id AND R.user_id = " + user_id;
 }
+var resBody = "";
+var userId = 0;
+var workId = 0;
+var courses = [];
+var assigns = [];
 
 router.get('/courses', function(req, res) {
+    db.serialize(function() {
+        db.each(getCourses(userId), function(err, row) {
+            courses.push(row);
+        });
 
-	fs.readFile('public/main.html', function (err, data) {
-		if(err) {
-			res.send(404);
-		}
-		else {
-			
-			res.send(data.toString());
-		}
-	});
+	db.each(getAssignments(userId), function(err, row) {
+              assigns.push(row);
+        });
+
+
+   });
 	
+	for(var i in courses) {
+		resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
+		for(var j in assigns) {
+			if(assigns[j].course_id == courses[i].course_id) {
+				resBody = resBody.concat("<li>"+assigns[j].title+"</li>");	
+			}
+		}
+		resBody = resBody.concat("</ul>");
+
+	}
+	res.send(resBody);
 	
-});
+   resBody = "";
+   courses = [];
+   assigns = [];
+  // db.close();
 
 //router.get('
 module.exports = router;
