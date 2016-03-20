@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var sqlite = require('sqlite3').verbose();
+const fs = require('fs');
 
 var db = new sqlite.Database("codedrop.db");
 
