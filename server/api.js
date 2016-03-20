@@ -65,19 +65,17 @@ router.get('/get_courses', function(req, res) {
     db.serialize(function() {
         db.each(getCourses(userId), function(err, row) {
 			resBody = resBody.concat(JSON.stringify(row) + "<br>");
-            courses.push(row);
+            courses.push(JSON.stringify(row));
         });
 
 		db.each(getAssignments(userId), function(err, row) {
             resBody  = resBody.concat(JSON.stringify(row) + "<br>");
-              assigns.push(row);
+              assigns.push(JSON.stringify(row));
         });
 
 
    });
-	res.send(resBody + 
-		$.each(courses, function(index, value) {return value;}) + 
-		$.each(assigns, function(index, value) {return value;})
+	res.send(resBody + JSON.parse(courses[0]) + JSON.parse(assigns[0]));
 	);
    resBody = "";
   // db.close();
