@@ -15,41 +15,37 @@ router.get('/', function(req, res) {
  */
 
 function getAllCourses() {
-        return "SELECT * FROM courses";
+	return "SELECT * FROM courses";
 }
-
+ 
 function getCourses(user_id) {
-        return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.cour
-se_id AND R.user_id = " + user_id;
+	return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.course_id AND R.user_id = " + user_id;
 }
 
 function getAssignments(user_id) {
-        return "SELECT W.* FROM work W, register R WHERE W.course_id = R.course_
-id AND R.user_id = " + user_id;
+	return "SELECT W.* FROM work W, register R WHERE W.course_id = R.course_id AND R.user_id = " + user_id;
 }
 
 function getFiles(user_id) {
-        return "SELECT F.* FROM file F, file_storage FS WHERE F.fs_id = FS.fs_id
- AND FS.user_id = " + user_id;
+	return "SELECT F.* FROM file F, file_storage FS WHERE F.fs_id = FS.fs_id AND FS.user_id = " + user_id;
 }
 
 function getUsers() {
-        return "SELECT * FROM users";
+	return "SELECT * FROM users";
 }
 
 function getSolutions(user_id) {
-        return "SELECT S.* FROM solution WHERE S.user_id = " + user_id;
+	return "SELECT S.* FROM solution WHERE S.user_id = " + user_id;
 }
 
 function getSolution(work_id, user_id) {
-        return "SELECT * FROM solution WHERE work_id = " + work_id + " AND user_
-id = " + userId;
+	return "SELECT * FROM solution WHERE work_id = " + work_id + " AND user_id = " + userId;
 }
 
 /****************************************************
  * API METHOD ACCESS ENTRY POINT FACTORY GENERATION
- * CLASS DESCRIPTION DIAGRAM FACTORY for
- *      CodeDrop! made and licsenced by:
+ * CLASS DESCRIPTION DIAGRAM FACTORY for 
+ * 	CodeDrop! made and licsenced by:
  * TEAM CSSTCS4770TPAPT2016WSAMUN Winter 2016
  ****************************************************
  *
@@ -57,9 +53,8 @@ id = " + userId;
  * example: router.get('[method_name]', function())
  *
  ****************************************************/
-
+ 
 // GENERAL API METHODS
-
 var resBody = "";
 var userId = 0;
 var workId = 0;
@@ -75,7 +70,7 @@ router.get('/get_courses', function(req, res) {
 
 		db.each(getAssignments(userId), function(err, row) {
             resBody  = resBody.concat(JSON.stringify(row) + "<br>");
-            assigns.push(row);
+              assigns.push(row);
         });
 
 
@@ -97,7 +92,7 @@ router.get('/get_assignment_list', function(req, res) {
 
 
 router.get('/get_files', function(req, res) {
-        db.serialize(function() {
+	db.serialize(function() {
         db.each(getFiles(userId), function(err, row) {
               resBody  = resBody.concat(JSON.stringify(row) + "<br>");
         });
@@ -151,7 +146,7 @@ router.get('/save_courses', function(req, res) {
 });
 
 router.get('/get_users', function(req, res) {
-        db.serialize(function() {
+	db.serialize(function() {
         db.each(getUsers(), function(err, row) {
               resBody  = resBody.concat(JSON.stringify(row) + "<br>");
         });
