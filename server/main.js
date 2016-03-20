@@ -22,7 +22,7 @@ router.get('/edit', function(req, res) {
 });
 
 router.get('/soln', function(req, res) {
-	res.sendFile('public/asignedit.html', {root: __dirname });
+	res.sendFile('public/stucode.html', {root: __dirname });
 });
 
 router.get('/mark', function(req, res) {

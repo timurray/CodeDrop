@@ -3,30 +3,52 @@
    <head>
       <meta charset="utf-8">
       <title>Write Code Below.</title>
-      <link type="text/css" rel="stylesheet" href="main.css">
-      <!-- Import for CodeMirror-->
+      <link type="text/css" rel="stylesheet" href="default.css">
+     
+	 <!-- Import for CodeMirror-->
       <link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
+
+
       <script src="CodeMirror/lib/codemirror.js"></script>
+      <script src="js/fileupload.js"></script>
       <style>
       .CodeMirror 
       {
+		
            height: 100%;
       }
       </style>
    </head>
    <body>
-      <div class="header">
-         <a id="home" href="/home">Home</a>   CodeDrop!   <a id="signout" href="/logout">Signout!</a>
-      </div>
+   <div id="wrapper">
+		
+		<div id="header-wrapper"> <div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#"><img src="favicon.ico" alt=""/>Codedrop</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="index.html#" accesskey="1" title="">Home</a></li>
+					<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
+					<li><a href="login.html#" accesskey="3" title="">Sign In</a></li>
+				</ul>
+			</div>
+		</div></div>
+	
+    
       <form id="stucodeform">
-         <div id="maincode">
+	  
+	      <div id="maincode">
+		  <table style="width:100%;"> <tr> 
+		  <td style="width: 5%">
             <div class="left" id="leftcontainerstucode">
                <div id="filebrowser">
                   <span>File Browser:</span>
-                  <br>
+                  <textarea class="browser-area">
+				  </textarea>
                </div>
                <div id="commandbuttons">
-                  <span>Buttons</span>
+                  <span>Upload File </span><input type="file" id="fileup" onchange="uploadfileevent(event,'fileup')">
                   <br>
                   <input class="button" name="compile" value="Compile" type="button" onclick="">
                   <br>
@@ -36,10 +58,16 @@
                
                </div>
             </div>
+			</td>
+			<td>
             <div id="codeeditor">
                <textarea id="codeeditarea" form="stucodeform" name="codeeditarea" rows="100"></textarea>
             </div>
+			</td>
+		</tr>
+		</table>
          </div>
+
       </form>
       <div id="consolediv">
             
@@ -58,7 +86,14 @@
                     
                 });
             };
+            function uploadfileevent(event,read)
+            {
+               uploadfile(read);
+            }
+            
         </script>
-      
+	</tr>
+	</table>
+    </div>
    </body>
 </html>
