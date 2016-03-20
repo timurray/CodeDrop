@@ -6,19 +6,23 @@ const fs = require('fs');
 var db = new sqlite.Database("codedrop.db");
 
 router.get('/', function(req, res) {
-  res.sendFile('public/index.html', {root: __dirname });
+	res.sendFile('public/index.html', {root: __dirname });
 });
 
 router.get('/login', function(req, res) {
-  res.sendFile('public/login.html', {root: __dirname });
+	res.sendFile('public/login.html', {root: __dirname });
 });
 
 router.get('/contact', function(req, res) {
-  res.sendFile('public/contact.html', {root: __dirname });
+	res.sendFile('public/contact.html', {root: __dirname });
 });
 
 router.get('/edit', function(req, res) {
-  res.sendFile('public/asignedit.html', {root: __dirname });
+	res.sendFile('public/asignedit.html', {root: __dirname });
+});
+
+router.get('/soln', function(req, res) {
+	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
 router.get('/mark', function(req, res) {
@@ -63,27 +67,27 @@ router.get('/courses', function(req, res) {
 	
 	for(var r in register) {
 		if(register[r].user_id == userId) {
-		for(var i in courses) {
-			if(register[r].course_id== courses[i].course_id) {
-			resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
+			for(var i in courses) {
+				if(register[r].course_id== courses[i].course_id) {
+					resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
 		
-			for(var j in assigns) {
-				if(courses[i].course_id == assigns[j].course_id) {
+					for(var j in assigns) {
+						if(courses[i].course_id == assigns[j].course_id) {
 				
-					resBody = resBody.concat("<li>"+assigns[j].title);
-					if(register[r].role == 1) {
-						resBody = resBody.concat("<a href='mark?course="+courses[i].course_id+"'>View Student Submissions</a>");
+							resBody = resBody.concat("<li>"+assigns[j].title);
+							if(register[r].role == 1) {
+								resBody = resBody.concat("&nbsp;&nbsp;<a href='edit?id="+assigns[j].work_id+"'>[Edit]</a>&nbsp;&nbsp;<a href='mark?id="+assigns[j].work_id+"'>Student Submissions</a>");
+							}
+							else if(register[r].role == 0) {
+								resBody = resBody.concat("&nbsp;&nbsp;<a href='soln?id="+assigns[j].work_id+"'>View Your Solution</a>");
+							}
+							resBody = resBody.concat("</li>");
+						}
 					}
-					else if(register[r].role == 0) {
-						resBody = resBody.concat("<a href='edit?course="+courses[i].course_id+"'>View Your Solution</a>");
-					}
-					resBody = resBody.concat("</li>");
+					resBody = resBody.concat("</ul>");
 				}
 			}
-			resBody = resBody.concat("</ul>");
-			}
-
-		}}
+		}
 	}
 	res.send(resBody);
 	
