@@ -75,7 +75,10 @@ router.get('/get_courses', function(req, res) {
 
 
    });
-   res.send(resBody + courses.toString() + assigns.toString());
+	res.send(resBody + 
+		$.each(courses, function(index, value) {return value;}) + 
+		$.each(assigns, function(index, value) {return value;})
+	);
    resBody = "";
   // db.close();
 });
