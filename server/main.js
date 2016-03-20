@@ -26,7 +26,7 @@ router.get('/courses', function(req, res) {
 
 
 	//var file = "";
-	var resBody = "";
+	var resBody = "?";
 	/*fs.readFile('public/main.html', function (err, data) {
 		if(err) {
 			res.send(404);
@@ -44,7 +44,7 @@ router.get('/courses', function(req, res) {
    res.send(resBody + file);*/
    
    db.serialize(function() {
-        db.each(getCourses(0), function(err, row) {
+        db.each("SELECT * FROM COURSES", function(err, row) {
               resBody  = resBody.concat(JSON.stringify(row) + "<br>");
         });
    });
