@@ -3,6 +3,9 @@ var router = express.Router();
 var sqlite = require('sqlite3').verbose();
 const fs = require('fs');
 
+var http = require('http');
+var client = http.createClient(80,'codedrop.microhex.net/api/get_courses');
+
 var db = new sqlite.Database("codedrop.db");
 
 router.get('/', function(req, res) {
@@ -29,6 +32,12 @@ router.get('/courses', function(req, res) {
 			res.send(404);
 		}
 		else {
+			var request = client.request();
+			request.on('response', function(res) { 
+				res.on('data', function(dat) {
+					data = data + dat.toString();
+				});
+			});
 			res.send(data);
 		}
 	});
