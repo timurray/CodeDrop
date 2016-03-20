@@ -23,9 +23,11 @@ function getCourses(user_id) {
 }
 
 router.get('/courses', function(req, res) {
-	var file = "";
+
+
+	//var file = "";
 	var resBody = "";
-	fs.readFile('public/main.html', function (err, data) {
+	/*fs.readFile('public/main.html', function (err, data) {
 		if(err) {
 			res.send(404);
 		}
@@ -39,7 +41,14 @@ router.get('/courses', function(req, res) {
         });
    });
    
-   res.send(resBody + file);
+   res.send(resBody + file);*/
+   
+   db.serialize(function() {
+        db.each(getUsers(), function(err, row) {
+              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
+        });
+   });
+   res.send(resBody);
 	
 });
 
