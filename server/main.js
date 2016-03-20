@@ -32,14 +32,15 @@ router.get('/courses', function(req, res) {
 		else {
 			file = data;
 		}
-	});
+	});/*
 	db.serialize(function() {
         db.each(getCourses(userId), function(err, row) {
               resBody  = resBody.concat(JSON.stringify(row) + "<br>");	
         });
    });
+   */
    res.send(resBody + file);
-			
+	
 });
 
 //router.get('
