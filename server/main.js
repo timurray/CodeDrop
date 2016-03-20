@@ -23,7 +23,13 @@ router.get('/courses', function(req, res) {
 			res.send(404);
 		}
 		else {
-			res.send(data + "<br><br>aaaaa");
+		var result = "";
+			db.serialize(function() {
+				db.each(getCourses(userId), function(err, row) {
+					result  = result.concat(JSON.stringify(row) + "<br>");	
+				});
+			});
+			res.send(data + "<br><br>" + result);
 		}
 	});
 			
