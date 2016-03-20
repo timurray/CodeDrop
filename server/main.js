@@ -17,8 +17,15 @@ router.get('/contact', function(req, res) {
 });
 
 router.get('/courses', function(req, res) {
-	res.sendFile('public/main.html', {root: __dirname });
-	res.send('aaaa');
+	fs.readFile('public/main.html', function (err, data) {
+		if(err) {
+			res.send(404);
+		}
+		else {
+			res.send(data + "<br><br>aaaaa");
+		}
+	});
+			
 });
 
 //router.get('
