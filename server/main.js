@@ -17,6 +17,14 @@ router.get('/contact', function(req, res) {
   res.sendFile('public/contact.html', {root: __dirname });
 });
 
+router.get('/edit', function(req, res) {
+  res.sendFile('public/asignedit.html', {root: __dirname });
+});
+
+function getAssignments(user_id) {
+	return "SELECT W.* FROM work W, register R WHERE W.course_id = R.course_id AND R.user_id = " + user_id;
+}
+
 
 function getCourses(user_id) {
 	return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.course_id AND R.user_id = " + user_id;
@@ -42,11 +50,13 @@ router.get('/courses', function(req, res) {
 	
 	for(var i in courses) {
 		resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
+		
 		for(var j in assigns) {
-			if(assigns[j].course_id == courses[i].course_id) {
-				resBody = resBody.concat("<li>"+assigns[j].title+"</li>");	
+			if(courses[i].course_id == assigns[j].course_id) {
+				resBody = resBody.concat("<li><a href='edit?course="+courses[i].course_id+"'>"+assigns[j].title+"</a></li>");
 			}
 		}
+		
 		resBody = resBody.concat("</ul>");
 
 	}
@@ -56,6 +66,6 @@ router.get('/courses', function(req, res) {
    courses = [];
    assigns = [];
   // db.close();
-
+});
 //router.get('
 module.exports = router;
