@@ -18,19 +18,20 @@ router.get('/contact', function(req, res) {
 });
 
 router.get('/courses', function(req, res) {
-	fs.readFile('public/main.html', function (err, data) {
-		if(err) {
-			res.send(404);
-		}
-		else {
-		var result = "";
-			db.serialize(function() {
+
+	db.serialize(function() {
+		fs.readFile('public/main.html', function (err, data) {
+			if(err) {
+				res.send(404);
+			}
+			else {
+				var result = "";
 				db.each(getCourses(userId), function(err, row) {
 					result  = result.concat(JSON.stringify(row) + "<br>");	
 				});
-			});
+			}
 			res.send(data + "<br><br>" + result);
-		}
+		});
 	});
 			
 });
