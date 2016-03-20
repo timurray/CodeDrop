@@ -18,6 +18,7 @@ router.get('/contact', function(req, res) {
 
 router.get('/courses', function(req, res) {
 	res.sendFile('public/main.html', {root: __dirname });
+	res.send('aaaa');
 });
 
 //router.get('
