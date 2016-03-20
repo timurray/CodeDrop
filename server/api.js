@@ -64,20 +64,31 @@ var assigns = [];
 router.get('/get_courses', function(req, res) {
     db.serialize(function() {
         db.each(getCourses(userId), function(err, row) {
-			resBody = resBody.concat(JSON.stringify(row) + "<br>");
-            courses.push(JSON.stringify(row));
+            courses.push(row);
         });
 
-		db.each(getAssignments(userId), function(err, row) {
-            resBody  = resBody.concat(JSON.stringify(row) + "<br>");
-              assigns.push(JSON.stringify(row));
+	db.each(getAssignments(userId), function(err, row) {
+              assigns.push(row);
         });
 
 
    });
-	res.send(resBody + JSON.parse(courses[0]) + JSON.parse(assigns[0]));
-	);
+	
+	for(var i in courses) {
+		resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
+		for(var j in assigns) {
+			if(assigns[j].course_id == courses[i].course_id) {
+				resBody = resBody.concat("<li>"+assigns[j].title+"</li>");	
+			}
+		}
+		resBody = resBody.concat("</ul>");
+
+	}
+	res.send(resBody);
+	
    resBody = "";
+   courses = [];
+assigns = [];
   // db.close();
 });
 
