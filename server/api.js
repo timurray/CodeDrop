@@ -61,12 +61,14 @@ var userId = 0;
 var workId = 0; 
 
 router.get('/get_courses', function(req, res) {
+	var courses = [];
    db.serialize(function() {
         db.each(getCourses(userId), function(err, row) {
 		resBody = resBody.concat(JSON.stringify(row));
+		courses.push(row);
         });
    });
-   res.send(resBody);
+   res.send(resBody + "<br>" + courses[0].name);
    resBody = "";
   // db.close();
 });
