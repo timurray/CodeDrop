@@ -24,31 +24,15 @@ function getCourses(user_id) {
 
 router.get('/courses', function(req, res) {
 
-
-	//var file = "";
-	var resBody = "?";
-	/*fs.readFile('public/main.html', function (err, data) {
+	fs.readFile('public/main.html', function (err, data) {
 		if(err) {
 			res.send(404);
 		}
 		else {
-			file = data;
+			res.send(data);
 		}
 	});
-	db.serialize(function() {
-        db.each(getCourses(userId), function(err, row) {
-            //  resBody  = resBody.concat(JSON.stringify(row) + "<br>");	
-        });
-   });
-   
-   res.send(resBody + file);*/
-   
-   db.serialize(function() {
-        db.each("SELECT * FROM COURSES", function(err, row) {
-              resBody  = resBody.concat(JSON.stringify(row) + "<br>");
-        });
-   });
-   res.send(resBody);
+	
 	
 });
 
