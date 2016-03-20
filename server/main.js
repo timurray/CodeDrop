@@ -30,7 +30,7 @@ router.get('/courses', function(req, res) {
 		}
 		else {
 			
-			res.send(data);
+			res.send(data.toString());
 		}
 	});
 	
