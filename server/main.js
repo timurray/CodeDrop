@@ -21,19 +21,29 @@ router.get('/edit', function(req, res) {
   res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
+router.get('/mark', function(req, res) {
+	res.sendFile('public/asignedit.html', {root: __dirname });
+});
+
+
 function getAssignments(user_id) {
 	return "SELECT W.* FROM work W, register R WHERE W.course_id = R.course_id AND R.user_id = " + user_id;
 }
 
-
 function getCourses(user_id) {
 	return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.course_id AND R.user_id = " + user_id;
 }
+
+function getRegister(user_id) {
+	return "SELECT R.* FROM register R WHERE R.user_id = " + user_id;
+}
+
 var resBody = "";
 var userId = 0;
 var workId = 0;
 var courses = [];
 var assigns = [];
+var register = [];
 
 router.get('/courses', function(req, res) {
     db.serialize(function() {
@@ -41,24 +51,36 @@ router.get('/courses', function(req, res) {
             courses.push(row);
         });
 
-	db.each(getAssignments(userId), function(err, row) {
-              assigns.push(row);
-        });
-
-
+		db.each(getAssignments(userId), function(err, row) {
+			assigns.push(row);
+		});
+	
+		db.each(getRegister(userId), function(err, row) {
+			register.push(row);
+		});
+	
    });
 	
-	for(var i in courses) {
-		resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
+	for(var r in register) {
+		for(var i in courses) {
+			resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
 		
-		for(var j in assigns) {
-			if(courses[i].course_id == assigns[j].course_id) {
-				resBody = resBody.concat("<li><a href='edit?course="+courses[i].course_id+"'>"+assigns[j].title+"</a></li>");
+			for(var j in assigns) {
+				if(courses[i].course_id == assigns[j].course_id) {
+				
+					resBody = resBody.concat("<li>"+assigns[j].title);
+					if(reg[r].role == 1) {
+						resBody = resBody.concat("<a href='mark?course="+courses[i].course_id+"'>View Student Submissions</a>");
+					}
+					else if(reg[r].role == 0) {
+						resBody = resBody.concat("<a href='edit?course="+courses[i].course_id+"'>View Your Solution</a>");
+					}
+					resBody = resBody.concat("</li>");
+				}
 			}
-		}
-		
-		resBody = resBody.concat("</ul>");
+			resBody = resBody.concat("</ul>");
 
+		}
 	}
 	res.send(resBody);
 	
