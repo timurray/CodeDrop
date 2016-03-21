@@ -48,10 +48,10 @@ var register = [];
 router.get('/submissions', function(req, res) {
 	resBody.concat("<ul>");
 	db.serialize( function() {
-		db.each("SELECT S.name FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
-			resBody = resBody.concat("<li>"+JSON.stringify(row)+"</li>");
-		}
-	}
+		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
+			resBody = resBody.concat("<li><a href='soln'>"+row.first_name + " " + row.last_name +"</a></li>");
+		});
+	});
 	res.send(resBody);
 	resBody ="";
 });
