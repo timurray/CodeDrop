@@ -37,6 +37,15 @@ router.post('/userpage', function(req, res) {
 	});
 });
 
+router.post('/savecode', function(req, res) {
+	var content = req.body.codeeditarea;
+	db.serialize(function() {
+		console.log ("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
+		db.run("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
+	});
+	res.send("Success <br>" + content);
+});
+
 router.get('/register', function(req, res) {
         res.sendFile('public/register.html', {root: __dirname });
 });
@@ -73,7 +82,6 @@ router.get('/soln', function(req, res) {
 			if(err) {
 				console.log(err);
 			}
-			console.log(data);
 			contents = contents + data;
 		});
 		fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
@@ -84,7 +92,6 @@ router.get('/soln', function(req, res) {
 		});
 		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
 			rest += row.contents;
-			console.log(JSON.stringify(row));
 		});
 		res.send(contents + rest);
 	});
