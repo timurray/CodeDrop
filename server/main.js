@@ -87,8 +87,13 @@ router.get('/edit', function(req, res) {
 });
 
 router.get('/soln', function(req, res) {
-	res.sendFile('public/stucode.html', {root: __dirname });
-	res.body = res.body + "modified";
+	fs.readFile('/home/tim/teamproj/CodeDrop/server/public/stucode.html', 'utf8', function(err, data) {
+		if(err) {
+			return console.log(err);
+		}
+		res.send(data + "modified");
+	});
+
 });
 
 
