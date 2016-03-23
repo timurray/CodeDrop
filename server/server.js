@@ -4,7 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 //var api = require('./api');
 //var main = require('./main');
-//var compile = require('./compilerequest');
+var compile = require('./compilerequest');
 
 var server = express();
 server.use(express.static(__dirname + '/public'));
@@ -17,9 +17,9 @@ var compile = require('./compilerequest');
 
 server.use('/api', api);
 server.use('/', main);
-server.use('/compile',compile);
+server.use('/compile',compile.route);
 
-var port = 8081;
+var port = 8080;
 server.listen(port, function() {
     console.log('server listening on port ' + port);
 });
