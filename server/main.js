@@ -89,21 +89,29 @@ router.get('/edit', function(req, res) {
 });
 
 var contents = "";
+var rest = "";
 router.get('/soln', function(req, res) {
 	db.serialize(function() {
-		fs.readFile('public/stucode.html', 'utf8', function(err, data) {
+		fs.readFile('public/firsthalf-stucode.html', 'utf8', function(err, data) {
 			if(err) {
 				console.log(err);
 			}
 			console.log(data);
 			contents = contents + data;
 		});
+		fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
+			if(err){ 
+				console.log(err);
+			}
+			rest = rest + data;
+		});
 		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
-			contents += row.contents;
+			rest += row.contents;
 			console.log(JSON.stringify(row));
 		});
-		res.send(contents);
+		res.send(contents + rest);
 	});
+	rest = "";
 	contents ="";
 });
 

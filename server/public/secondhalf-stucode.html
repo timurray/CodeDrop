@@ -1,0 +1,36 @@
+</textarea>
+            </div>
+			</td>
+		</tr>
+		</table>
+         </div>
+
+      </form>
+      <div id="consolediv">
+            
+      </div>
+
+      <!-- Code mirror Script-->
+      <script>
+            window.onload = function() {
+                window.editor = CodeMirror.fromTextArea(codeeditarea, {
+                    mode: "java",
+                    value:"Write Code Here . . .",
+                    lineNumbers: true,
+                    lineWrapping: true,
+                    tabindex:3,
+                    viewportMargin:Infinity,
+                    
+                });
+            };
+            function uploadfileevent(event,read)
+            {
+               uploadfile(read);
+            }
+            
+        </script>
+	</tr>
+	</table>
+    </div>
+   </body>
+</html>

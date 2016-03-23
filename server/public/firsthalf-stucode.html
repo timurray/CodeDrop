@@ -1,0 +1,65 @@
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Write Code Below.</title>
+      <link type="text/css" rel="stylesheet" href="default.css">
+     
+	 <!-- Import for CodeMirror-->
+      <link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
+
+
+      <script src="CodeMirror/lib/codemirror.js"></script>
+      <script src="js/fileupload.js"></script>
+      <style>
+      .CodeMirror 
+      {
+		
+           height: 100%;
+      }
+      </style>
+   </head>
+   <body>
+   <div id="wrapper">
+		
+		<div id="header-wrapper"> <div id="header" class="container">
+			<div id="logo">
+				<h1><a href="#"><img src="favicon.ico" alt=""/>Codedrop</a></h1>
+			</div>
+			<div id="menu">
+				<ul>
+					<li class="current_page_item"><a href="index.html#" accesskey="1" title="">Home</a></li>
+					<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
+					<li><a href="login.html#" accesskey="3" title="">Sign In</a></li>
+				</ul>
+			</div>
+		</div></div>
+	
+    
+      <form id="stucodeform" method="post" enctype="multipart/form-data" action="/compile">
+	  
+	      <div id="maincode">
+		  <table style="width:100%;"> <tr> 
+		  <td style="width: 5%">
+            <div class="left" id="leftcontainerstucode">
+               <div id="filebrowser">
+                  <span>File Browser:</span>
+                  <textarea class="browser-area">
+				  </textarea>
+               </div>
+               <div id="commandbuttons">
+                  <span>Upload File </span><input type="file" id="file" name="file" onchange="uploadfileevent(event,'fileup')">
+                  <br>
+                  <input type="submit" value="compile and run">
+                  <br>
+                  <input class="button" name="compile" value="Compile" type="button" onclick="">
+                  <br>
+                  <input class="button" name="run" value="Run" type="button" onclick="">
+                  <br>
+                  <input class="button" name="save" value="Save" type="button" onclick="">
+               
+               </div>
+            </div>
+			</td>
+			<td>
+            <div id="codeeditor">
+               <textarea id="codeeditarea" form="stucodeform" name="codeeditarea" rows="100">
