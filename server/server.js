@@ -14,7 +14,7 @@ server.use('/api', api);
 server.use('/', main);
 server.use('/compile',compile.route);
 
-var port = 8080;
+var port = 8081;
 server.listen(port, function() {
     console.log('server listening on port ' + port);
 });
