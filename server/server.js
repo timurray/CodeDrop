@@ -1,10 +1,5 @@
 var express = require('express');
-//var api = require('./api');
-//var main = require('./main');
 var bodyParser = require('body-parser');
-//var api = require('./api');
-//var main = require('./main');
-//var compile = require('./compilerequest');
 
 var server = express();
 server.use(express.static(__dirname + '/public'));
