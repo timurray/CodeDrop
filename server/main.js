@@ -37,9 +37,17 @@ router.post('/userpage', function(req, res) {
 	});
 });
 
-router.post('/register', function(req, res) {
-	var username = req.body.username;
-        db.serialize(function() {
+router.get('/register', function(req, res) {
+        res.sendFile('public/register.html', {root: __dirname });
+});
+
+router.post('/registered', function(req, res) {
+	var email = req.body.email;
+        var fname = req.body.firstname;
+        var lname = req.body.lastname;
+        var phnum = req.body.phonenumber;
+	res.send("Good job you can type and click a button, you are a genius and this is sarcasm lol" + email + " " + fname + " " + lname + " " + phnum);
+        /*db.serialize(function() {
                 try {
                         db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
                                 // if nothing was selected, rows will be empty arra;
@@ -54,7 +62,7 @@ router.post('/register', function(req, res) {
                 catch(er) {
                         console.log(er);
                 }
-        });
+        });*/
 });
 
 router.get('/login2', function(req, res) {
@@ -80,6 +88,7 @@ router.get('/edit', function(req, res) {
 
 router.get('/soln', function(req, res) {
 	res.sendFile('public/stucode.html', {root: __dirname });
+	res.body = res.body + "modified";
 });
 
 

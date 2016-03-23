@@ -1,0 +1,8 @@
+2016-03-23 16:18:45: [PM2][WORKER] Started with refreshing interval: 30000
+2016-03-23 16:18:45: [[[[ PM2/God daemon launched ]]]]
+2016-03-23 16:18:45: BUS system [READY] on port /home/tim/teamproj/CodeDrop/.pm2/pub.sock
+2016-03-23 16:18:45: RPC interface [READY] on port /home/tim/teamproj/CodeDrop/.pm2/rpc.sock
+2016-03-23 16:18:45: God db process id unknown
+2016-03-23 16:19:09: God db process id unknown
+2016-03-23 16:28:09: 3 : id unknown
+2016-03-23 16:28:38: God db process id unknown
