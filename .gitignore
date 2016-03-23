@@ -2,3 +2,4 @@ npm-debug.log
 server/node_modules
 codedrop.db
 server/codedrop.db
+.pm2
