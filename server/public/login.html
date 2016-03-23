@@ -5,13 +5,10 @@
 <title>Login to CodeDrop!</title>
 <link type="text/css" rel="stylesheet" href="default.css"/>
 <link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
-<meta name="google-signin-client_id" content="525150621968-9h7q64n4j8htluq1p4ssjguj3khflv6h.apps.googleusercontent.com">
-<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
 <div id="wrapper">
-	<a href="#" onclick="signOut();">Sign out</a>
 	<div id="header-wrapper"> <div id="header" class="container">
 		<div id="logo">
 			<h1><img src="favicon.ico" alt=""/> <a href="#">Codedrop</a></h1>
@@ -45,7 +42,6 @@
 					<input type="submit" href="#" class="button"/>
 					<a href="register" class="button">Register</a>
 				</div>
-				<div class="g-signin2" data-onsuccess="onSignIn"></div>
 				</form>
 			</div>
 		</div>
@@ -56,36 +52,5 @@
 <div id="copyright" class="container">
 	<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
 </div>
-<script>
-      function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
-        var profile = googleUser.getBasicProfile();
-        var email = profile.getEmail();
-	console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-        console.log("Name: " + profile.getName());
-        console.log("Image URL: " + profile.getImageUrl());
-        console.log("Email: " + profile.getEmail());
-
-        // The ID token you need to pass to your backend:
-        var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
-        
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'http://codedrop.microhex.com/main.html');
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.onload = function() {
-                console.log('Signed in as: ' + xhr.responseText);
-        };
-        xhr.send('email=' + email);
-      };
-</script>
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
 </body>
 </html>
