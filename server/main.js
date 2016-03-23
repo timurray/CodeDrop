@@ -87,13 +87,19 @@ router.get('/edit', function(req, res) {
 });
 
 router.get('/soln', function(req, res) {
-	fs.readFile('/home/tim/teamproj/CodeDrop/server/public/stucode.html', 'utf8', function(err, data) {
-		if(err) {
-			return console.log(err);
-		}
-		res.send(data + "modified");
+	var contents = "";
+	db.serialize(function() {
+		fs.readFile('/home/tim/teamproj/CodeDrop/server/public/stucode.html', 'utf8', function(err, data) {
+			if(err) {
+				return console.log(err);
+			}
+			contents = data;
+		});
+		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
+			contents += row.contents;
+		});
+		res.send(contents);
 	});
-
 });
 
 
