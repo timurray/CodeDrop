@@ -51,8 +51,7 @@ r.post('/',mkdir,up.any(),function(req,res){
    });
    javac.on('close',function(code){
       console.log('Exited on code'+code);
-   });
-   var java = spawn('java',['-cp','public/temp',filename]);
+      var java = spawn('java',['-cp','public/temp',filename]);
    java.stdout.on('data',function(data){
       console.log('output\n'+data);
       joutput ='Output:'+data;
@@ -70,7 +69,10 @@ r.post('/',mkdir,up.any(),function(req,res){
          runerr:jerr
       }
       res.send(JSON.stringify(jsonout));
-      spawn('rm',['-rf','public/temp']);
+      //spawn('rm',['-rf','public/temp']);
    });
+   });
+   
+   
 });
 module.exports= r;
