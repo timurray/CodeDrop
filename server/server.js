@@ -12,9 +12,9 @@ var compile = require('./compilerequest');
 
 server.use('/api', api);
 server.use('/', main);
-server.use('/compile',compile);
+server.use('/compile',compile.route);
 
-var port = 8081;
+var port = 8080;
 server.listen(port, function() {
     console.log('server listening on port ' + port);
 });
