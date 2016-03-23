@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var sqlite = require('sqlite3').verbose();
+var bodyParser = require('body-parser');
 const fs = require('fs');
 
 var db = new sqlite.Database("codedrop.db");
@@ -11,6 +12,21 @@ router.get('/', function(req, res) {
 
 router.get('/login', function(req, res) {
 	res.sendFile('public/login.html', {root: __dirname });
+	//console.log('Username: ' + req.body.username);
+	//console.log('password: ' + req.body.password);
+});
+
+router.get('/login2', function(req, res) {
+	res.sendFile('public/login2.html', {root: __dirname });
+});
+
+router.post('/loggedin', function(req, res) {
+	//res.sendFile('public/login2.html', {root: __dirname });
+	console.log(req.body);
+	var username = req.body.username;
+        //var pass = req.body.password;
+        console.log("post recieved: " + username); //+ " " +  password);
+	res.send('Username: ' + req.body.username);
 });
 
 router.get('/contact', function(req, res) {
