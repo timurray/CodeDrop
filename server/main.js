@@ -16,6 +16,47 @@ router.get('/login', function(req, res) {
 	//console.log('password: ' + req.body.password);
 });
 
+router.post('/userpage', function(req, res) {
+	var username = req.body.username;
+	var password = req.body.password;
+	db.serialize(function() {
+		try {
+			db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
+				// if nothing was selected, rows will be empty arra;
+				if(rows == undefined || rows === []){
+					res.send("nope, that user doesn't exist, stop trying to invade our site, kiddo");	
+				}
+				else{
+					res.send(rows[0].user_id + rows[0].first_name + rows[0].email + '\nCongrats buddy');
+				}
+			});
+		}
+		catch(er) {
+			console.log(er);
+		}
+	});
+});
+
+router.post('/register', function(req, res) {
+	var username = req.body.username;
+        db.serialize(function() {
+                try {
+                        db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
+                                // if nothing was selected, rows will be empty arra;
+                                if(rows == undefined || rows === []){
+                                        res.send("nope, that user doesn't exist, stop trying to invade our site, kiddo");
+                                }
+                                else{
+                                        res.send(rows[0].user_id + rows[0].first_name + rows[0].email + '\nCongrats buddy');
+                                }
+                        });
+                }
+                catch(er) {
+                        console.log(er);
+                }
+        });
+});
+
 router.get('/login2', function(req, res) {
 	res.sendFile('public/login2.html', {root: __dirname });
 });
