@@ -23,7 +23,9 @@ router.post('/userpage', function(req, res) {
 		try {
 			db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
 				// if nothing was selected, rows will be empty arra;
-				if(rows == undefined || rows === []){
+			
+				
+				if(err || rows == undefined || rows === []){
 					res.send("nope, that user doesn't exist, stop trying to invade our site, kiddo");	
 				}
 				else{
@@ -86,20 +88,23 @@ router.get('/edit', function(req, res) {
 	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
+var contents = "";
 router.get('/soln', function(req, res) {
-	var contents = "";
 	db.serialize(function() {
-		fs.readFile('/home/tim/teamproj/CodeDrop/server/public/stucode.html', 'utf8', function(err, data) {
+		fs.readFile('public/stucode.html', 'utf8', function(err, data) {
 			if(err) {
-				return console.log(err);
+				console.log(err);
 			}
-			contents = data;
+			console.log(data);
+			contents = contents + data;
 		});
 		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
 			contents += row.contents;
+			console.log(JSON.stringify(row));
 		});
 		res.send(contents);
 	});
+	contents ="";
 });
 
 
