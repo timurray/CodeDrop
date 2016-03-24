@@ -22,12 +22,12 @@ router.post('/userpage', function(req, res) {
 	db.serialize(function() {
 		try {
 			db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
-				// if nothing was selected, rows will be empty arra;
-				if(rows == undefined || rows === []){
-					res.send("nope, that user doesn't exist, stop trying to invade our site, kiddo");	
+				// if nothing was selected, rows will be empty array;			
+				if(err || rows == undefined || rows === []){
+					res.send("User not registered");	
 				}
 				else{
-					res.send(rows[0].user_id + rows[0].first_name + rows[0].email + '\nCongrats buddy');
+					res.send(rows[0].user_id + rows[0].first_name + rows[0].email + '\n');
 				}
 			});
 		}
@@ -37,45 +37,33 @@ router.post('/userpage', function(req, res) {
 	});
 });
 
+router.post('/savecode', function(req, res) {
+	var content = req.body.codeeditarea;
+	db.serialize(function() {
+		console.log ("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
+		db.run("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
+	});
+	res.send("Success <br>" + content);
+});
+
 router.get('/register', function(req, res) {
         res.sendFile('public/register.html', {root: __dirname });
 });
 
 router.post('/registered', function(req, res) {
 	var email = req.body.email;
-        var fname = req.body.firstname;
-        var lname = req.body.lastname;
-        var phnum = req.body.phonenumber;
-	res.send("Good job you can type and click a button, you are a genius and this is sarcasm lol" + email + " " + fname + " " + lname + " " + phnum);
-        /*db.serialize(function() {
-                try {
-                        db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
-                                // if nothing was selected, rows will be empty arra;
-                                if(rows == undefined || rows === []){
-                                        res.send("nope, that user doesn't exist, stop trying to invade our site, kiddo");
-                                }
-                                else{
-                                        res.send(rows[0].user_id + rows[0].first_name + rows[0].email + '\nCongrats buddy');
-                                }
-                        });
-                }
-                catch(er) {
-                        console.log(er);
-                }
-        });*/
-});
-
-router.get('/login2', function(req, res) {
-	res.sendFile('public/login2.html', {root: __dirname });
-});
-
-router.post('/loggedin', function(req, res) {
-	//res.sendFile('public/login2.html', {root: __dirname });
-	console.log(req.body);
-	var username = req.body.username;
-        //var pass = req.body.password;
-        console.log("post recieved: " + username); //+ " " +  password);
-	res.send('Username: ' + req.body.username);
+	var fname = req.body.firstname;
+    var lname = req.body.lastname;
+	var phnum = req.body.phonenumber;
+	var pswd = req.body.password;
+	console.log("Student Registered: " + email + " " + fname + " " + lname + " " + phnum);
+ 	
+ 	db.serialize(function() {
+ 		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
+  	});
+  	
+  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
+  	
 });
 
 router.get('/contact', function(req, res) {
@@ -86,20 +74,29 @@ router.get('/edit', function(req, res) {
 	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
+var contents = "";
+var rest = "";
 router.get('/soln', function(req, res) {
-	var contents = "";
 	db.serialize(function() {
-		fs.readFile('/home/tim/teamproj/CodeDrop/server/public/stucode.html', 'utf8', function(err, data) {
+		fs.readFile('public/firsthalf-stucode.html', 'utf8', function(err, data) {
 			if(err) {
-				return console.log(err);
+				console.log(err);
 			}
-			contents = data;
+			contents = contents + data;
+		});
+		fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
+			if(err){ 
+				console.log(err);
+			}
+			rest = rest + data;
 		});
 		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
-			contents += row.contents;
+			rest += row.contents;
 		});
-		res.send(contents);
+		res.send(contents + rest);
 	});
+	rest = "";
+	contents ="";
 });
 
 
@@ -181,5 +178,5 @@ router.get('/courses', function(req, res) {
 	register = [];
   // db.close();
 });
-//router.get('
+
 module.exports = router;
