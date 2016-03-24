@@ -1,0 +1,14 @@
+COMP 4770 - Team C - Server Deployment
+
+We have our latest stable release hosted and running at
+	codedrop.microhex.net
+for your testing convenience.
+
+Requirements:
+	- Tested on Ubuntu 14.04.3.
+	- Should work on any semi-recent Ubuntu or Debian system without issue.
+	- Latest NodeJS in Ubuntu repos.
+	- Express, bodyparse, sqlite, formidable.
+
+Steps:
+	1) 
