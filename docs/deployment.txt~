@@ -7,8 +7,11 @@ for your testing convenience.
 Requirements:
 	- Tested on Ubuntu 14.04.3.
 	- Should work on any semi-recent Ubuntu or Debian system without issue.
-	- Latest NodeJS in Ubuntu repos.
+	- Latest NodeJS/npm in Ubuntu repos.
 	- Express, bodyparse, sqlite, formidable.
 
 Steps:
-	1) 
+	1) Change to ./CodeDrop/server/
+	2) sudo apt-get install npm
+	3) sudo npm install
+	4) node server.js
