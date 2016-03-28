@@ -71,11 +71,29 @@ router.get('/creation', function(req, res) {
 });
 
 router.post('/createuser', function(req, res) {
-	
+	var email = req.body.email;
+	var fname = req.body.firstname;
+    var lname = req.body.lastname;
+	var phnum = req.body.phonenumber;
+	var pswd = req.body.password;
+	console.log("Student Registered: " + email + " " + fname + " " + lname + " " + phnum);
+ 	
+ 	db.serialize(function() {
+ 		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
+  	});
+  	
+  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
 });
 
 router.post('/createcourse', function(req, res) {
+	var name = req.body.name;
+	var number = req.body.number;
+	var startdate = req.body.startdate;
+	var enddate = req.body.enddate;
 	
+	db.serialize(function() {
+ 		//db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
+  	});
 });
 
 router.get('/contact', function(req, res) {
