@@ -87,13 +87,14 @@ router.post('/createuser', function(req, res) {
 
 router.post('/createcourse', function(req, res) {
 	var name = req.body.name;
-	var number = req.body.number;
 	var startdate = req.body.startdate;
 	var enddate = req.body.enddate;
 	
 	db.serialize(function() {
- 		//db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
+ 		db.run("INSERT INTO courses (name, startdate, enddate) VALUES ('" + name + "','" + startdate + "','" + enddate + "')");		
   	});
+  	
+  	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate);
 });
 
 router.get('/contact', function(req, res) {
