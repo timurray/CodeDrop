@@ -66,57 +66,39 @@ router.post('/registered', function(req, res) {
   	
 });
 
-
 router.get('/creation', function(req, res) {
-		// the problem here is that the db searching takes longer than the html writing so
-		// it takes longer to load on the page
-		// a long time too
-		// sometimes doesnt work at all
-		// need to figure out a way for it all to happen at once
-		// also must be better way then just hard coding in the html here right?
-		var courses = [];
-		var users = [];
 		//keep this commented out line which does the html statically
         //res.sendFile('public/creation.html', {root: __dirname });
-		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h2> Create New User: </h2>');
+		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<ul>\n');
 
 		db.serialize(function() {
         	db.each("SELECT * FROM users", function(err, row) {
-            	users.push(row.first_name + '<br>\n');
-        	});
+            	res.write('<li>' + row.first_name + '</li><br>\n');
+        	}, function() {
+        		res.write('</ul>\n<h2> Create New User: </h2>\n');
+        		res.write('<form method="post" action="/createuser">\n<input type="text" name="email" placeholder="Email"/><br>\n');
+				res.write('<input type="text" name="password" placeholder="Password"/><br>\n');
+				res.write('<input type="text" name="firstname" placeholder="First Name"/><br>\n');
+				res.write('<input type="text" name="lastname" placeholder="Last Name"/><br>\n');
+				res.write('<input type="text" name="phonenumber" placeholder="Phone Number"/><br>\n');
+				res.write('<input type="submit"/>\n</form>\n');
+				res.write('<h3> Current Courses Available: <h3>\n<ul>\n');
+			});	
 		});
-		
-		for(var i in users){
-			console.log(users[i]);
-			res.write(users[i]);
-		}
-		
-		res.write('<form method="post" action="/createuser">\n<input type="text" name="email" placeholder="Email"/><br>\n');
-		res.write('<input type="text" name="password" placeholder="Password"/><br>\n');
-		res.write('<input type="text" name="firstname" placeholder="First Name"/><br>\n');
-		res.write('<input type="text" name="lastname" placeholder="Last Name"/><br>\n');
-		res.write('<input type="text" name="phonenumber" placeholder="Phone Number"/><br>\n');
-		res.write('<input type="submit"/>\n</form>\n');
-		res.write('<h2> Create New Course: </h2>\n');
 		
 		db.serialize(function() {
         	db.each("SELECT * FROM courses", function(err, row) {
-            	courses.push(row.name + '<br>\n');
-        	});
-		});
-		
-		for(var j in courses){
-			console.log(courses[j]);
-			res.write(courses[j]);
-		}
-		
-		res.write('<form method="post" action="/createcourse">\n');
-		res.write('<input type="text" name="name" placeholder="Course Name"/><br>\n');
-		res.write('<input type="text" name="startdate" placeholder="Start Date"/><br>\n');
-		res.write('<input type="text" name="enddate" placeholder="End Date"/><br>\n');
-		res.write('<input type="submit"/>\n');
-		res.write('</form>\n');
-		
+            	res.write('<li>' + row.name + '</li><br>\n');
+        	}, function () {
+        		res.write('</ul>\n<h2> Create New Course: </h2>\n');
+        		res.write('<form method="post" action="/createcourse">\n');
+				res.write('<input type="text" name="name" placeholder="Course Name"/><br>\n');
+				res.write('<input type="text" name="startdate" placeholder="Start Date"/><br>\n');
+				res.write('<input type="text" name="enddate" placeholder="End Date"/><br>\n');
+				res.write('<input type="submit"/>\n');
+				res.write('</form>\n');
+			});
+		});	
 });
 
 router.post('/createuser', function(req, res) {
@@ -131,7 +113,7 @@ router.post('/createuser', function(req, res) {
  		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
   	});
   	
-  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
+  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.post('/createcourse', function(req, res) {
@@ -143,7 +125,7 @@ router.post('/createcourse', function(req, res) {
  		db.run("INSERT INTO courses (name, startdate, enddate) VALUES ('" + name + "','" + startdate + "','" + enddate + "')");		
   	});
   	
-  	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate);
+  	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.get('/contact', function(req, res) {
