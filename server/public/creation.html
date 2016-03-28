@@ -1,0 +1,23 @@
+<html>
+	<title>User/Course Creation</title>
+	<h1>User/Course Creation</h1>
+	<body>
+		<h2> Create New User: </h2>
+		<form method="post" action="/createuser">
+			<input type="text" name="email" placeholder="Email"/><br>
+			<input type="text" name="password" placeholder="Password"/><br>
+			<input type="text" name="firstname" placeholder="First Name"/><br>
+			<input type="text" name="lastname" placeholder="Last Name"/><br>
+			<input type="text" name="phonenumber" placeholder="Phone Number"/><br>
+			<input type="submit"/>
+		</form>
+		<h2> Create New Course: </h2>
+		<form method="post" action="/createcourse">	
+			<input type="text" name="name" placeholder="Course Name"/><br>
+			<input type="text" name="number" placeholder="Course Number"/><br>
+			<input type="text" name="startdate" placeholder="Password"/><br>
+			<input type="text" name="enddate" placeholder="First Name"/><br>
+			<input type="submit"/>
+		</form>	
+	<body>
+</html>

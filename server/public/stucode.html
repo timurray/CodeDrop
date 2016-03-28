@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html>
    <head>
       <meta charset="utf-8">
@@ -56,20 +56,19 @@
                   <br>
                   <input class="button" name="run" value="Run" type="button" onclick="">
                   <br>
-                  <input class="button" name="save" value="Save" type="button" onclick="">
                
                </div>
             </div>
 			</td>
-			<td>
+			</tr>
+			</table>
+			</div>
+			</form>
+			<form id="savecodeform" method="post" action="/savecode">
             <div id="codeeditor">
-               <textarea id="codeeditarea" form="stucodeform" name="codeeditarea" rows="100"></textarea>
+               <textarea id="codeeditarea" form="savecodeform" name="codeeditarea" rows="100">null</textarea>
             </div>
-			</td>
-		</tr>
-		</table>
-         </div>
-
+	<input type="submit"/>
       </form>
       <div id="consolediv">
             

@@ -66,6 +66,18 @@ router.post('/registered', function(req, res) {
   	
 });
 
+router.get('/creation', function(req, res) {
+        res.sendFile('public/creation.html', {root: __dirname });
+});
+
+router.post('/createuser', function(req, res) {
+	
+});
+
+router.post('/createcourse', function(req, res) {
+	
+});
+
 router.get('/contact', function(req, res) {
 	res.sendFile('public/contact.html', {root: __dirname });
 });
