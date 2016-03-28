@@ -44,22 +44,22 @@ r.post('/',mkdir,up.any(),function(req,res){
    
    javac.stdout.on('data', function(data){
       console.log('stdout: data'+ data);
-      stoutput ='stdout: data'+data; 
+      stoutput +=data; 
    });
    javac.stderr.on('data',function(data){
       console.log('stderr: data '+data);
-      sterr = 'stderr: data'+data;
+      sterr =+data;
    });
    javac.on('close',function(code){
       console.log('Exited on code '+code);
       var java = spawn('java',['-cp',storeat,filename]);
       java.stdout.on('data',function(data){
          console.log('output\n'+data);
-         joutput ='Output:'+data;
+         joutput +=data;
       });
       java.stderr.on('data',function(data){
          console.log('error'+data);
-         jerr = 'Errors:'+data;
+         jerr +=data;
        });
       java.on('close',function(code){
          jsonout = 
@@ -89,22 +89,22 @@ compiler:function()
    
    javac.stdout.on('data', function(data){
       console.log('stdout: data'+ data);
-      stoutput ='stdout: data'+data; 
+      stoutput =+ data; 
    });
    javac.stderr.on('data',function(data){
       console.log('stderr: data '+data);
-      sterr = 'stderr: data'+data;
+      sterr =+ data;
    });
    javac.on('close',function(code){
       console.log('Exited on code '+code);
       var java = spawn('java',['-cp',storeat,filename]);
       java.stdout.on('data',function(data){
          console.log('output\n'+data);
-         joutput ='Output:'+data;
+         joutput =+ data;
       });
       java.stderr.on('data',function(data){
          console.log('error'+data);
-         jerr = 'Errors:'+data;
+         jerr =+ data;
        });
       java.on('close',function(code){
          jsonout = 
