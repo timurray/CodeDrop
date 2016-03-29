@@ -91,6 +91,9 @@ router.get('/creation', function(req, res) {
 		
 		db.serialize(function() {
         	db.each("SELECT * FROM courses", function(err, row) {
+        		if (err) {
+        			res.write(err);	
+        		}
             	res.write('<li>' + row.name + '</li><br>\n');
         	}, function () {
         		res.write('</ul>\n<h2> Create New Course: </h2>\n');
