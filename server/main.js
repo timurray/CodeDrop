@@ -73,6 +73,9 @@ router.get('/creation', function(req, res) {
 
 		db.serialize(function() {
         	db.each("SELECT * FROM users", function(err, row) {
+        		if (err) {
+        			res.write(err);	
+        		}
             	res.write('<li>' + row.first_name + '</li><br>\n');
         	}, function() {
         		res.write('</ul>\n<h2> Create New User: </h2>\n');
