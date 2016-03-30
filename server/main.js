@@ -24,10 +24,10 @@ router.post('/userpage', function(req, res) {
 			db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
 				// if nothing was selected, rows will be empty array;			
 				if(err || rows == undefined || rows === []){
-					res.send("User not registered");	
+					res.write("User not registered");	
 				}
 				else{
-					res.send(rows[0].user_id + rows[0].first_name + rows[0].email + '\n');
+					res.write(rows[0].user_id + rows[0].first_name + rows[0].email + '\n');
 				}
 			});
 		}
@@ -43,7 +43,7 @@ router.post('/savecode', function(req, res) {
 		console.log ("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
 		db.run("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
 	});
-	res.send("Success <br>" + content);
+	res.write("Success <br>" + content);
 });
 
 router.get('/register', function(req, res) {
@@ -62,7 +62,7 @@ router.post('/registered', function(req, res) {
  		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
   	});
   	
-  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
+  	res.write("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
   	
 });
 
@@ -119,7 +119,7 @@ router.post('/createuser', function(req, res) {
  		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
   	});
   	
-  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+  	res.write("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.post('/createcourse', function(req, res) {
@@ -131,7 +131,7 @@ router.post('/createcourse', function(req, res) {
  		db.run("INSERT INTO courses (name, startdate, enddate) VALUES ('" + name + "','" + startdate + "','" + enddate + "')");		
   	});
   	
-  	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+  	res.write("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.get('/contact', function(req, res) {
@@ -161,7 +161,7 @@ router.get('/soln', function(req, res) {
 		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
 			rest += row.contents;
 		});
-		res.send(contents + rest);
+		res.write(contents + rest);
 	});
 	rest = "";
 	contents ="";
@@ -180,7 +180,6 @@ function getRegister(user_id) {
 	return "SELECT R.* FROM register R WHERE R.user_id = " + user_id;
 }
 
-var resBody = "";
 var userId = 0;
 var workId = 0;
 var courses = [];
@@ -188,14 +187,13 @@ var assigns = [];
 var register = [];
 
 router.get('/submissions', function(req, res) {
-	resBody.concat("<ul>");
+	res.write("<ul>");
 	db.serialize( function() {
 		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
-			resBody = resBody.concat("<li><a href='soln'>"+row.first_name + " " + row.last_name +"</a></li>");
+			res.write("<li><a href='soln'>"+row.first_name + " " + row.last_name +"</a></li>");
 		});
 	});
-	res.send(resBody);
-	resBody ="";
+	res.write("</ul>");
 });
 
 router.get('/courses', function(req, res) {
@@ -218,29 +216,26 @@ router.get('/courses', function(req, res) {
 		if(register[r].user_id == userId) {
 			for(var i in courses) {
 				if(register[r].course_id== courses[i].course_id) {
-					resBody = resBody.concat("<br>"+courses[i].name+"<ul>");
+					res.write("<br>"+courses[i].name+"<ul>");
 		
 					for(var j in assigns) {
 						if(courses[i].course_id == assigns[j].course_id) {
 				
-							resBody = resBody.concat("<li>"+assigns[j].title);
+							res.write("<li>"+assigns[j].title);
 							if(register[r].role == 1) {
-								resBody = resBody.concat("&nbsp;&nbsp;<a href='edit?id="+assigns[j].work_id+"'>[Edit]</a>&nbsp;&nbsp;<a href='submissions?id="+courses[i].course_id+"'>Student Submissions</a>");
+								res.write("&nbsp;&nbsp;<a href='edit?id="+assigns[j].work_id+"'>[Edit]</a>&nbsp;&nbsp;<a href='submissions?id="+courses[i].course_id+"'>Student Submissions</a>");
 							}
 							else if(register[r].role == 0) {
-								resBody = resBody.concat("&nbsp;&nbsp;<a href='soln?id="+assigns[j].work_id+"'>View Your Solution</a>");
+								res.write("&nbsp;&nbsp;<a href='soln?id="+assigns[j].work_id+"'>View Your Solution</a>");
 							}
-							resBody = resBody.concat("</li>");
+							res.write("</li>");
 						}
 					}
-					resBody = resBody.concat("</ul>");
+					res.write("</ul>");
 				}
 			}
 		}
 	}
-	res.send(resBody);
-	
-   resBody = "";
    courses = [];
    assigns = [];
 	register = [];
