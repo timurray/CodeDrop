@@ -6,6 +6,10 @@ const fs = require('fs');
 
 var db = new sqlite.Database("codedrop.db");
 
+
+var userId = -1;
+
+
 router.get('/', function(req, res) {
 	res.sendFile('public/index.html', {root: __dirname });
 });
@@ -19,15 +23,17 @@ router.get('/login', function(req, res) {
 router.post('/userpage', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
+	
 	db.serialize(function() {
 		try {
 			db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
 				// if nothing was selected, rows will be empty array;			
 				if(err || rows == undefined || rows === []){
-					res.write("User not registered");	
+					res.send("User not registered");	
 				}
 				else{
-					res.write(rows[0].user_id + rows[0].first_name + rows[0].email + '\n');
+					userId = rows[0].user_id;
+					console.log('user Id is: ' + userId);
 				}
 			});
 		}
@@ -119,7 +125,7 @@ router.post('/createuser', function(req, res) {
  		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
   	});
   	
-  	res.write("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.post('/createcourse', function(req, res) {
@@ -131,7 +137,7 @@ router.post('/createcourse', function(req, res) {
  		db.run("INSERT INTO courses (name, startdate, enddate) VALUES ('" + name + "','" + startdate + "','" + enddate + "')");		
   	});
   	
-  	res.write("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+  	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.get('/contact', function(req, res) {
@@ -180,7 +186,6 @@ function getRegister(user_id) {
 	return "SELECT R.* FROM register R WHERE R.user_id = " + user_id;
 }
 
-var userId = 0;
 var workId = 0;
 var courses = [];
 var assigns = [];
@@ -238,7 +243,7 @@ router.get('/courses', function(req, res) {
 	}
    courses = [];
    assigns = [];
-	register = [];
+   register = [];
   // db.close();
 });
 
