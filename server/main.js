@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var crypto = require('crypto');
 var sqlite = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 const fs = require('fs');
@@ -9,6 +10,9 @@ var db = new sqlite.Database("codedrop.db");
 
 var userId = -1;
 
+function session_sql(user_id, session_id) {
+	return "INSERT INTO sessions (session_id, user_id) VALUES ('" + session_id + "'," + user_id + ")";
+}
 
 router.get('/', function(req, res) {
 	res.sendFile('public/index.html', {root: __dirname });
@@ -33,6 +37,11 @@ router.post('/userpage', function(req, res) {
 				}
 				else{
 					userId = rows[0].user_id;
+					var sessionId = crypto.randomBytes(10).toString('hex');
+
+					// puts the users session token in the database
+					db.run(session_sql(userId,sessionId));
+					
 					console.log('user Id is: ' + userId);
 				}
 			});
