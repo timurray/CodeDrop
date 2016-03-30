@@ -68,7 +68,7 @@ router.post('/registered', function(req, res) {
  		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
   	});
   	
-  	res.write("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
+  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum);
   	
 });
 
@@ -109,6 +109,7 @@ router.get('/creation', function(req, res) {
 				res.write('<input type="text" name="enddate" placeholder="End Date"/><br>\n');
 				res.write('<input type="submit"/>\n');
 				res.write('</form>\n');
+				res.end();
 			});
 		});	
 });
