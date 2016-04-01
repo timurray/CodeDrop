@@ -28,15 +28,15 @@ router.post('/userpage', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
 	var sessionId = '';
-
+	var found_user = false;
 
 	db.serialize(function() {
 			db.each("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, row) {
-				// if nothing was selected, rows will be empty array;			
 				if(err || row == undefined || row === []){
 					
 				}
 				else{
+					found_user = true;
 					userId = row.user_id;
 					sessionId = crypto.randomBytes(10).toString('hex');
 					db.run(session_sql(userId,sessionId));
@@ -46,9 +46,15 @@ router.post('/userpage', function(req, res) {
 					return;
 				}
 			}, function() {
-				console.log("sessionID: " + sessionId);
-				req.method = 'get';
-				res.redirect('/courses?sessionId='+sessionId);
+				if(found_user) {
+				
+					console.log("sessionID: " + sessionId);
+					req.method = 'get';
+					res.redirect('/courses?sessionId='+sessionId);
+				}
+				else {
+					console.log("Invalid credentials");
+				}
 			});
 	});
 });
@@ -176,6 +182,10 @@ router.get('/soln', function(req, res) {
 			rest = rest + data;
 		});
 		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
+			if(err) { 
+				console.log(err);
+			}
+			
 			rest += row.contents;
 		});
 		res.write(contents + rest);
@@ -189,8 +199,8 @@ function getAssignments(user_id) {
 	return "SELECT W.* FROM work W, register R WHERE W.course_id = R.course_id AND R.user_id = " + user_id;
 }
 
-function getCourses(session_id) {
-	return "SELECT C.*, W.* FROM courses C, register R, sessions S, work W WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id AND R.course_id = C.course_id AND W.course_id = C.course_id";
+function getCourses(session_id, role) {
+	return "SELECT C.*, W.* FROM courses C, register R, sessions S, work W WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id AND R.course_id = C.course_id AND R.role = " + role + " AND W.course_id = C.course_id";
 }
 
 function getRegister(user_id) {
@@ -203,37 +213,61 @@ var assigns = [];
 var register = [];
 
 router.get('/submissions', function(req, res) {
-	res.write("<ul>");
+	res.write("<html><ul>");
 	db.serialize( function() {
 		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
 			res.write("<li><a href='soln'>"+row.first_name + " " + row.last_name +"</a></li>");
 		});
+	}, function() {
+		res.write("</ul></html>");
+		res.end();
 	});
-	res.write("</ul>");
 });
 
 router.get('/courses', function(req, res) {
-	var course = '';
+	var student_course = '';
+	var inst_course = '';
 	db.serialize( function() {
-		res.write("<html><body><ul><ul>");
-		db.each(getCourses(req.query.sessionId), function(err, row) {
+		res.write("<html><body> YOUR ASSIGNMENTS <br/> <ul>");
+		
+		// Put out rows for all courses you are a student in!
+		
+		db.each(getCourses(req.query.sessionId, 0), function(err, row) {
 			if(err) {
 				console.log(err);
 			}
-			if(row.course_id != course) {
+			if(row.course_id != student_course) {
 				res.write("</ul>");
-				course = row.course_id;
-				res.write("<li><a href='/course?id=" + row.course_id + "'>" + row.name + "</a></li>");
+				student_course = row.course_id;
+				res.write("<li>" + row.name + "</li>");
 				res.write("<ul>");
-				res.write("<li><a>" + row.title + "</a></li>");
+				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + ";id=" + row.course_id + "'>" + row.title + "</a></li>");
 			}
 			else {
-				res.write("<li><a>" + row.title + "</a></li>");
+				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + ";id=" + row.course_id + "'>" + row.title + "</a></li>");
 			}
 			
 		}, function() {
-			res.write("</ul></body></html>");
-			res.end();
+			res.write("</ul>");	
+			res.write("Courses You Teach <ul>");
+			db.each(getCourses(req.query.sessionId, 1), function(err, row) {
+				if(err) {
+					console.log(err);
+				}
+				if(row.course_id != inst_course) {
+					res.write("</ul>");
+					inst_course = row.course_id;
+					res.write("<li>" + row.name + "</li>");
+					res.write("<ul>");
+					res.write("<li>" + row.title + "<a href='asignedit'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
+				}
+				else {
+					res.write("<li>" + row.title + "<a href='asignedit'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
+				}
+			}, function() {
+				res.write("</ul>");
+				res.end();
+			});
 		});
 	});
 });
