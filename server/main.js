@@ -103,9 +103,7 @@ router.get('/creation', function(req, res) {
 				res.write('<input type="submit"/>\n</form>\n');
 				res.write('<h3> Current Courses Available: <h3>\n<select>\n');
 			});	
-		});
-		
-		db.serialize(function() {
+
         	db.each("SELECT * FROM courses", function(err, row) {
         		if (err) {
         			res.write(err);	
