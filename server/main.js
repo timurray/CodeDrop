@@ -85,23 +85,23 @@ router.post('/registered', function(req, res) {
 router.get('/creation', function(req, res) {
 		//keep this commented out line which does the html statically
         //res.sendFile('public/creation.html', {root: __dirname });
-		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<ul>\n');
+		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<select>\n');
 
 		db.serialize(function() {
         	db.each("SELECT * FROM users", function(err, row) {
         		if (err) {
         			res.write(err);	
         		}
-            	res.write('<li>' + row.first_name + '</li><br>\n');
+            	res.write('<option>' + row.first_name + '</option><br>\n');
         	}, function() {
-        		res.write('</ul>\n<h2> Create New User: </h2>\n');
+        		res.write('</select>\n<h2> Create New User: </h2>\n');
         		res.write('<form method="post" action="/createuser">\n<input type="text" name="email" placeholder="Email"/><br>\n');
 				res.write('<input type="text" name="password" placeholder="Password"/><br>\n');
 				res.write('<input type="text" name="firstname" placeholder="First Name"/><br>\n');
 				res.write('<input type="text" name="lastname" placeholder="Last Name"/><br>\n');
 				res.write('<input type="text" name="phonenumber" placeholder="Phone Number"/><br>\n');
 				res.write('<input type="submit"/>\n</form>\n');
-				res.write('<h3> Current Courses Available: <h3>\n<ul>\n');
+				res.write('<h3> Current Courses Available: <h3>\n<select>\n');
 			});	
 		});
 		
@@ -110,9 +110,9 @@ router.get('/creation', function(req, res) {
         		if (err) {
         			res.write(err);	
         		}
-            	res.write('<li>' + row.name + '</li><br>\n');
+            	res.write('<option>' + row.name + '</option><br>\n');
         	}, function () {
-        		res.write('</ul>\n<h2> Create New Course: </h2>\n');
+        		res.write('</select>\n<h2> Create New Course: </h2>\n');
         		res.write('<form method="post" action="/createcourse">\n');
 				res.write('<input type="text" name="name" placeholder="Course Name"/><br>\n');
 				res.write('<input type="text" name="startdate" placeholder="Start Date"/><br>\n');
