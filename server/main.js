@@ -27,28 +27,29 @@ router.get('/login', function(req, res) {
 router.post('/userpage', function(req, res) {
 	var username = req.body.username;
 	var password = req.body.password;
-	
+	var sessionId = '';
+
+
 	db.serialize(function() {
-		try {
-			db.all("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, rows) {
+			db.each("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, row) {
 				// if nothing was selected, rows will be empty array;			
-				if(err || rows == undefined || rows === []){
-					res.send("User not registered");	
+				if(err || row == undefined || row === []){
+					
 				}
 				else{
-					userId = rows[0].user_id;
-					var sessionId = crypto.randomBytes(10).toString('hex');
-
-					// puts the users session token in the database
+					userId = row.user_id;
+					sessionId = crypto.randomBytes(10).toString('hex');
 					db.run(session_sql(userId,sessionId));
 					
+					// puts the users session token in the database
 					console.log('user Id is: ' + userId);
+					return;
 				}
+			}, function() {
+				console.log("sessionID: " + sessionId);
+				req.method = 'get';
+				res.redirect('/courses?sessionId='+sessionId);
 			});
-		}
-		catch(er) {
-			console.log(er);
-		}
 	});
 });
 
@@ -188,8 +189,8 @@ function getAssignments(user_id) {
 	return "SELECT W.* FROM work W, register R WHERE W.course_id = R.course_id AND R.user_id = " + user_id;
 }
 
-function getCourses(user_id) {
-	return "SELECT C.* FROM courses C, register R WHERE C.course_id = R.course_id AND R.user_id = " + user_id;
+function getCourses(session_id) {
+	return "SELECT C.* FROM courses C, register R, sessions S WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id AND R.course_id = C.course_id";
 }
 
 function getRegister(user_id) {
@@ -212,49 +213,22 @@ router.get('/submissions', function(req, res) {
 });
 
 router.get('/courses', function(req, res) {
-    db.serialize(function() {
-        db.each(getCourses(userId), function(err, row) {
-            courses.push(row);
-        });
-
-		db.each(getAssignments(userId), function(err, row) {
-			assigns.push(row);
-		});
-	
-		db.each(getRegister(userId), function(err, row) {
-			register.push(row);
-		});
-	
-   });
-	
-	for(var r in register) {
-		if(register[r].user_id == userId) {
-			for(var i in courses) {
-				if(register[r].course_id== courses[i].course_id) {
-					res.write("<br>"+courses[i].name+"<ul>");
-		
-					for(var j in assigns) {
-						if(courses[i].course_id == assigns[j].course_id) {
-				
-							res.write("<li>"+assigns[j].title);
-							if(register[r].role == 1) {
-								res.write("&nbsp;&nbsp;<a href='edit?id="+assigns[j].work_id+"'>[Edit]</a>&nbsp;&nbsp;<a href='submissions?id="+courses[i].course_id+"'>Student Submissions</a>");
-							}
-							else if(register[r].role == 0) {
-								res.write("&nbsp;&nbsp;<a href='soln?id="+assigns[j].work_id+"'>View Your Solution</a>");
-							}
-							res.write("</li>");
-						}
-					}
-					res.write("</ul>");
-				}
+	db.serialize( function() {
+		res.write("<html><body><ul>");
+		console.log('<ul>');
+		db.each(getCourses(req.query.sessionId), function(err, row) {
+			if(err) {
+				console.log(err);
 			}
-		}
-	}
-   courses = [];
-   assigns = [];
-   register = [];
-  // db.close();
+				console.log('<li>');
+				res.write("<li>" + JSON.stringify(row) + "</li>");
+			
+		}, function() {
+			console.log("</ul>");
+			res.write("</ul></body></html>");
+			res.end();
+		});
+	});
 });
 
 module.exports = router;
