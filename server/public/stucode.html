@@ -48,7 +48,12 @@
 				  </textarea>
                </div>
                <div id="commandbuttons">
-                  <span>Upload File </span><input type="file" id="file" name="file" onchange="uploadfileevent(event,'fileup')">
+                  <span>Upload File </span><input type="file" id="file" name="file"  multiple>
+                  <br>
+                  <select id="compiletype" name="compiletype">
+                     <option value="java">Java</option>
+                     <option value="c++">C++</option>
+                  </select>
                   <br>
                   <input type="submit" value="compile and run">
                   <br>

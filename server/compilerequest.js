@@ -1,5 +1,6 @@
 //This will make a temp directory upload the java code compile it it run it the erase it
 var express = require("express");
+var bodyParser = require('body-parser');
 var r = express.Router();
 var fs= require("fs");
 var multer = require("multer");
@@ -21,14 +22,14 @@ var mkdir = function(req,res,next)
    });
 };
 
-//Storage
+//Storage makes a temp working directory
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, storeat)
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
-    filename = file.originalname.split('.java')[0];
+    filename = file.originalname.split('.')[0];
   }
 });
 var up = multer({ storage: storage });
@@ -39,40 +40,84 @@ r.post('/',mkdir,up.any(),function(req,res){
    var sterr="";
    var joutput="";
    var jerr="";
-   var javac = spawn('javac',[storeat+'/'+filename+'.java']);
+   var compiletype= req.body.compiletype;
+   console.log("Compile using "+compiletype+" compiler");
+   if(compiletype === "java")
+   {
+      var javac = spawn('javac',[storeat+'/'+filename+'.java']);
    
    
-   javac.stdout.on('data', function(data){
-      console.log('stdout: data'+ data);
-      stoutput +=data; 
-   });
-   javac.stderr.on('data',function(data){
-      console.log('stderr: data '+data);
-      sterr =+data;
-   });
-   javac.on('close',function(code){
-      console.log('Exited on code '+code);
-      var java = spawn('java',['-cp',storeat,filename]);
-      java.stdout.on('data',function(data){
-         console.log('output\n'+data);
-         joutput +=data;
+      javac.stdout.on('data', function(data){
+         console.log('stdout: data'+ data);
+         stoutput +=data; 
       });
-      java.stderr.on('data',function(data){
-         console.log('error'+data);
-         jerr +=data;
-       });
-      java.on('close',function(code){
-         jsonout = 
-         {
-            comout:stoutput,
-            comerr:sterr,
-            runout:joutput,
-            runerr:jerr
-         }
-         res.send(JSON.stringify(jsonout));
+      javac.stderr.on('data',function(data){
+         console.log('stderr: data '+data);
+         sterr =+data;
+      });
+      javac.on('close',function(code){
+         console.log('Exited on code '+code);
+         var java = spawn('java',['-cp',storeat,filename]);
+         java.stdout.on('data',function(data){
+            console.log('output\n'+data);
+            joutput +=data;
+         });
+         java.stderr.on('data',function(data){
+            console.log('error'+data);
+            jerr +=data;
+         });
+         java.on('close',function(code){
+            jsonout = 
+            {
+               comout:stoutput,
+               comerr:sterr,
+               runout:joutput,
+               runerr:jerr
+            }
+            console.log(jsonout);
+         //res.send(JSON.stringify(jsonout));
       //spawn('rm',['-rf','public/temp']);
          });
-   });  
+      });
+   }
+   if(compiletype==="c++")
+   {
+      var cCompiler = spawn('gcc',[storeat+'/'+filename+'.cpp']);
+      console.log("Got here 86");
+   
+      cCompiler.stdout.on('data', function(data){
+         console.log('stdout: data'+ data);
+         stoutput +=data; 
+      });
+      cCompiler.stderr.on('data',function(data){
+         console.log('stderr: data '+data);
+         sterr =+data;
+      });
+      cCompiler.on('close',function(code){
+         console.log('Exited on code '+code);
+         var runner = spawn(storeat+"a.out");
+         runner.stdout.on('data',function(data){
+            console.log('output\n'+data);
+            joutput +=data;
+         });
+         runner.stderr.on('data',function(data){
+            console.log('error'+data);
+            jerr +=data;
+         });
+         runner.on('close',function(code){
+            jsonout = 
+            {
+               comout:stoutput,
+               comerr:sterr,
+               runout:joutput,
+               runerr:jerr
+            }
+            console.log(jsonout);
+         //res.send(JSON.stringify(jsonout));
+      //spawn('rm',['-rf','public/temp']);
+         });
+      });
+   } 
 });
 
 module.exports= 
