@@ -190,7 +190,7 @@ function getAssignments(user_id) {
 }
 
 function getCourses(session_id) {
-	return "SELECT C.* FROM courses C, register R, sessions S WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id AND R.course_id = C.course_id";
+	return "SELECT C.*, W.* FROM courses C, register R, sessions S, work W WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id AND R.course_id = C.course_id AND W.course_id = C.course_id";
 }
 
 function getRegister(user_id) {
@@ -213,18 +213,25 @@ router.get('/submissions', function(req, res) {
 });
 
 router.get('/courses', function(req, res) {
+	var course = '';
 	db.serialize( function() {
-		res.write("<html><body><ul>");
-		console.log('<ul>');
+		res.write("<html><body><ul><ul>");
 		db.each(getCourses(req.query.sessionId), function(err, row) {
 			if(err) {
 				console.log(err);
 			}
-				console.log('<li>');
-				res.write("<li>" + JSON.stringify(row) + "</li>");
+			if(row.course_id != course) {
+				res.write("</ul>");
+				course = row.course_id;
+				res.write("<li><a href='/course?id=" + row.course_id + "'>" + row.name + "</a></li>");
+				res.write("<ul>");
+				res.write("<li><a>" + row.title + "</a></li>");
+			}
+			else {
+				res.write("<li><a>" + row.title + "</a></li>");
+			}
 			
 		}, function() {
-			console.log("</ul>");
 			res.write("</ul></body></html>");
 			res.end();
 		});
