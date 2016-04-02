@@ -59,13 +59,16 @@ router.post('/userpage', function(req, res) {
 	});
 });
 
+function saveCodeContentsSql(work_id, session_id, content) {
+	return "INSERT OR REPLACE INTO solution (work_id, user_id, contents) VALUES ("+work_id+", (SELECT user_id FROM sessions WHERE session_id = '" + session_id +"'), '" + content + "')";
+}
+
 router.post('/savecode', function(req, res) {
-	var content = req.body.codeeditarea;
 	db.serialize(function() {
-	console.log("UPDATE solution SET contents = '" + content + "' WHERE user_id = (SELECT N.user_id FROM sessions N WHERE N.session_id = '" + req.query.sessionId + "' AND work_id = " + req.query.id);
-		db.run("UPDATE solution SET contents = '" + content + "' WHERE user_id = (SELECT N.user_id FROM sessions N WHERE N.session_id = '" + req.query.sessionId + "') AND work_id = " + req.query.id);
+		console.log(saveCodeContentsSql(req.query.id, req.query.sessionId, req.body.codeeditarea));
+		db.run(saveCodeContentsSql(req.query.id, req.query.sessionId, req.body.codeeditarea), res.redirect('/courses?sessionId='+req.query.sessionId));
+		
 	});
-	res.write("Success <br>" + content);
 });
 
 router.get('/register', function(req, res) {
