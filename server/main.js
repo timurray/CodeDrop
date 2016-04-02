@@ -91,40 +91,39 @@ router.post('/registered', function(req, res) {
 router.get('/creation', function(req, res) {
 		//keep this commented out line which does the html statically
         //res.sendFile('public/creation.html', {root: __dirname });
-		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<ul>\n');
+		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<select name="users">\n');
 
 		db.serialize(function() {
         	db.each("SELECT * FROM users", function(err, row) {
         		if (err) {
         			res.write(err);	
         		}
-            	res.write('<li>' + row.first_name + '</li><br>\n');
+            	res.write('<option>' + row.email + '</option><br>\n');
         	}, function() {
-        		res.write('</ul>\n<h2> Create New User: </h2>\n');
+        		res.write('</select>\n<h2> Create New User: </h2>\n');
         		res.write('<form method="post" action="/createuser">\n<input type="text" name="email" placeholder="Email"/><br>\n');
 				res.write('<input type="text" name="password" placeholder="Password"/><br>\n');
 				res.write('<input type="text" name="firstname" placeholder="First Name"/><br>\n');
 				res.write('<input type="text" name="lastname" placeholder="Last Name"/><br>\n');
 				res.write('<input type="text" name="phonenumber" placeholder="Phone Number"/><br>\n');
 				res.write('<input type="submit"/>\n</form>\n');
-				res.write('<h3> Current Courses Available: <h3>\n<ul>\n');
+				res.write('<h3> Current Courses Available: <h3>\n<select name="courses">\n');
 			});	
-		});
-		
-		db.serialize(function() {
+
         	db.each("SELECT * FROM courses", function(err, row) {
         		if (err) {
         			res.write(err);	
         		}
-            	res.write('<li>' + row.name + '</li><br>\n');
+            	res.write('<option>' + row.name + '</option><br>\n');
         	}, function () {
-        		res.write('</ul>\n<h2> Create New Course: </h2>\n');
+        		res.write('</select>\n<button onclick="goToEdit()">Edit Course</button>\n<h2> Create New Course: </h2>\n');
         		res.write('<form method="post" action="/createcourse">\n');
 				res.write('<input type="text" name="name" placeholder="Course Name"/><br>\n');
 				res.write('<input type="text" name="startdate" placeholder="Start Date"/><br>\n');
 				res.write('<input type="text" name="enddate" placeholder="End Date"/><br>\n');
 				res.write('<input type="submit"/>\n');
 				res.write('</form>\n');
+				res.write('<script src="/public/scriptsForStuff.js"></script>');
 				res.end();
 			});
 		});	
@@ -155,6 +154,32 @@ router.post('/createcourse', function(req, res) {
   	});
   	
   	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+});
+
+router.get('/courseEdit/:courseName', function(req, res) {
+	var course = req.params.courseName;
+	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h2> Currently Registered Users in this Course:</h2>\n<ul>\n');
+	db.serialize(function () {
+		db.each("SELECT * FROM users U, courses C, register R WHERE C.name = " + course + "AND R.course_id = C.course_id AND R.user_id = U.user_id", 
+		function (err, row) {
+			if(err) {
+				res.write(err);
+			}
+			res.write('<li>' + row.email + '</li>');
+		});
+		
+		res.write('</ul>\n<h2>All users:</h2>\n<select>\n');
+		db.each("SELECT * FROM users", function(err, row) {
+        		if (err) {
+        			res.write(err);	
+        		}
+        		//need to make this so it only selects non register users^
+            	res.write('<option>' + row.email + '</option><br>\n');
+        }, function() {
+        	res.write('</select>\n</body>\n</html>\n');
+        	res.end();
+        });		
+	});
 });
 
 router.get('/contact', function(req, res) {
