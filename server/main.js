@@ -62,8 +62,8 @@ router.post('/userpage', function(req, res) {
 router.post('/savecode', function(req, res) {
 	var content = req.body.codeeditarea;
 	db.serialize(function() {
-		console.log ("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
-		db.run("UPDATE work SET contents = '" + content + "' WHERE work_id = " + req.query.id);
+	console.log("UPDATE solution SET contents = '" + content + "' WHERE user_id = (SELECT N.user_id FROM sessions N WHERE N.session_id = '" + req.query.sessionId + "' AND work_id = " + req.query.id);
+		db.run("UPDATE solution SET contents = '" + content + "' WHERE user_id = (SELECT N.user_id FROM sessions N WHERE N.session_id = '" + req.query.sessionId + "') AND work_id = " + req.query.id);
 	});
 	res.write("Success <br>" + content);
 });
@@ -190,33 +190,43 @@ router.get('/edit', function(req, res) {
 	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
-var contents = "";
-var rest = "";
 router.get('/soln', function(req, res) {
 	db.serialize(function() {
-		fs.readFile('public/firsthalf-stucode.html', 'utf8', function(err, data) {
-			if(err) {
-				console.log(err);
-			}
-			contents = contents + data;
-		});
-		fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
-			if(err){ 
-				console.log(err);
-			}
-			rest = rest + data;
-		});
-		db.each("SELECT W.contents FROM work W WHERE W.work_id = " + req.query.id, function(err, row) {
+		var contents = '';
+		db.each("SELECT S.contents FROM solution S, sessions N WHERE N.session_id = '" + req.query.sessionId + "' AND S.user_id = N.user_id AND S.work_id = " + req.query.id, function(err, row) {
 			if(err) { 
 				console.log(err);
 			}
-			
-			rest += row.contents;
+			if(JSON.stringify(row.contents) != 'null') {
+				contents = row.contents;
+			}
+		}, function() {
+			fs.readFile('public/firsthalf-stucode.html', 'utf8', function(err, data) {
+				if(err) {
+					console.log(err);
+				}
+				res.write(data);
+				
+			/*
+			<form id="savecodeform" method="post" action="/savecode">
+            <div id="codeeditor">
+               <textarea id="codeeditarea" form="savecodeform" name="codeeditarea" rows="100">
+			*/
+				res.write("<form id='savecodeform' method='post' action='/savecode?sessionId="+req.query.sessionId +"&id=" + req.query.id + "'>");
+				res.write("<div id='codeeditor'>");
+				res.write("<textarea id='codeeditarea' form='savecodeform' name='codeeditarea' rows='100'>");
+				
+				res.write(contents);
+				fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
+					if(err) {
+						console.log(err);
+					}
+					res.write(data);
+					res.end();
+				});
+			});
 		});
-		res.write(contents + rest);
 	});
-	rest = "";
-	contents ="";
 });
 
 
@@ -266,10 +276,10 @@ router.get('/courses', function(req, res) {
 				student_course = row.course_id;
 				res.write("<li>" + row.name + "</li>");
 				res.write("<ul>");
-				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + ";id=" + row.course_id + "'>" + row.title + "</a></li>");
+				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + "&id=" + row.work_id + "'>" + row.title + "</a></li>");
 			}
 			else {
-				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + ";id=" + row.course_id + "'>" + row.title + "</a></li>");
+				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + "&id=" + row.work_id + "'>" + row.title + "</a></li>");
 			}
 			
 		}, function() {
