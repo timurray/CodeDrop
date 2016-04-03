@@ -163,16 +163,18 @@ router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
 	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h2> Currently Registered Users in this Course:</h2>\n<ul>\n');
 	db.serialize(function () {
-		db.each("SELECT * FROM users U, courses C, register R WHERE C.name = " + course + "AND R.course_id = C.course_id AND R.user_id = U.user_id", 
+		db.each('SELECT * FROM users U, courses C, register R WHERE C.name = "' + course + '" AND R.course_id = C.course_id AND R.user_id = U.user_id', 
 		function (err, row) {
 			if(err) {
 				res.write(err);
 			}
-			res.write('<li>' + row.email + '</li>');
+			console.log(row.email);
+			res.write('<li>' + row.email + '</li><br>');
+		}, function(){
+			res.write('</ul>\n<h2>All users:</h2>\n<select>\n');
 		});
 		
-		res.write('</ul>\n<h2>All users:</h2>\n<select>\n');
-		db.each("SELECT * FROM users", function(err, row) {
+		db.each('SELECT * FROM users U, courses C, register R WHERE C.name = "' + course + '" AND R.course_id = C.course_id AND R.user_id != U.user_id', function(err, row) {
         		if (err) {
         			res.write(err);	
         		}
