@@ -171,19 +171,43 @@ router.get('/courseEdit/:courseName', function(req, res) {
 			console.log(row.email);
 			res.write('<li>' + row.email + '</li><br>');
 		}, function(){
-			res.write('</ul>\n<h2>All users:</h2>\n<select>\n');
+			res.write('</ul>\n<h2>Users not registered for this course:</h2>\n');
+			res.write('<form method="get" action="/addUser">\n<select name="users">\n');
 		});
 		
-		db.each('SELECT * FROM users U, courses C, register R WHERE C.name = "' + course + '" AND R.course_id = C.course_id AND R.user_id != U.user_id', function(err, row) {
+		db.each('SELECT U.email FROM users U WHERE NOT U.user_id IN (SELECT R.user_id FROM register R, courses C WHERE R.course_id = C.course_id AND C.name = "' + course + '")', function(err, row) {
         		if (err) {
-        			res.write(err);	
+        			res.write(err);
         		}
         		//need to make this so it only selects non register users^
+        		console.log(row);
             	res.write('<option>' + row.email + '</option><br>\n');
         }, function() {
-        	res.write('</select>\n</body>\n</html>\n');
+        	res.write('</select>\n<input type="submit"/>\n</form>\n</body>\n</html>\n');
+        	//res.write('<button onclick="addUser()">Add User To ' + course + '</button>');
+        	//res.write('<script src="/public/scriptsForStuff.js"></script>');
         	res.end();
         });		
+	});
+});
+
+// MUST BE A WAY TO UPDATE CURRENT PAGE
+router.get('/addUser', function(req, res) {
+	var email = req.body.users;
+	console.log('i got here' + email);
+	db.serialize(function() {
+		db.each('SELECT * from users U WHERE U.email = "' + email + '"', function(err, row) {
+			if(err) {
+				res.write(err);
+			}
+			//leaving out role till we get an option to pick when adding
+			console.log(req.params.courseName + " " + row.user_id);
+			db.run('INSERT INTO register (user_id, course_id) VALUES ' + row.user_id + ', (SELECT course_id FROM courses WHERE course_name = "' + req.params.courseName + '")');
+		});
+		
+		//??
+		//res.redirect('/courseEdit/:courseName');
+		res.send('sent with: ' + email);
 	});
 });
 
