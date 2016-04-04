@@ -369,8 +369,105 @@ router.get('/courses', function(req, res) {
 	});
 });
 
+function editAssignmentSql(session_id, work_id) {
+	return "SELECT DISTINCT W.* FROM work W, register R, sessions S WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id and R.role = " + 1 + " AND W.work_id = " + work_id;
+}
+
 router.get('/edit/:name/:work_id', function(req, res) {
-	res.sendFile('public/asignedit.html', {root: __dirname });
+	db.serialize(function() {
+		res.write('<html>');
+		res.write('<body>');
+		
+		db.each(editAssignmentSql(req.query.sessionId, req.params.work_id), function(err, row) {
+			if(err) {
+				console.log(err);
+			}
+			res.write('<form method="post" action="/saveassign/' + req.params.name + '/' + req.params.work_id + '">');
+			res.write('<div id="title">Title:</div>');
+			res.write('<input name="save_title" type="text" value="'+ not_null(row.title) + '"/>');
+			res.write('<div id="description">Description:</div>');
+			res.write('<input type="text" name="desc" value="'+row.contents+'"></input>');
+
+			res.write('<table id="test-table">');
+			res.write('<tr><td>Input:</td><td>  <input name="save_input" type="text" value="' + not_null(row.input) + '"/></td></tr>');
+			res.write('<tr><td>Output:</td><td> <input name="save_output" type="text" value="' + not_null(row.output) + '"/></td></tr>');
+			res.write('<tr><td>Code:</td><td>   <input name="save_code" type="text" value="' + not_null(row.code) + '"/></td></tr>');
+			res.write('<tr><td>Runs:</td><td>   <input name="save_runs" type="text" value="' + not_null(row.runs) + '"/></td></tr>');
+			res.write('</table>');
+			
+			res.write('<table id="dates-table">');
+			res.write('<tr><td>Start Date:</td><td><input name="startdate" type="text" value="' + not_null(row.start_date) + '"/></td></tr>');
+			res.write('<tr><td>End Date:</td><td><input name="duedate" type="text" value="' + not_null(row.due_date) + '"/></td></tr>');
+			res.write('</table>');
+			
+			
+			res.write('<input type="submit"/>');
+			res.write('</form>');
+		}, function() {
+			res.write('</body>');
+			res.write('</html>');
+			res.end();
+		});
+	});
 });
+
+function saveAssignmentSql(work_id, course_id, title, start_date, due_date, contents, input, output, code, runs) {
+	var sql = "INSERT OR REPLACE INTO work (work_id, course_id, title, start_date, due_date, contents, input, output, code, runs) VALUES (";
+	
+	sql = sql + work_id;
+	sql = appdel(sql, course_id);
+	sql = appdel(sql, quote(title));
+	sql = appdel(sql, quote(start_date));
+	sql = appdel(sql, quote(due_date));
+	sql = appdel(sql, quote(contents));
+	sql = appdel(sql, quote(input));
+	sql = appdel(sql, quote(output));
+	sql = appdel(sql, quote(code));
+    sql = appdel(sql, runs);
+	
+	sql += ")";
+	console.log(sql);
+	return sql;
+}
+
+router.post('/saveassign/:course_name/:work_id', function(req, res) {
+	db.each(saveAssignmentSql(
+		req.params.work_id,
+		"(SELECT course_id FROM courses WHERE name = " + quote(req.params.course_name) + ")",
+		req.body.save_title,
+		req.body.startdate,
+		req.body.duedate,
+		req.body.desc,
+		req.body.save_input,
+		req.body.save_output,
+		req.body.save_code,
+		req.body.save_runs
+	), function(err, row) {
+		if(err) {
+			console.log(err);
+		}
+	}
+	, res.redirect('back')
+	);
+});
+
+function appdel(sql, str) {
+	return sql.concat(", " + str);
+}
+
+function quote(str) {
+	return quote(str, true);
+}
+function quote(str, single) {
+	if (single) return "'" + str + "'";
+	else return '"' + str + '"';
+}
+
+function not_null(str) {
+	if (str == undefined || str == null || str == 'null') {
+		return '';
+	}
+	return str;
+}
 
 module.exports = router;
