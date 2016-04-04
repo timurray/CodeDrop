@@ -36,7 +36,7 @@
 		</div></div>
 	
     
-      <form id="stucodeform" enctype="multipart/form-data" role="form">
+      
 	  
 	      <div id="maincode">
 		  <table style="width:100%;"> <tr> 
@@ -56,12 +56,12 @@
                      <option value="c++">C++</option>
                   </select>
                   <br>
-                  <input type="submit" value="compile and run">
-                  <br>
+                  <form id="stucodeform" enctype="multipart/form-data" role="form">
+                     <input class="button" type="submit" value="compile and run">
+                  </form>
                   <input class="button" id="compile" name="compile" value="Compile" type="button" onclick="">
                   <br>
-                  <input class="button" name="run" value="Run" type="button" onclick="">
-                  <br>
+                  <button class="button" id="upload" name="upload" value="Upload">
                
                </div>
             </div>
@@ -69,7 +69,6 @@
 			</tr>
 			</table>
 			</div>
-			</form>
 			<form id="savecodeform" method="post" action="/savecode">
             <div id="codeeditor">
                <textarea id="codeeditarea" form="savecodeform" name="codeeditarea" rows="100">null</textarea>
@@ -77,7 +76,7 @@
 	<input type="submit"/>
       </form>
       <div id="consolediv">
-            <textarea name="console" id="console" style="width:50%" rows=50></textarea>
+            <textarea name="console" id="console" style="width:50%" rows=20></textarea>
       </div>
 
 
@@ -117,7 +116,7 @@
                      compiler:comtype.val()
                   };
                   console.log("Got here");
-                  $.post("/compile/com",jobj,function(data){
+                  $.post("/compile/",jobj,function(data){
                      console.log(data);
                      con.val(data);
                   });

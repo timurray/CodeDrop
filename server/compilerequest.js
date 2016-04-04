@@ -35,8 +35,8 @@ var storage = multer.diskStorage({
 });
 var up = multer({ storage: storage });
 
-//Compiles
-r.post('/com',mkdir,function(req,res){
+//Compiles and runs code
+r.post('/',mkdir,function(req,res){
    //res.send(req.body);
    var stoutput="";
    var sterr="";
@@ -53,6 +53,10 @@ r.post('/com',mkdir,function(req,res){
       }
       console.log("file made");
    });
+   if(compiletype === "c++")
+   {
+      res.send("Not implemented");
+   }
    if(compiletype === "java")
    {
       var javac = spawn('javac',[storeat+'/'+filename+'.java']);   
@@ -84,161 +88,33 @@ r.post('/com',mkdir,function(req,res){
                runerr:jerr
             }
             console.log(jsonout);
-         res.send(jsonout.runout);
+            
+         res.send("Compiler Error:\n"+jsonout.comerr+"\nCompiler Output:\n"+jsonout.comout+"\nRuntime error:\n"+jsonout.runerr+"\nRuntime Output:\n"+jsonout.runout);
       spawn('rm',['-rf','public/temp']);
          });
       });
    }
-   
-});
-r.post('/',mkdir,up.any(),function(req,res){
-   var stoutput="";
-   var sterr="";
-   var joutput="";
-   var jerr="";
-   var compiletype= req.body.compiletype;
-   console.log("Compile using "+compiletype+" compiler");
-   if(compiletype === "java")
+   if(compiletype === "python")
    {
-      var javac = spawn('javac',[storeat+'/'+filename+'.java']);
-   
-   
-      javac.stdout.on('data', function(data){
-         console.log('stdout: data'+ data);
-         stoutput +=data; 
-      });
-      javac.stderr.on('data',function(data){
-         console.log('stderr: data '+data);
-         sterr =+data;
-      });
-      javac.on('close',function(code){
-         console.log('Exited on code '+code);
-         var java = spawn('java',['-cp',storeat,filename]);
-         java.stdout.on('data',function(data){
-            console.log('output\n'+data);
-            joutput +=data;
-         });
-         java.stderr.on('data',function(data){
-            console.log('error'+data);
-            jerr +=data;
-         });
-         java.on('close',function(code){
-            jsonout = 
-            {
-               comout:stoutput,
-               comerr:sterr,
-               runout:joutput,
-               runerr:jerr
-            }
-            console.log(jsonout);
-         res.send(JSON.stringify(jsonout));
-      //spawn('rm',['-rf','public/temp']);
-         });
-      });
-   }
-   if(compiletype==="c++")
-   {
-      var cCompiler = exec('gcc',[storeat+'/'+filename+'.cpp']);
-      console.log("Got here 86");
-   
-      cCompiler.stdout.on('data', function(data){
-         console.log('stdout: data'+ data);
-         stoutput +=data; 
-      });
-      cCompiler.stderr.on('data',function(data){
-         console.log('stderr: data '+data);
-         sterr =+data;
-      });
-      cCompiler.on('close',function(code){
-         console.log('Exited on code '+code);
-         var runner = spawn(storeat+"a.out");
-         runner.stdout.on('data',function(data){
-            console.log('output\n'+data);
-            joutput +=data;
-         });
-         runner.stderr.on('data',function(data){
-            console.log('error'+data);
-            jerr +=data;
-         });
-         runner.on('close',function(code){
-            jsonout = 
-            {
-               comout:stoutput,
-               comerr:sterr,
-               runout:joutput,
-               runerr:jerr
-            }
-            console.log(jsonout);
-         //res.send(JSON.stringify(jsonout));
-      //spawn('rm',['-rf','public/temp']);
-         });
-      });
-   }
-   if(compiletype==='python')
-   {
-   
       var python = spawn('python',[storeat+'/'+filename+'.py']);
-         console.log("got here 128");
-         python.stderr.on('data',function(data){
-            console.log('data '+data);
-            jerr+=data;
-         });
-         python.stdout.on('data',function(data){
-         console.log("got here 134");
-            console.log('data '+data);
-            joutput+=data;
-         });
-     
-
-      
+      python.stderr.on('data',function(data){
+         console.log('data '+data);
+         jerr+=data;
+      });
+      python.stdout.on('data',function(data){
+         console.log('data '+data);
+         joutput+=data;
+      });
+      python.on('close',function(code){
+         res.send('Errors:\n'+jerr+"\nOutput:\n"+joutput);
+         spawn('rm',['-rf','public/temp']);
+      });
    }
-   //res.redirect('stucode.html')
-   //res.send(jsonout);
+   
 });
 
+//Exports the routes
 module.exports= 
 {
-route:r,
-compiler:function()
-{
-   var stoutput="";
-   var sterr="";
-   var joutput="";
-   var jerr="";
-   var javac = spawn('javac',[storeat+'/'+filename+'.java']);
-   
-   
-   javac.stdout.on('data', function(data){
-      console.log('stdout: data'+ data);
-      stoutput =+ data; 
-   });
-   javac.stderr.on('data',function(data){
-      console.log('stderr: data '+data);
-      sterr =+ data;
-   });
-   javac.on('close',function(code){
-      console.log('Exited on code '+code);
-      var java = spawn('java',['-cp',storeat,filename]);
-      java.stdout.on('data',function(data){
-         console.log('output\n'+data);
-         joutput =+ data;
-      });
-      java.stderr.on('data',function(data){
-         console.log('error'+data);
-         jerr =+ data;
-       });
-      java.on('close',function(code){
-         jsonout = 
-         {
-            comout:stoutput,
-            comerr:sterr,
-            runout:joutput,
-            runerr:jerr
-         }
-         //res.send(JSON.stringify(jsonout));
-      //spawn('rm',['-rf','public/temp']);
-         });
-   });
-   return jsonout;
-}
+   route:r,
 };
