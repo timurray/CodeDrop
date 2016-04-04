@@ -10,9 +10,6 @@ var db = new sqlite.Database("codedrop.db");
 
 var userId = -1;
 
-function session_sql(user_id, session_id) {
-	return "INSERT INTO sessions (session_id, user_id) VALUES ('" + session_id + "'," + user_id + ")";
-}
 
 router.get('/', function(req, res) {
 	res.sendFile('public/index.html', {root: __dirname });
@@ -23,6 +20,10 @@ router.get('/login', function(req, res) {
 	//console.log('Username: ' + req.body.username);
 	//console.log('password: ' + req.body.password);
 });
+
+function session_sql(user_id, session_id) {
+	return "INSERT INTO sessions (session_id, user_id) VALUES (" + quote(session_id) + "," + user_id + ")";
+}
 
 router.post('/userpage', function(req, res) {
 	var username = req.body.username;
@@ -297,7 +298,7 @@ function getAssignments(user_id) {
 }
 
 function getCourses(session_id, role) {
-	return "SELECT C.*, W.* FROM courses C, register R, sessions S, work W WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id AND R.course_id = C.course_id AND R.role = " + role + " AND W.course_id = C.course_id";
+	return "SELECT C.*, W.* FROM courses C, register R, sessions S, work W WHERE S.session_id = " + quote(session_id) + " AND R.user_id = S.user_id AND R.course_id = C.course_id AND R.role = " + role + " AND W.course_id = C.course_id";
 }
 
 function getRegister(user_id) {
@@ -310,13 +311,16 @@ var assigns = [];
 var register = [];
 
 router.get('/submissions', function(req, res) {
-	res.write("<html><ul>");
+	res.write(projectHeaderHTML("Assignment submissions", 0));
 	db.serialize( function() {
+	
 		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
 			res.write("<li><a href='viewsoln/" + row.user_id + "'>"+row.first_name + " " + row.last_name +"</a></li>");
 		});
+	
 	}, function() {
-		res.write("</ul></html>");
+		res.write("</ul>");
+		res.write(projectFooterHTML());
 		res.end();
 	});
 });
@@ -325,7 +329,8 @@ router.get('/courses', function(req, res) {
 	var student_course = '';
 	var inst_course = '';
 	db.serialize( function() {
-		res.write("<html><body> YOUR ASSIGNMENTS <br/> <ul>");
+		res.write(projectHeaderHTML("Your Assignments", 0));
+		res.write("YOUR ASSIGNMENTS <br/> <ul>");
 		
 		// Put out rows for all courses you are a student in!
 		
@@ -363,6 +368,7 @@ router.get('/courses', function(req, res) {
 				}
 			}, function() {
 				res.write("</ul>");
+				res.write(projectFooterHTML());
 				res.end();
 			});
 		});
@@ -370,13 +376,12 @@ router.get('/courses', function(req, res) {
 });
 
 function editAssignmentSql(session_id, work_id) {
-	return "SELECT DISTINCT W.* FROM work W, register R, sessions S WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id and R.role = " + 1 + " AND W.work_id = " + work_id;
+	return "SELECT DISTINCT W.*, T.* FROM work W, tests T, register R, sessions S WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id and R.role = " + 1 + " AND W.work_id = " + work_id + " AND T.work_id = W.work_id";
 }
 
 router.get('/edit/:name/:work_id', function(req, res) {
 	db.serialize(function() {
-		res.write('<html>');
-		res.write('<body>');
+		res.write(projectHeaderHTML("Edit Assignment", 0));
 		
 		db.each(editAssignmentSql(req.query.sessionId, req.params.work_id), function(err, row) {
 			if(err) {
@@ -389,8 +394,8 @@ router.get('/edit/:name/:work_id', function(req, res) {
 			res.write('<input type="text" name="desc" value="'+row.contents+'"></input>');
 
 			res.write('<table id="test-table">');
-			res.write('<tr><td>Input:</td><td>  <input name="save_input" type="text" value="' + not_null(row.input) + '"/></td></tr>');
-			res.write('<tr><td>Output:</td><td> <input name="save_output" type="text" value="' + not_null(row.output) + '"/></td></tr>');
+			res.write('<tr><td>Input:</td><td>  <input name="save_input" type="text" value="' + not_null(row.test_input) + '"/></td></tr>');
+			res.write('<tr><td>Output:</td><td> <input name="save_output" type="text" value="' + not_null(row.test_output) + '"/></td></tr>');
 			res.write('<tr><td>Code:</td><td>   <input name="save_code" type="text" value="' + not_null(row.code) + '"/></td></tr>');
 			res.write('<tr><td>Runs:</td><td>   <input name="save_runs" type="text" value="' + not_null(row.runs) + '"/></td></tr>');
 			res.write('</table>');
@@ -404,8 +409,7 @@ router.get('/edit/:name/:work_id', function(req, res) {
 			res.write('<input type="submit"/>');
 			res.write('</form>');
 		}, function() {
-			res.write('</body>');
-			res.write('</html>');
+			res.write(projectFooterHTML());
 			res.end();
 		});
 	});
@@ -423,7 +427,11 @@ function saveAssignmentSql(work_id, course_id, title, start_date, due_date, cont
 	sql = appdel(sql, quote(input));
 	sql = appdel(sql, quote(output));
 	sql = appdel(sql, quote(code));
-    sql = appdel(sql, runs);
+	
+    if( isNaN(parseFloat(runs)) ) {
+		runs = "''";
+	}
+	sql = appdel(sql, runs);
 	
 	sql += ")";
 	console.log(sql);
@@ -431,7 +439,7 @@ function saveAssignmentSql(work_id, course_id, title, start_date, due_date, cont
 }
 
 router.post('/saveassign/:course_name/:work_id', function(req, res) {
-	db.each(saveAssignmentSql(
+	db.run(saveAssignmentSql(
 		req.params.work_id,
 		"(SELECT course_id FROM courses WHERE name = " + quote(req.params.course_name) + ")",
 		req.body.save_title,
@@ -459,7 +467,7 @@ function quote(str) {
 	return quote(str, true);
 }
 function quote(str, single) {
-	if (single) return "'" + str + "'";
+	if (single==true) return "'" + str + "'";
 	else return '"' + str + '"';
 }
 
@@ -469,5 +477,34 @@ function not_null(str) {
 	}
 	return str;
 }
+
+function projectHeaderHTML(title, selected) {
+	var html = '';
+	html = html.concat('<html><head><link rel="icon" href="/favicon.ico"/>');
+	html = html.concat('<title>' + title + '</title>');
+	html = html.concat('<link type="text/css" rel="stylesheet" href="/default.css"/>');
+	html = html.concat('</head><body>');
+	html = html.concat('<div id="header"><div id="header-wrapper"><div id="header" class="container">');
+	html = html.concat('<div id="logo"><h1><img src="/favicon.ico" alt=""/><a href="/">CodeDrop</a></h1></div>');
+	html = html.concat('<div id="menu"><ul><li><a href="/">Home</a></li>');
+	html = html.concat('<li class="current_page_item"><a href="/courses">Courses</a></li>');
+	html = html.concat('<li><a href="/contact">Contact</a></li>');
+	html = html.concat('<li><a href="/login">Sign In</a></li>');
+	html = html.concat('</ul></div></div></div>');
+	
+	html = html.concat('<div id="banner"><div class="container">');
+	
+	return html;
+}
+
+function projectFooterHTML() {
+	var html = '';
+	html = html.concat('</div></div></div>');
+	html = html.concat('<div id="copyright" class="container">');
+	html = html.concat('<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p></div>');
+	html = html.concat('</body></html>');
+	return html;
+}
+
 
 module.exports = router;
