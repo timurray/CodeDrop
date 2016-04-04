@@ -6,6 +6,7 @@ var fs= require("fs");
 var multer = require("multer");
 var app = express();
 var spawn = require("child_process").spawn;
+var exec = require("child_process").exec;
 var filename;
 var jsonout;
 //Not implemented yet will be used to separate users
@@ -35,6 +36,61 @@ var storage = multer.diskStorage({
 var up = multer({ storage: storage });
 
 //Compiles
+r.post('/com',mkdir,function(req,res){
+   //res.send(req.body);
+   var stoutput="";
+   var sterr="";
+   var joutput="";
+   var jerr="";
+   //Gets filename without ext aka xXx.java->xXx
+   var filename=req.body.file.split('.')[0];
+   //String to denote compiler java c++ python 
+   var compiletype=req.body.compiler;
+   fs.writeFile(storeat+'/'+req.body.file,req.body.contents,function(err){
+      if(err)
+      {
+         return console.error(err);
+      }
+      console.log("file made");
+   });
+   if(compiletype === "java")
+   {
+      var javac = spawn('javac',[storeat+'/'+filename+'.java']);   
+      javac.stdout.on('data', function(data){
+         console.log('stdout: data'+ data);
+         stoutput +=data;
+      });
+      javac.stderr.on('data',function(data){
+         console.log('stderr: data '+data);
+         sterr =+data;
+      });
+      javac.on('close',function(code){
+         console.log('Exited on code '+code);
+         var java = spawn('java',['-cp',storeat,filename]);
+         java.stdout.on('data',function(data){
+            console.log('output\n'+data);
+            joutput +=data;
+         });
+         java.stderr.on('data',function(data){
+            console.log('error'+data);
+            jerr +=data;
+         });
+         java.on('close',function(code){
+            jsonout = 
+            {
+               comout:stoutput,
+               comerr:sterr,
+               runout:joutput,
+               runerr:jerr
+            }
+            console.log(jsonout);
+         res.send(jsonout.runout);
+      spawn('rm',['-rf','public/temp']);
+         });
+      });
+   }
+   
+});
 r.post('/',mkdir,up.any(),function(req,res){
    var stoutput="";
    var sterr="";
@@ -75,14 +131,14 @@ r.post('/',mkdir,up.any(),function(req,res){
                runerr:jerr
             }
             console.log(jsonout);
-         //res.send(JSON.stringify(jsonout));
+         res.send(JSON.stringify(jsonout));
       //spawn('rm',['-rf','public/temp']);
          });
       });
    }
    if(compiletype==="c++")
    {
-      var cCompiler = spawn('gcc',[storeat+'/'+filename+'.cpp']);
+      var cCompiler = exec('gcc',[storeat+'/'+filename+'.cpp']);
       console.log("Got here 86");
    
       cCompiler.stdout.on('data', function(data){
@@ -117,7 +173,27 @@ r.post('/',mkdir,up.any(),function(req,res){
       //spawn('rm',['-rf','public/temp']);
          });
       });
-   } 
+   }
+   if(compiletype==='python')
+   {
+   
+      var python = spawn('python',[storeat+'/'+filename+'.py']);
+         console.log("got here 128");
+         python.stderr.on('data',function(data){
+            console.log('data '+data);
+            jerr+=data;
+         });
+         python.stdout.on('data',function(data){
+         console.log("got here 134");
+            console.log('data '+data);
+            joutput+=data;
+         });
+     
+
+      
+   }
+   //res.redirect('stucode.html')
+   //res.send(jsonout);
 });
 
 module.exports= 

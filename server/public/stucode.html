@@ -10,7 +10,7 @@
 
 
       <script src="CodeMirror/lib/codemirror.js"></script>
-      <script src="js/fileupload.js"></script>
+
       <style>
       .CodeMirror 
       {
@@ -36,7 +36,7 @@
 		</div></div>
 	
     
-      <form id="stucodeform" method="post" enctype="multipart/form-data" action="/compile">
+      <form id="stucodeform" enctype="multipart/form-data" role="form">
 	  
 	      <div id="maincode">
 		  <table style="width:100%;"> <tr> 
@@ -52,12 +52,13 @@
                   <br>
                   <select id="compiletype" name="compiletype">
                      <option value="java">Java</option>
+                     <option value="python">Python</option>
                      <option value="c++">C++</option>
                   </select>
                   <br>
                   <input type="submit" value="compile and run">
                   <br>
-                  <input class="button" name="compile" value="Compile" type="button" onclick="">
+                  <input class="button" id="compile" name="compile" value="Compile" type="button" onclick="">
                   <br>
                   <input class="button" name="run" value="Run" type="button" onclick="">
                   <br>
@@ -76,9 +77,54 @@
 	<input type="submit"/>
       </form>
       <div id="consolediv">
-            
+            <textarea name="console" id="console" style="width:50%" rows=50></textarea>
       </div>
 
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script>
+         window.jQuery||document.write('<script src ="jquery-1.12.1.min.js"><\/script>')
+      </script>
+      <script>
+         $(document).ready(function(){ 
+            //varibles
+            var form=$("#stucodeform");
+            //var files = document.getElementById('file').files;
+            var comtype = $("#compiletype");
+            var con = $("#console");
+            form.submit(function(event){
+               var filecon="";
+               var filename="";
+               var file = document.getElementById('file').files[0];
+               event.preventDefault();
+               console.log("form submitted");
+               console.log(form.val());
+               //console.log(files.val());
+               console.log(comtype.val());
+               //Reads the file
+               var reader = new FileReader();
+               reader.readAsText(file,'utf-8');
+               reader.onload=function(e) {
+                  var result=e.target.result;
+                  filename=file.name;
+                  filecon+=result;
+                  console.log(filecon+' '+filename);
+               };
+               reader.onloadend=function(){
+                  var jobj = {
+                     file:filename,
+                     contents:filecon,
+                     compiler:comtype.val()
+                  };
+                  console.log("Got here");
+                  $.post("/compile/com",jobj,function(data){
+                     console.log(data);
+                     con.val(data);
+                  });
+               };
+            });
+         });
+       </script>
       <!-- Code mirror Script-->
       <script>
             window.onload = function() {
@@ -92,6 +138,7 @@
                     
                 });
             };
+            
             function uploadfileevent(event,read)
             {
                uploadfile(read);
