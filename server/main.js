@@ -195,6 +195,39 @@ router.get('/edit', function(req, res) {
 	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
+router.get('/viewsoln/:student', function(req, res) {
+	db.serialize(function() {
+		var contents = '';
+		db.each("SELECT S.contents FROM solution S WHERE S.user_id = " + req.params.student, function(err, row) {
+			if(err) {
+				console.log(err);
+			}
+			else if (JSON.stringify(row.contents) != 'null') {
+				contents = row.contents;
+			}
+		}, function() {
+			fs.readFile('public/firsthalf-stucode.html', 'utf8', function(err, data) {
+				if(err) {
+					console.log(err);
+				}
+				res.write(data);
+				
+				res.write("<form id='savecodeform' method='post' action='/savecode?sessionId="+req.query.sessionId +"&id=" + req.query.id + "'>");
+				res.write("<div id='codeeditor'>");
+				res.write("<textarea id='codeeditarea' form='savecodeform' name='codeeditarea' rows='100'>");
+				
+				res.write(contents);
+				fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
+					if(err) {
+						console.log(err);
+					}
+					res.write(data);
+					res.end();
+				});
+			});
+		});
+	});
+});
 router.get('/soln', function(req, res) {
 	db.serialize(function() {
 		var contents = '';
@@ -256,7 +289,7 @@ router.get('/submissions', function(req, res) {
 	res.write("<html><ul>");
 	db.serialize( function() {
 		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
-			res.write("<li><a href='soln'>"+row.first_name + " " + row.last_name +"</a></li>");
+			res.write("<li><a href='viewsoln/" + row.user_id + "'>"+row.first_name + " " + row.last_name +"</a></li>");
 		});
 	}, function() {
 		res.write("</ul></html>");
@@ -279,7 +312,7 @@ router.get('/courses', function(req, res) {
 			if(row.course_id != student_course) {
 				res.write("</ul>");
 				student_course = row.course_id;
-				res.write("<li>" + row.name + "</li>");
+				res.write("<li>" + row.name + ": " + row.course_title + "</li>");
 				res.write("<ul>");
 				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + "&id=" + row.work_id + "'>" + row.title + "</a></li>");
 			}
@@ -299,10 +332,10 @@ router.get('/courses', function(req, res) {
 					inst_course = row.course_id;
 					res.write("<li>" + row.name + "</li>");
 					res.write("<ul>");
-					res.write("<li>" + row.title + "<a href='asignedit'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
+					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
 				}
 				else {
-					res.write("<li>" + row.title + "<a href='asignedit'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
+					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
 				}
 			}, function() {
 				res.write("</ul>");
@@ -310,6 +343,10 @@ router.get('/courses', function(req, res) {
 			});
 		});
 	});
+});
+
+router.get('/edit/:name/:work_id', function(req, res) {
+	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
 module.exports = router;

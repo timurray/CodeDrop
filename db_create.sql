@@ -2,16 +2,17 @@
 CREATE TABLE courses ( 
 	course_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
 	name VARCHAR (64), 
+	course_title VARCHAR (64),
 	section INTEGER DEFAULT 0, 
 	startdate VARCHAR(50), 
 	enddate VARCHAR(50)
 );
 
-INSERT INTO courses (course_id, name, section, startdate, enddate) VALUES 
-	(1, 'COMP4770', 0, 'Jan. 6th, 2016', 'Apr. 6th, 2016'),
-	(2, 'PSYC1001', 0, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
-	(3, 'PSYC1001', 1, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
-	(4, 'MATH2000', 0, 'Jan. 6th, 2016', 'Apr. 20th, 2016');
+INSERT INTO courses (course_id, name, course_title, section, startdate, enddate) VALUES 
+	(1, 'COMP4770', 'Team Project', 0, 'Jan. 6th, 2016', 'Apr. 6th, 2016'),
+	(2, 'PSYC1001', 'Psychology II',0, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
+	(3, 'PSYC1001', 'Psychology II',1, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
+	(4, 'MATH2000', 'Calculus 3'    0, 'Jan. 6th, 2016', 'Apr. 20th, 2016');
 
 -- Table: users
 CREATE TABLE users ( 
