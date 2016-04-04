@@ -161,17 +161,16 @@ router.post('/createcourse', function(req, res) {
 
 router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
-	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h2> Currently Registered Users in this Course:</h2>\n<ul>\n');
+	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h2> Currently Registered Users in this Course:</h2>\n<form method="get" action="/removeUser/' + course + '">\n<select name="regUsers">\n');
 	db.serialize(function () {
 		db.each('SELECT * FROM users U, courses C, register R WHERE C.name = "' + course + '" AND R.course_id = C.course_id AND R.user_id = U.user_id', 
 		function (err, row) {
 			if(err) {
 				res.write(err);
 			}
-			console.log(row.email);
-			res.write('<li>' + row.email + '</li><br>');
+			res.write('<option>' + row.email + '</option>\n<br>');
 		}, function(){
-			res.write('</ul>\n<h2>Users not registered for this course:</h2>\n');
+			res.write('</select>\n<input type="submit" value="Remove user from course"/>\n</form>\n<h2>Users not registered for this course:</h2>\n');
 			res.write('<form method="get" action="/addUser/' + course + '">\n<select name="users">\n');
 		});
 		
@@ -183,7 +182,7 @@ router.get('/courseEdit/:courseName', function(req, res) {
         		console.log(row);
             	res.write('<option>' + row.email + '</option><br>\n');
         }, function() {
-        	res.write('</select>\n<input type="submit"/>\n</form>\n</body>\n</html>\n');
+        	res.write('</select>\n<input type="submit" value="Add user to course"/>\n</form>\n</body>\n</html>\n');
         	//res.write('<button onclick="addUser()">Add User To ' + course + '</button>');
         	//res.write('<script src="/public/scriptsForStuff.js"></script>');
         	res.end();
@@ -205,6 +204,7 @@ router.get('/addUser/:courseName', function(req, res) {
 			//leaving out role till we get an option to pick when adding
 			userId = row.user_id;
 		});		
+		
 		db.each('SELECT C.course_id from courses C WHERE C.name = "' + course + '"', function(err, row) {
 			if(err) {
 				res.write(err);
@@ -213,6 +213,35 @@ router.get('/addUser/:courseName', function(req, res) {
 		}, function() {
 			//replace for now until we make check for it
 			db.run('INSERT OR REPLACE INTO register (user_id, course_id) VALUES ("' + userId + '","' + courseId + '")');
+			res.redirect('back');
+		});
+	});
+});
+
+router.get('/removeUser/:courseName', function(req, res) {
+	var query = req.query;
+	var email = query.users;
+	var course = req.params.courseName;
+	var userId = '';
+	var courseId = '';
+	db.serialize(function() {
+		db.each('SELECT U.user_id from users U WHERE U.email = "' + email + '"', function(err, row) {
+			if(err) {
+				res.write(err);
+			}
+			userId = row.user_id;
+			console.log(userId);
+		});
+		
+		db.each('SELECT C.course_id from courses C WHERE C.name = "' + course + '"', function(err, row) {
+			if(err) {
+				res.write(err);
+			}
+			courseId = row.course_id;
+			console.log(courseId);
+		}, function() {
+			console.log(userId + ' lol ' + courseId);			
+			db.run('DELETE FROM register WHERE user_id = "' + userId + '" AND course_id = "' + courseId + '"');
 			res.redirect('back');
 		});
 	});
@@ -259,6 +288,7 @@ router.get('/viewsoln/:student', function(req, res) {
 		});
 	});
 });
+
 router.get('/soln', function(req, res) {
 	db.serialize(function() {
 		var contents = '';
