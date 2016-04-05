@@ -293,10 +293,14 @@ router.get('/edit', function(req, res) {
 	res.sendFile('public/asignedit.html', {root: __dirname });
 });
 
-router.get('/viewsoln/:student', function(req, res) {
+function viewSolutionSql(title, student) {
+	return "SELECT S.contents FROM solution S WHERE S.work_id = (SELECT work_id FROM work WHERE title = " + quote(title) + ") AND S.user_id = " + student;
+}
+
+router.get('/viewsoln/:title/:student', function(req, res) {
+	var contents = '';
 	db.serialize(function() {
-		var contents = '';
-		db.each("SELECT S.contents FROM solution S WHERE S.user_id = " + req.params.student, function(err, row) {
+		db.each(viewSolutionSql(req.params.title, req.params.student), function(err, row) {
 			if(err) {
 				console.log(err);
 			}
@@ -310,7 +314,6 @@ router.get('/viewsoln/:student', function(req, res) {
 				}
 				res.write(data);
 				
-				res.write("<form id='savecodeform' method='post' action='/savecode?sessionId="+req.query.sessionId +"&id=" + req.query.id + "'>");
 				res.write("<div id='codeeditor'>");
 				res.write("<textarea id='codeeditarea' form='savecodeform' name='codeeditarea' rows='100'>");
 				
@@ -384,12 +387,13 @@ var courses = [];
 var assigns = [];
 var register = [];
 
-router.get('/submissions', function(req, res) {
+router.get('/submissions/:course/:title', function(req, res) {
 	res.write(projectHeaderHTML("Assignment submissions", 0));
+	res.write("<h2>Submissions for " + req.params.title + " </h2>");
 	db.serialize( function() {
 	
-		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = " + req.query.id, function(err, row) {
-			res.write("<li><a href='viewsoln/" + row.user_id + "'>"+row.first_name + " " + row.last_name +"</a></li>");
+		db.each("SELECT S.* FROM users S, register R WHERE R.user_id = S.user_id AND R.role = 0 AND R.course_id = (SELECT course_id FROM courses WHERE name = " + quote(req.params.course) + ")", function(err, row) {
+			res.write("<li><a href='/viewsoln/" + req.params.title + "/" + row.user_id + "'>"+row.first_name + " " + row.last_name +"</a></li>");
 		});
 	
 	}, function() {
@@ -433,12 +437,12 @@ router.get('/courses', function(req, res) {
 				if(row.course_id != inst_course) {
 					res.write("</ul>");
 					inst_course = row.course_id;
-					res.write("<li>" + row.name + "</li>");
+					res.write("<li>" + row.name + " <a href='edit/" + row.name+"/?sessionId="+req.query.sessionId+"'>Add new assignment</a></li>");
 					res.write("<ul>");
-					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
+					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>View submissions</a></li>");
 				}
 				else {
-					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions?id=" + row.course_id + "'>View submissions</a></li>");
+					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>View submissions</a></li>");
 				}
 			}, function() {
 				res.write("</ul>");
@@ -452,6 +456,22 @@ router.get('/courses', function(req, res) {
 function editAssignmentSql(session_id, work_id) {
 	return "SELECT W.*, T.* FROM work W LEFT JOIN tests T ON W.work_id = T.work_id WHERE W.work_id = " + work_id + " AND (SELECT user_id FROM sessions WHERE session_id = " + quote(session_id) + ") = (SELECT user_id FROM register WHERE course_id = W.course_id AND role = 1)";
 }
+
+router.get('/edit/:name', function(req, res) {
+	db.serialize( function() {
+		var id = 0;
+		db.run(
+			"INSERT INTO work (course_id, title) VALUES ((SELECT course_id FROM courses WHERE name = " + quote(req.params.name) + "), 'New Assignment')",
+			function(err, row) {
+				if(err) {
+					console.log(err);
+				}
+			},
+			res.redirect('back')
+		);
+	});
+	
+});
 
 router.get('/edit/:name/:work_id', function(req, res) {
 	db.serialize(function() {
