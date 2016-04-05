@@ -87,7 +87,7 @@ router.post('/registered', function(req, res) {
 router.get('/creation', function(req, res) {
 		//keep this commented out line which does the html statically
         //res.sendFile('public/creation.html', {root: __dirname });
-		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<select name="users">\n');
+		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<form method="get" action="/deleteUser">\n<select name="users">\n');
 
 		db.serialize(function() {
         	db.each("SELECT * FROM users", function(err, row) {
@@ -103,7 +103,7 @@ router.get('/creation', function(req, res) {
             	}
             	
         	}, function() {
-        		res.write('</select>\n<h2> Create New User: </h2>\n');
+        		res.write('</select>\n<input type="submit" value="Delete User"/></form>\n<h2> Create New User: </h2>\n');
         		res.write('<form method="post" action="/createuser">\n<input type="text" name="email" placeholder="Email"/><br>\n');
 				res.write('<input type="text" name="password" placeholder="Password"/><br>\n');
 				res.write('<input type="text" name="firstname" placeholder="First Name"/><br>\n');
@@ -111,7 +111,7 @@ router.get('/creation', function(req, res) {
 				res.write('<input type="text" name="phonenumber" placeholder="Phone Number"/><br>\n');
 				res.write('Admin:<input type="checkbox" name="isAdmin"/>\n');
 				res.write('<input type="submit"/>\n</form>\n');
-				res.write('<h3> Current Courses Available: <h3>\n<select name="courses">\n');
+				res.write('<h3> Current Courses Available: <h3>\n<form method="get" action="/deleteCourse"/>\n<select name="courses">\n');
 			});	
 
         	db.each("SELECT * FROM courses", function(err, row) {
@@ -120,7 +120,7 @@ router.get('/creation', function(req, res) {
         		}
             	res.write('<option>' + row.name + '</option><br>\n');
         	}, function () {
-        		res.write('</select>\n<button onclick="goToEdit()">Edit Course</button>\n<h2> Create New Course: </h2>\n');
+        		res.write('</select>\n<input type="submit" value="Delete Course"/>\n</form>\n<button onclick="goToEdit()">Edit Course</button>\n<h2> Create New Course: </h2>\n');
         		res.write('<form method="post" action="/createcourse">\n');
 				res.write('<input type="text" name="name" placeholder="Course Name"/><br>\n');
 				res.write('<input type="text" name="startdate" placeholder="Start Date"/><br>\n');
@@ -170,6 +170,36 @@ router.post('/createcourse', function(req, res) {
   	
   	res.redirect('back');
   	//res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+});
+
+router.get('/deleteUser', function(req, res) {
+	var query = req.query;
+	var email = query.users;
+	// incase of admin, slits to get rid of '(admin)' in the email string
+	var emailArr = email.split(' (');
+	
+	db.serialize(function(err) {
+		if(err) {
+			res.send(err);
+		}
+		db.run('DELETE FROM users WHERE email="' + emailArr[0] + '"');
+		
+		res.redirect('back');
+	});
+});
+
+router.get('/deleteCourse', function(req, res) {
+	var query = req.query;
+	var course = query.courses;
+	
+	db.serialize(function(err) {
+		if(err) {
+			res.send(err);
+		}
+		db.run('DELETE FROM courses WHERE name="' + course + '"');
+		
+		res.redirect('back');
+	});
 });
 
 router.get('/courseEdit/:courseName', function(req, res) {
