@@ -184,8 +184,6 @@ router.get('/courseEdit/:courseName', function(req, res) {
             	res.write('<option>' + row.email + '</option><br>\n');
         }, function() {
         	res.write('</select>\n<input type="submit" value="Add user to course"/>\n</form>\n</body>\n</html>\n');
-        	//res.write('<button onclick="addUser()">Add User To ' + course + '</button>');
-        	//res.write('<script src="/public/scriptsForStuff.js"></script>');
         	res.end();
         });		
 	});
@@ -221,11 +219,12 @@ router.get('/addUser/:courseName', function(req, res) {
 
 router.get('/removeUser/:courseName', function(req, res) {
 	var query = req.query;
-	var email = query.users;
+	var email = query.regUsers;
 	var course = req.params.courseName;
 	var userId = '';
 	var courseId = '';
 	db.serialize(function() {
+		console.log(email);
 		db.each('SELECT U.user_id from users U WHERE U.email = "' + email + '"', function(err, row) {
 			if(err) {
 				res.write(err);
