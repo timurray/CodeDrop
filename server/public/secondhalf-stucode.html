@@ -3,9 +3,54 @@
 	<input type="submit"/>
       </form>
       <div id="consolediv">
-            
+            <textarea name="console" id="console" style="width:50%" rows=20></textarea>
       </div>
 
+
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+      <script>
+         window.jQuery||document.write('<script src ="jquery-1.12.1.min.js"><\/script>')
+      </script>
+      <script>
+         $(document).ready(function(){ 
+            //varibles
+            var form=$("#stucodeform");
+            //var files = document.getElementById('file').files;
+            var comtype = $("#compiletype");
+            var con = $("#console");
+            form.submit(function(event){
+               var filecon="";
+               var filename="";
+               var file = document.getElementById('file').files[0];
+               event.preventDefault();
+               console.log("form submitted");
+               console.log(form.val());
+               //console.log(files.val());
+               console.log(comtype.val());
+               //Reads the file
+               var reader = new FileReader();
+               reader.readAsText(file,'utf-8');
+               reader.onload=function(e) {
+                  var result=e.target.result;
+                  filename=file.name;
+                  filecon+=result;
+                  console.log(filecon+' '+filename);
+               };
+               reader.onloadend=function(){
+                  var jobj = {
+                     file:filename,
+                     contents:filecon,
+                     compiler:comtype.val()
+                  };
+                  console.log("Got here");
+                  $.post("/compile/",jobj,function(data){
+                     console.log(data);
+                     con.val(data);
+                  });
+               };
+            });
+         });
+       </script>
       <!-- Code mirror Script-->
       <script>
             window.onload = function() {
@@ -19,6 +64,7 @@
                     
                 });
             };
+            
             function uploadfileevent(event,read)
             {
                uploadfile(read);
