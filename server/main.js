@@ -120,7 +120,7 @@ router.get('/creation', function(req, res) {
         		}
             	res.write('<option>' + row.name + '</option><br>\n');
         	}, function () {
-        		res.write('</select>\n<button onclick="goToEdit()">Edit Course</button>\n<input type="submit" value="Delete Course"/>\n</form>\n<h2> Create New Course: </h2>\n');
+        		res.write('</select>\n<input type="submit" value="Delete Course"/>\n</form>\n<button onclick="goToEdit()">Edit Course</button>\n<h2> Create New Course: </h2>\n');
         		res.write('<form method="post" action="/createcourse">\n');
 				res.write('<input type="text" name="name" placeholder="Course Name"/><br>\n');
 				res.write('<input type="text" name="startdate" placeholder="Start Date"/><br>\n');
