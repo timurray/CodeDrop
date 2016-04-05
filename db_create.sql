@@ -1,24 +1,24 @@
 -- Table: courses
 CREATE TABLE courses ( 
 	course_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
-	name VARCHAR (64), 
-	section INTEGER DEFAULT 0, 
+	name VARCHAR (64) NOT NULL, 
+	course_title VARCHAR (64),
+	sections INTEGER DEFAULT 1,
 	startdate VARCHAR(50), 
 	enddate VARCHAR(50)
 );
 
-INSERT INTO courses (course_id, name, section, startdate, enddate) VALUES 
-	(1, 'COMP4770', 0, 'Jan. 6th, 2016', 'Apr. 6th, 2016'),
-	(2, 'PSYC1001', 0, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
-	(3, 'PSYC1001', 1, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
-	(4, 'MATH2000', 0, 'Jan. 6th, 2016', 'Apr. 20th, 2016');
+INSERT INTO courses (course_id, name, course_title, sections, startdate, enddate) VALUES 
+	(1, 'COMP4770', 'Team Project' , 1, 'Jan. 6th, 2016', 'Apr. 6th, 2016'),
+	(2, 'PSYC1001', 'Psychology II', 2, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
+	(3, 'MATH2000', 'Calculus 3'   , 1, 'Jan. 6th, 2016', 'Apr. 20th, 2016');
 
 -- Table: users
 CREATE TABLE users ( 
 	user_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
 	first_name VARCHAR (64), 
 	last_name VARCHAR (64), 
-	email VARCHAR (64) UNIQUE, 
+	email VARCHAR (64) NOT NULL UNIQUE, 
 	phone VARCHAR (13), 
 	password VARCHAR (64), 
 	role_admin BOOLEAN DEFAULT 0
@@ -42,8 +42,8 @@ CREATE TABLE files (
 -- Table: work
 CREATE TABLE work ( 
 	work_id INTEGER NOT NULL PRIMARY KEY, 
-	course_id INTEGER REFERENCES courses (course_id) ON DELETE CASCADE, 
-	title VARCHAR (64), 
+	course_id INTEGER NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE, 
+	title VARCHAR (64) NOT NULL, 
 	due_date DATE, 
 	contents BLOB
 );
@@ -59,6 +59,15 @@ INSERT INTO work (work_id, course_id, title, due_date, contents) VALUES
 	(8, 3, 'Final Assignment', NULL, NULL)
 ;
 
+CREATE TABLE tests ( 
+	test_id INTEGER NOT NULL PRIMARY KEY,
+	work_id INTEGER NOT NULL REFERENCES work (work_id) ON DELETE CASCADE,
+	test_input BLOB,
+	test_output BLOB,
+	code BLOB,
+	runs INTEGER
+);
+
 -- Table: file_storage
 CREATE TABLE file_storage ( 
 	fs_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
@@ -68,34 +77,35 @@ CREATE TABLE file_storage (
 
 -- Table: sessions
 CREATE TABLE sessions ( 
-	session_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
-	user_id INTEGER REFERENCES users (user_id) ON DELETE CASCADE
+	session_id VARCHAR(64) NOT NULL PRIMARY KEY UNIQUE, 
+	user_id INTEGER NOT NULL REFERENCES users (user_id) ON DELETE CASCADE
 );
 
 -- Table: register
 CREATE TABLE register ( 
-	user_id INTEGER REFERENCES users (user_id) ON DELETE CASCADE, 
-	course_id INTEGER REFERENCES courses (course_id) ON DELETE CASCADE, 
-	role INTEGER, 
-	PRIMARY KEY (user_id, course_id)
+	user_id INTEGER NOT NULL REFERENCES users (user_id) ON DELETE CASCADE, 
+	course_id INTEGER NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE, 
+	section INTEGER NOT NULL DEFAULT 1,
+	role INTEGER NOT NULL DEFAULT 0, 
+	PRIMARY KEY (user_id, course_id, section)
 );
 
-INSERT INTO register (user_id, course_id, role) VALUES 
-	(1, 1, 0),
-	(2, 1, 0),
-	(3, 1, 1),
-	(4, 1, 0),
-	(4, 2, 0),
-	(3, 2, 1),
-	(2, 3, 2),
-	(3, 3, 1),
-	(4, 3, 0)
+INSERT INTO register (user_id, course_id, section, role) VALUES 
+	(1, 1, 1, 0),
+	(2, 1, 1, 0),
+	(3, 1, 1, 1),
+	(4, 1, 1, 0),
+	(4, 2, 1, 0),
+	(3, 2, 1, 1),
+             (3, 2, 2, 1),
+	(2, 2, 2, 2),
+	(4, 3, 1, 0)
 ;
 
 -- Table: solution
 CREATE TABLE solution ( 
-	work_id INTEGER REFERENCES work (work_id), 
-	user_id INTEGER REFERENCES users (user_id) ON DELETE CASCADE, 
+	work_id INTEGER NOT NULL REFERENCES work (work_id), 
+	user_id INTEGER NOT NULL REFERENCES users (user_id) ON DELETE CASCADE, 
 	contents BLOB, 
 	grade INTEGER, 
 	feedback BLOB, 
