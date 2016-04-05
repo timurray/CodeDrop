@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 
 var server = express();
 server.use(express.static(__dirname + '/public'));
-server.use('/favicon.ico',./favicon.ico);
 server.use(bodyParser.urlencoded({ extended: true }));
 
 // all new routes go after this line
