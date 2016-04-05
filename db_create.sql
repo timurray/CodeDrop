@@ -72,6 +72,7 @@ CREATE TABLE tests (
 CREATE TABLE file_storage ( 
 	fs_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
 	capacity INTEGER, 
+	name VARCHAR,
 	user_id INTEGER REFERENCES users (user_id) ON DELETE CASCADE
 );
 
