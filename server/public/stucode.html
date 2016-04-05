@@ -121,6 +121,23 @@
             });
          });
        </script>
+       <!-- Makes file browser -->
+       <script>
+         $(document).ready(function(){
+            var filebrowser = $('#filebrowser');
+            var url = window.location.href;
+            var sess = url.split('soln?')[1].split('&')[0];
+            var id = url.split('soln?')[1].split('&')[1].spilt('=')[1];
+            var inputs ={
+               session:sess,
+               wid:id
+            };
+            $.post('/getfilelist',inputs,function(data){
+               console.log(data);
+               filebrowser.val(data);
+            });
+         });
+       </script>
       <!-- Code mirror Script-->
       <script>
             window.onload = function() {
