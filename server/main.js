@@ -98,7 +98,14 @@ router.get('/creation', function(req, res) {
         		if (err) {
         			res.write(err);	
         		}
-            	res.write('<option>' + row.email + '</option><br>\n');
+        		
+        		if(row.role_admin == 1) {
+            		res.write('<option>' + row.email + ' (admin)' + '</option><br>\n');
+            	}
+            	else{
+            		res.write('<option>' + row.email + '</option><br>\n');
+            	}
+            	
         	}, function() {
         		res.write('</select>\n<h2> Create New User: </h2>\n');
         		res.write('<form method="post" action="/createuser">\n<input type="text" name="email" placeholder="Email"/><br>\n');
@@ -106,6 +113,7 @@ router.get('/creation', function(req, res) {
 				res.write('<input type="text" name="firstname" placeholder="First Name"/><br>\n');
 				res.write('<input type="text" name="lastname" placeholder="Last Name"/><br>\n');
 				res.write('<input type="text" name="phonenumber" placeholder="Phone Number"/><br>\n');
+				res.write('Admin:<input type="checkbox" name="isAdmin"/>\n');
 				res.write('<input type="submit"/>\n</form>\n');
 				res.write('<h3> Current Courses Available: <h3>\n<select name="courses">\n');
 			});	
@@ -135,13 +143,24 @@ router.post('/createuser', function(req, res) {
     var lname = req.body.lastname;
 	var phnum = req.body.phonenumber;
 	var pswd = req.body.password;
-	console.log("Student Registered: " + email + " " + fname + " " + lname + " " + phnum);
+	var isAdmin = req.body.isAdmin || false;
+	
+	if(isAdmin == false) {
+		isAdmin = 0;
+	}
+	else {
+		isAdmin = 1;
+	}
+	//var query = req.query;
+	//var isAdmin = query.isAdmin;
+	console.log("Student Registered: " + email + " " + fname + " " + lname + " " + phnum + " " + isAdmin);
  	
  	db.serialize(function() {
- 		db.run("INSERT INTO users (first_name, last_name, email, phone, password) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "')");		
+ 		db.run("INSERT INTO users (first_name, last_name, email, phone, password, role_admin) VALUES ('" + fname + "','" + lname + "','" + email + "','" + phnum + "','" + pswd + "','" + isAdmin + "')");		
   	});
   	
-  	res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+  	res.redirect('back');
+  	//res.send("User registered with the following info: " + "<br>" + email + "<br>" + fname + "<br>" + lname + "<br>" + phnum + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.post('/createcourse', function(req, res) {
@@ -153,7 +172,8 @@ router.post('/createcourse', function(req, res) {
  		db.run("INSERT INTO courses (name, startdate, enddate) VALUES ('" + name + "','" + startdate + "','" + enddate + "')");		
   	});
   	
-  	res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
+  	res.redirect('back');
+  	//res.send("Course created with the following info: " + "<br>" + name + "<br>" + startdate + "<br>" + enddate + '<br>\n<a href="/creation">Back to User/Course Creation</a>');
 });
 
 router.get('/courseEdit/:courseName', function(req, res) {
