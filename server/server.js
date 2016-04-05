@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var server = express();
+server.use('/favicon.ico',./favicon.ico);
 server.use("/public", express.static(__dirname + '/public'));
 server.use(bodyParser.urlencoded({ extended: true }));
 

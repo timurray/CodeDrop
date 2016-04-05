@@ -9,7 +9,7 @@
 
 
       <script src="CodeMirror/lib/codemirror.js"></script>
-      <script src="js/fileupload.js"></script>
+
       <style>
       .CodeMirror 
       {
@@ -33,11 +33,8 @@
 				</ul>
 			</div>
 		</div></div>
-	
-    
-      <form id="stucodeform" method="post" enctype="multipart/form-data" action="/compile">
 	  
-	      <div id="maincode">
+	     <div id="maincode">
 		  <table style="width:100%;"> <tr> 
 		  <td style="width: 5%">
             <div class="left" id="leftcontainerstucode">
@@ -47,14 +44,20 @@
 				  </textarea>
                </div>
                <div id="commandbuttons">
-                  <span>Upload File </span><input type="file" id="file" name="file" onchange="uploadfileevent(event,'fileup')">
+                  <span>Upload File </span><input type="file" id="file" name="file"  multiple>
                   <br>
-                  <input type="submit" value="compile and run">
+                  <select id="compiletype" name="compiletype">
+                     <option value="java">Java</option>
+                     <option value="python">Python</option>
+                     <option value="c++">C++</option>
+                  </select>
                   <br>
-                  <input class="button" name="compile" value="Compile" type="button" onclick="">
+                  <form id="stucodeform" enctype="multipart/form-data" role="form">
+                     <input class="button" type="submit" value="compile and run">
+                  </form>
+                  <input class="button" id="compile" name="compile" value="Compile" type="button" onclick="">
                   <br>
-                  <input class="button" name="run" value="Run" type="button" onclick="">
-                  <br>
+                  <button class="button" id="upload" name="upload" value="Upload">
                
                </div>
             </div>
@@ -62,5 +65,4 @@
 			</tr>
 			</table>
 			</div>
-			</form>
 			
