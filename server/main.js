@@ -39,13 +39,10 @@ router.post('/userpage', function(req, res) {
 					db.run(session_sql(userId,sessionId));
 					
 					// puts the users session token in the database
-					console.log('user Id is: ' + userId);
 					return;
 				}
 			}, function() {
 				if(found_user) {
-				
-					console.log("sessionID: " + sessionId);
 					req.method = 'get';
 					res.redirect('/courses?sessionId='+sessionId);
 				}
@@ -62,7 +59,6 @@ function saveCodeContentsSql(work_id, session_id, content) {
 
 router.post('/savecode', function(req, res) {
 	db.serialize(function() {
-		console.log(saveCodeContentsSql(req.query.id, req.query.sessionId, req.body.codeeditarea));
 		db.run(saveCodeContentsSql(req.query.id, req.query.sessionId, req.body.codeeditarea), res.redirect('/courses?sessionId='+req.query.sessionId));
 		
 	});
@@ -434,13 +430,12 @@ router.get('/courses', function(req, res) {
 });
 
 function editAssignmentSql(session_id, work_id) {
-	return "SELECT DISTINCT W.*, T.* FROM work W, tests T, register R, sessions S WHERE S.session_id = '" + session_id + "' AND R.user_id = S.user_id and R.role = " + 1 + " AND W.work_id = " + work_id + " AND T.work_id = W.work_id";
+	return "SELECT W.*, T.* FROM work W LEFT JOIN tests T ON W.work_id = T.work_id WHERE W.work_id = " + work_id + " AND (SELECT user_id FROM sessions WHERE session_id = " + quote(session_id) + ") = (SELECT user_id FROM register WHERE course_id = W.course_id AND role = 1)";
 }
 
 router.get('/edit/:name/:work_id', function(req, res) {
 	db.serialize(function() {
 		res.write(projectHeaderHTML("Edit Assignment", 0));
-		
 		db.each(editAssignmentSql(req.query.sessionId, req.params.work_id), function(err, row) {
 			if(err) {
 				console.log(err);
@@ -449,7 +444,7 @@ router.get('/edit/:name/:work_id', function(req, res) {
 			res.write('<div id="title">Title:</div>');
 			res.write('<input name="save_title" type="text" value="'+ not_null(row.title) + '"/>');
 			res.write('<div id="description">Description:</div>');
-			res.write('<input type="text" name="desc" value="'+row.contents+'"></input>');
+			res.write('<input type="text" name="desc" value="'+ not_null(row.contents)+'"></input>');
 
 			res.write('<table id="test-table">');
 			res.write('<tr><td>Input:</td><td>  <input name="save_input" type="text" value="' + not_null(row.test_input) + '"/></td></tr>');
@@ -473,8 +468,8 @@ router.get('/edit/:name/:work_id', function(req, res) {
 	});
 });
 
-function saveAssignmentSql(work_id, course_id, title, start_date, due_date, contents, input, output, code, runs) {
-	var sql = "INSERT OR REPLACE INTO work (work_id, course_id, title, start_date, due_date, contents, input, output, code, runs) VALUES (";
+function saveAssignmentSql(work_id, course_id, title, start_date, due_date, contents) {
+	var sql = "INSERT OR REPLACE INTO work (work_id, course_id, title, start_date, due_date, contents) VALUES (";
 	
 	sql = sql + work_id;
 	sql = appdel(sql, course_id);
@@ -482,17 +477,25 @@ function saveAssignmentSql(work_id, course_id, title, start_date, due_date, cont
 	sql = appdel(sql, quote(start_date));
 	sql = appdel(sql, quote(due_date));
 	sql = appdel(sql, quote(contents));
-	sql = appdel(sql, quote(input));
-	sql = appdel(sql, quote(output));
-	sql = appdel(sql, quote(code));
+	sql = sql + ")"
 	
+	console.log(sql);
+	return sql;
+}
+
+function saveTestsSql(work_id, input, output, code, runs) {
     if( isNaN(parseFloat(runs)) ) {
 		runs = "''";
 	}
-	sql = appdel(sql, runs);
 	
-	sql += ")";
-	console.log(sql);
+	var sql = "INSERT OR REPLACE INTO tests(test_id, work_id, test_input, test_output, code, runs) VALUES (";
+	sql = sql + work_id + ", ";
+	sql = sql + work_id;
+	sql = appdel(sql, quote(input));
+	sql = appdel(sql, quote(output));
+	sql = appdel(sql, quote(code));
+	sql = appdel(sql, runs);
+	sql = sql + ")";
 	return sql;
 }
 
@@ -503,18 +506,25 @@ router.post('/saveassign/:course_name/:work_id', function(req, res) {
 		req.body.save_title,
 		req.body.startdate,
 		req.body.duedate,
-		req.body.desc,
-		req.body.save_input,
-		req.body.save_output,
-		req.body.save_code,
-		req.body.save_runs
-	), function(err, row) {
+		req.body.desc)
+	, function(err, row) {
 		if(err) {
 			console.log(err);
 		}
 	}
-	, res.redirect('back')
-	);
+	, function() {
+		db.run(saveTestsSql(req.params.work_id,
+		req.body.save_input,
+		req.body.save_output,
+		req.body.save_code,
+		req.body.save_runs),
+			function(err, row) {
+				if(err) {
+					console.log(err);
+				}
+			}, res.redirect('back')
+		);
+	});
 });
 
 function appdel(sql, str) {

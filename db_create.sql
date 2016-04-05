@@ -3,15 +3,14 @@ CREATE TABLE courses (
 	course_id INTEGER NOT NULL PRIMARY KEY UNIQUE, 
 	name VARCHAR (64) NOT NULL, 
 	course_title VARCHAR (64),
-	sections INTEGER DEFAULT 1,
 	startdate VARCHAR(50), 
 	enddate VARCHAR(50)
 );
 
-INSERT INTO courses (course_id, name, course_title, sections, startdate, enddate) VALUES 
-	(1, 'COMP4770', 'Team Project' , 1, 'Jan. 6th, 2016', 'Apr. 6th, 2016'),
-	(2, 'PSYC1001', 'Psychology II', 2, 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
-	(3, 'MATH2000', 'Calculus 3'   , 1, 'Jan. 6th, 2016', 'Apr. 20th, 2016');
+INSERT INTO courses (course_id, name, course_title, startdate, enddate) VALUES 
+	(1, 'COMP4770', 'Team Project' , 'Jan. 6th, 2016', 'Apr. 6th, 2016'),
+	(2, 'PSYC1001', 'Psychology II', 'Jan. 6th, 2016', 'Apr. 20th, 2016'),
+	(3, 'MATH2000', 'Calculus 3'   , 'Jan. 6th, 2016', 'Apr. 20th, 2016');
 
 -- Table: users
 CREATE TABLE users ( 
@@ -44,6 +43,7 @@ CREATE TABLE work (
 	work_id INTEGER NOT NULL PRIMARY KEY, 
 	course_id INTEGER NOT NULL REFERENCES courses (course_id) ON DELETE CASCADE, 
 	title VARCHAR (64) NOT NULL, 
+	start_date DATE,
 	due_date DATE, 
 	contents BLOB
 );
@@ -97,7 +97,7 @@ INSERT INTO register (user_id, course_id, section, role) VALUES
 	(4, 1, 1, 0),
 	(4, 2, 1, 0),
 	(3, 2, 1, 1),
-             (3, 2, 2, 1),
+    (3, 2, 2, 1),
 	(2, 2, 2, 2),
 	(4, 3, 1, 0)
 ;
