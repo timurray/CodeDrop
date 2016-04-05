@@ -7,9 +7,7 @@ const fs = require('fs');
 
 var db = new sqlite.Database("codedrop.db");
 
-
 var userId = -1;
-
 
 router.get('/', function(req, res) {
 	res.sendFile('public/index.html', {root: __dirname });
@@ -17,8 +15,6 @@ router.get('/', function(req, res) {
 
 router.get('/login', function(req, res) {
 	res.sendFile('public/login.html', {root: __dirname });
-	//console.log('Username: ' + req.body.username);
-	//console.log('password: ' + req.body.password);
 });
 
 function session_sql(user_id, session_id) {
@@ -127,7 +123,7 @@ router.get('/creation', function(req, res) {
 				res.write('<input type="text" name="enddate" placeholder="End Date"/><br>\n');
 				res.write('<input type="submit"/>\n');
 				res.write('</form>\n');
-				res.write('<script src="/public/scriptsForStuff.js"></script>');
+				res.write('<script src="scriptsForStuff.js"></script>');
 				res.end();
 			});
 		});	
@@ -162,6 +158,7 @@ router.post('/createcourse', function(req, res) {
 
 router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
+	var roleName = '';
 	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h2> Currently Registered Users in this Course:</h2>\n<form method="get" action="/removeUser/' + course + '">\n<select name="regUsers">\n');
 	db.serialize(function () {
 		db.each('SELECT * FROM users U, courses C, register R WHERE C.name = "' + course + '" AND R.course_id = C.course_id AND R.user_id = U.user_id', 
@@ -169,7 +166,18 @@ router.get('/courseEdit/:courseName', function(req, res) {
 			if(err) {
 				res.write(err);
 			}
-			res.write('<option>' + row.email + '</option>\n<br>');
+			
+			if(row.role == 0) {
+				roleName = 'Student';
+			}
+			else if(row.role == 1){
+				roleName = 'Instructor';
+			}
+			else if(row.role == 2) {
+				roleName = 'TA';
+			}
+				
+			res.write('<option>' + row.email + ' (' + roleName + ')' + '</option>\n<br>');
 		}, function(){
 			res.write('</select>\n<input type="submit" value="Remove user from course"/>\n</form>\n<h2>Users not registered for this course:</h2>\n');
 			res.write('<form method="get" action="/addUser/' + course + '">\n<select name="users">\n');
@@ -183,7 +191,8 @@ router.get('/courseEdit/:courseName', function(req, res) {
         		console.log(row);
             	res.write('<option>' + row.email + '</option><br>\n');
         }, function() {
-        	res.write('</select>\n<input type="submit" value="Add user to course"/>\n</form>\n</body>\n</html>\n');
+        	res.write('</select>\n<br><input type="radio" name="role" value="Student"/>Student<br>\n<input type="radio" name="role" value="Instuctor"/>Instructor<br>\n<input type="radio" name="role" value="TA"/>TA<br>\n');
+        	res.write('<input type="submit" value="Add user to course"/>\n</form>\n</body>\n</html>\n');
         	res.end();
         });		
 	});
@@ -192,15 +201,30 @@ router.get('/courseEdit/:courseName', function(req, res) {
 router.get('/addUser/:courseName', function(req, res) {
 	var query = req.query;
 	var email = query.users;
+	
+	// parses to get email because in the option, the role is next to it in the string
+	var emailArr = email.split(' (');
+	var roleName = query.role;
+	var roleNum = -1;
 	var course = req.params.courseName;
 	var userId = '';
 	var courseId = '';
+	
+	if(roleName == 'Student') {
+		roleNum = 0;
+	}
+	else if(roleName == 'Instructor'){
+		roleNum = 1;
+	}
+	else if(roleName == 'TA') {
+		roleNum = 2;
+	}
+	
 	db.serialize(function() {
-		db.each('SELECT U.user_id from users U WHERE U.email = "' + email + '"', function(err, row) {
+		db.each('SELECT U.user_id from users U WHERE U.email = "' + emailArr[0] + '"', function(err, row) {
 			if(err) {
 				res.write(err);
 			}
-			//leaving out role till we get an option to pick when adding
 			userId = row.user_id;
 		});		
 		
@@ -210,8 +234,7 @@ router.get('/addUser/:courseName', function(req, res) {
 			}
 			courseId = row.course_id;
 		}, function() {
-			//replace for now until we make check for it
-			db.run('INSERT OR REPLACE INTO register (user_id, course_id) VALUES ("' + userId + '","' + courseId + '")');
+			db.run('INSERT OR REPLACE INTO register (user_id, course_id, role) VALUES ("' + userId + '","' + courseId + '","' + roleNum + '")');
 			res.redirect('back');
 		});
 	});
@@ -220,17 +243,18 @@ router.get('/addUser/:courseName', function(req, res) {
 router.get('/removeUser/:courseName', function(req, res) {
 	var query = req.query;
 	var email = query.regUsers;
+	
+	// parses to get email because in the option, the role is next to it in the string
+	var emailArr = email.split(' (');
 	var course = req.params.courseName;
 	var userId = '';
 	var courseId = '';
 	db.serialize(function() {
-		console.log(email);
-		db.each('SELECT U.user_id from users U WHERE U.email = "' + email + '"', function(err, row) {
+		db.each('SELECT U.user_id from users U WHERE U.email = "' + emailArr[0] + '"', function(err, row) {
 			if(err) {
 				res.write(err);
 			}
 			userId = row.user_id;
-			console.log(userId);
 		});
 		
 		db.each('SELECT C.course_id from courses C WHERE C.name = "' + course + '"', function(err, row) {
@@ -238,9 +262,7 @@ router.get('/removeUser/:courseName', function(req, res) {
 				res.write(err);
 			}
 			courseId = row.course_id;
-			console.log(courseId);
-		}, function() {
-			console.log(userId + ' lol ' + courseId);			
+		}, function() {			
 			db.run('DELETE FROM register WHERE user_id = "' + userId + '" AND course_id = "' + courseId + '"');
 			res.redirect('back');
 		});

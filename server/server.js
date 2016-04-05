@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 
 var server = express();
-server.use("/public", express.static(__dirname + '/public'));
+server.use(express.static(__dirname + '/public'));
 server.use(bodyParser.urlencoded({ extended: true }));
 
 // all new routes go after this line
