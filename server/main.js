@@ -205,7 +205,15 @@ router.get('/deleteCourse', function(req, res) {
 router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
 	var roleName = '';
-	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h2> Currently Registered Users in this Course:</h2>\n<form method="get" action="/removeUser/' + course + '">\n<select name="regUsers">\n');
+	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h1>' + course + '</h1>\n');
+	res.write('<h2>Change Course Info: </h2>\n');
+    res.write('<form method="post" action="/editCourseInfo/' + course + '">\n');
+	res.write('<input type="text" name="name" placeholder="Update Course Name"/><br>\n');
+	res.write('<input type="text" name="startdate" placeholder="Update Start Date"/><br>\n');
+	res.write('<input type="text" name="enddate" placeholder="Update End Date"/><br>\n');
+	res.write('<input type="submit"/>\n');
+	res.write('</form>\n<br><br>');
+	res.write('<h2> Currently Registered Users in this Course:</h2>\n<form method="get" action="/removeUser/' + course + '">\n<select name="regUsers">\n');
 	db.serialize(function () {
 		db.each('SELECT * FROM users U, courses C, register R WHERE C.name = "' + course + '" AND R.course_id = C.course_id AND R.user_id = U.user_id', 
 		function (err, row) {
@@ -240,7 +248,8 @@ router.get('/courseEdit/:courseName', function(req, res) {
         		}
         }, function() {
         	res.write('</select>\n<br><input type="radio" name="role" value="Student"/>Student<br>\n<input type="radio" name="role" value="Instuctor"/>Instructor<br>\n<input type="radio" name="role" value="TA"/>TA<br>\n');
-        	res.write('<input type="submit" value="Add user to course"/>\n</form>\n<br><br>\n<a href="/creation">Back to creation</a>\n</body>\n</html>\n');
+        	res.write('<input type="submit" value="Add user to course"/>\n</form>\n');
+        	res.write('<a href="/creation">Back to creation</a>\n</body>\n</html>\n');
         	res.end();
         });		
 	});
@@ -315,6 +324,28 @@ router.get('/removeUser/:courseName', function(req, res) {
 			res.redirect('back');
 		});
 	});
+});
+
+router.post('/editCourseInfo/:courseName', function(req, res) {
+	var currentName = req.params.courseName;
+	var name = req.body.name;
+	var startdate = req.body.startdate;
+	var enddate = req.body.enddate;
+	
+	console.log(currentName);
+	console.log(name);
+	db.serialize(function() {
+		if(name != '') {
+ 			db.run('UPDATE courses SET name="' + name + '" WHERE name="' + currentName + '"');	
+ 		}
+ 		else if(startdate != '') {
+ 			db.run('UPDATE courses SET startdate="' + startdate + '" WHERE name="' + currentName + '"');
+ 		}
+ 		else if(enddate != '') {
+ 			db.run('UPDATE courses SET enddate="' + enddate + '" WHERE name="' + currentName + '"');
+ 		} 
+ 		res.redirect('/courseEdit/' + name);	
+  	});
 });
 
 router.get('/contact', function(req, res) {
