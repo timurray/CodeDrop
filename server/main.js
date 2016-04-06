@@ -224,6 +224,36 @@ router.get('/deleteCourse', function(req, res) {
 	});
 });
 
+router.get('/deleteUser', function(req, res) {
+	var query = req.query;
+	var email = query.users;
+	// incase of admin, slits to get rid of '(admin)' in the email string
+	var emailArr = email.split(' (');
+	
+	db.serialize(function(err) {
+		if(err) {
+			res.send(err);
+		}
+		db.run('DELETE FROM users WHERE email="' + emailArr[0] + '"');
+		
+		res.redirect('back');
+	});
+});
+
+router.get('/deleteCourse', function(req, res) {
+	var query = req.query;
+	var course = query.courses;
+	
+	db.serialize(function(err) {
+		if(err) {
+			res.send(err);
+		}
+		db.run('DELETE FROM courses WHERE name="' + course + '"');
+		
+		res.redirect('back');
+	});
+});
+
 router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
 	var roleName = '';
