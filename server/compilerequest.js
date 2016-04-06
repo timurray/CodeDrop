@@ -1,5 +1,6 @@
 //This will make a temp directory upload the java code compile it it run it the erase it
 var express = require("express");
+//var sqlite = require('sqlite3').verbose();
 var bodyParser = require('body-parser');
 var r = express.Router();
 var fs= require("fs");
@@ -9,6 +10,9 @@ var spawn = require("child_process").spawn;
 var exec = require("child_process").exec;
 var filename;
 var jsonout;
+
+//var db = new sqlite.Database("codedrop.db");
+
 //Not implemented yet will be used to separate users
 //var username ='username';
 //Makes a directory for the class add username after
@@ -37,16 +41,25 @@ var up = multer({ storage: storage });
 
 //Compiles and runs code
 r.post('/',mkdir,function(req,res){
-   //res.send(req.body);
    var stoutput="";
    var sterr="";
    var joutput="";
    var jerr="";
    //Gets filename without ext aka xXx.java->xXx
+   /*
+   var filename ="";
+   var filecontents="";
+      db.each('"SELECT * from files where fs_id='+req.body.fileid+' AND file_name='+req.body.filename+'"',function(err,row){
+         var filenametemp=row.file_name;
+         filename= filenametemp.split('.')[0];
+         filecontents=row.contents;
+      });
+   */
    var filename=req.body.file.split('.')[0];
    //String to denote compiler java c++ python 
    var compiletype=req.body.compiler;
    fs.writeFile(storeat+'/'+req.body.file,req.body.contents,function(err){
+   //fs.writeFile(storeat+'/'+filename,filecontents,function(err){
       if(err)
       {
          return console.error(err);

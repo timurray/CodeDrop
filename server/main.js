@@ -71,7 +71,7 @@ router.post('/savecode', function(req, res) {
 router.post('/getfilelist',function(req,res){
    var uid="";
    //Html starting point of file browser
-   var returnstring='<form role="form" name="filelist" id="filelist"> <input type="hidden" name="wid" value="'+req.body.wid+'"><select id="filename" name="filename">';
+   var returnstring='<form role="form" name="filelist" id="filelist"> <input type="hidden" name="wid" id="wid" value="'+req.body.wid+'"><select id="filename" name="filename">';
    //Get user id from session
    db.all('SELECT U.user_id FROM sessions U where U.session_id='+req.body.session,function(err,rows){
       rows.forEach(function(row){

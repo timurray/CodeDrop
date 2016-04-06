@@ -81,17 +81,40 @@
       <script>
          window.jQuery||document.write('<script src ="jquery-1.12.1.min.js"><\/script>')
       </script>
+
+       <!-- Makes file browser -->
+       <script>
+         $(document).ready(function(){
+            var filebrowser = $('#filebrowser');
+            var url = window.location.href;
+            var sess = url.split('soln?')[1].split('&')[0];
+            var id = url.split('soln?')[1].split('&')[1].spilt('=')[1];
+            var inputs ={
+               session:sess,
+               wid:id
+            };
+            $.post('/getfilelist',inputs,function(data){
+               console.log(data);
+               filebrowser.val(data);
+            });
+         });
+       </script>
+             <!--Sends code to compile-->
       <script>
          $(document).ready(function(){ 
             //varibles
             var form=$("#stucodeform");
-            //var files = document.getElementById('file').files;
+            //var form=$("#filelist");
+            
             var comtype = $("#compiletype");
             var con = $("#console");
             form.submit(function(event){
                var filecon="";
                var filename="";
+               //var wid = $("#wid");
+               //var fid= $('#filename);
                var file = document.getElementById('file').files[0];
+               
                event.preventDefault();
                console.log("form submitted");
                console.log(form.val());
@@ -118,23 +141,6 @@
                      con.val(data);
                   });
                };
-            });
-         });
-       </script>
-       <!-- Makes file browser -->
-       <script>
-         $(document).ready(function(){
-            var filebrowser = $('#filebrowser');
-            var url = window.location.href;
-            var sess = url.split('soln?')[1].split('&')[0];
-            var id = url.split('soln?')[1].split('&')[1].spilt('=')[1];
-            var inputs ={
-               session:sess,
-               wid:id
-            };
-            $.post('/getfilelist',inputs,function(data){
-               console.log(data);
-               filebrowser.val(data);
             });
          });
        </script>
