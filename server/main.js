@@ -209,7 +209,7 @@ router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
 	var roleName = '';
 	res.write(projectHeaderHTML("Edit Course/User Info", 0));
-	res.write('\n<body>\n<h1>' + course + '</h1>\n');
+	res.write('\n<body>\n<h1>' + course + '</h1><br>\n');
 	res.write('<h2>Change Course Info: </h2>\n');
     res.write('<form method="post" action="/editCourseInfo/' + course + '">\n');
 	res.write('<input type="text" name="name" placeholder="Update Course Name"/><br>\n');
