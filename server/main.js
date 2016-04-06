@@ -87,7 +87,8 @@ router.post('/registered', function(req, res) {
 router.get('/creation', function(req, res) {
 		//keep this commented out line which does the html statically
         //res.sendFile('public/creation.html', {root: __dirname });
-		res.write('<html>\n<title>User/Course Creation</title>\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<form method="get" action="/deleteUser">\n<select name="users">\n');
+		res.write(projectHeaderHTML('User/Course Creation', 0));
+		res.write('\n<h1>User/Course Creation</h1>\n<body>\n<h3> Current Users: <h3>\n<form method="get" action="/deleteUser">\n<select name="users">\n');
 
 		db.serialize(function() {
         	db.each("SELECT * FROM users", function(err, row) {
@@ -128,6 +129,8 @@ router.get('/creation', function(req, res) {
 				res.write('<input type="submit"/>\n');
 				res.write('</form>\n');
 				res.write('<script src="scriptsForStuff.js"></script>');
+				
+				res.write(projectFooterHTML());
 				res.end();
 			});
 		});	
@@ -205,7 +208,8 @@ router.get('/deleteCourse', function(req, res) {
 router.get('/courseEdit/:courseName', function(req, res) {
 	var course = req.params.courseName;
 	var roleName = '';
-	res.write('<html>\n<title>Edit Course</title>\n<body>\n<h1>' + course + '</h1>\n');
+	res.write(projectHeaderHTML("Edit Course/User Info", 0));
+	res.write('\n<body>\n<h1>' + course + '</h1>\n');
 	res.write('<h2>Change Course Info: </h2>\n');
     res.write('<form method="post" action="/editCourseInfo/' + course + '">\n');
 	res.write('<input type="text" name="name" placeholder="Update Course Name"/><br>\n');
@@ -249,8 +253,10 @@ router.get('/courseEdit/:courseName', function(req, res) {
         }, function() {
         	res.write('</select>\n<br><input type="radio" name="role" value="Student"/>Student<br>\n<input type="radio" name="role" value="Instuctor"/>Instructor<br>\n<input type="radio" name="role" value="TA"/>TA<br>\n');
         	res.write('<input type="submit" value="Add user to course"/>\n</form>\n');
-        	res.write('<a href="/creation">Back to creation</a>\n</body>\n</html>\n');
-        	res.end();
+        	res.write('<a href="/creation">Back to creation</a>\n</body>\n');
+      
+			res.write(projectFooterHTML());
+			res.end();
         });		
 	});
 });
