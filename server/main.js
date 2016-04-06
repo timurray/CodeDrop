@@ -229,16 +229,18 @@ router.get('/courseEdit/:courseName', function(req, res) {
 			res.write('<form method="get" action="/addUser/' + course + '">\n<select name="users">\n');
 		});
 		
-		db.each('SELECT U.email FROM users U WHERE NOT U.user_id IN (SELECT R.user_id FROM register R, courses C WHERE R.course_id = C.course_id AND C.name = "' + course + '")', function(err, row) {
+		db.each('SELECT * FROM users U WHERE NOT U.user_id IN (SELECT R.user_id FROM register R, courses C WHERE R.course_id = C.course_id AND C.name = "' + course + '")', function(err, row) {
         		if (err) {
         			res.write(err);
         		}
-        		//need to make this so it only selects non register users^
-        		console.log(row);
-            	res.write('<option>' + row.email + '</option><br>\n');
+        		
+        		//if not admin, add to list because admins can't be enrolled in courses
+        		if(!(row.role_admin == 1)){
+        			res.write('<option>' + row.email + '</option><br>\n');
+        		}
         }, function() {
         	res.write('</select>\n<br><input type="radio" name="role" value="Student"/>Student<br>\n<input type="radio" name="role" value="Instuctor"/>Instructor<br>\n<input type="radio" name="role" value="TA"/>TA<br>\n');
-        	res.write('<input type="submit" value="Add user to course"/>\n</form>\n</body>\n</html>\n');
+        	res.write('<input type="submit" value="Add user to course"/>\n</form>\n<br><br>\n<a href="/creation">Back to creation</a>\n</body>\n</html>\n');
         	res.end();
         });		
 	});
