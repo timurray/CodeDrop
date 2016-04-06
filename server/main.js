@@ -477,7 +477,7 @@ router.get('/courses', function(req, res) {
 	var inst_course = '';
 	db.serialize( function() {
 		res.write(projectHeaderHTML("Your Assignments", 0));
-		res.write("YOUR ASSIGNMENTS <br/> <ul>");
+		res.write("<h2>YOUR ASSIGNMENTS </h2><br/> <ul>");
 		
 		// Put out rows for all courses you are a student in!
 		
@@ -506,13 +506,11 @@ router.get('/courses', function(req, res) {
 				if(row.course_id != inst_course) {
 					res.write("</ul>");
 					inst_course = row.course_id;
-					res.write("<li>" + row.name + " <a href='edit/" + row.name+"/?sessionId="+req.query.sessionId+"'>Add new assignment</a></li>");
+					res.write("<li>" + row.name + " <br/><div><a class='new-ass' href='edit/" + row.name+"/?sessionId="+req.query.sessionId+"'>Add new assignment</a></div><br/></li>");
 					res.write("<ul>");
-					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>View submissions</a></li>");
 				}
-				else {
-					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>View submissions</a></li>");
-				}
+				res.write("<li><a class='edit-ass' href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>"+row.title+"</a> <a class='submissions' href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>(SUBMISSIONS)</a></li>");
+
 			}, function() {
 				res.write("</ul>");
 				res.write(projectFooterHTML());

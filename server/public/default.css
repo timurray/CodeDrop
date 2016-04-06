@@ -679,3 +679,23 @@ table {
 	margin-left: auto;
 	margin-right:auto;
 }
+
+.edit-ass {
+	color: Tomato;
+	text-decoration: none;
+}
+
+.submissions {
+	color: #777;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.new-ass {
+	color: #2B3F48;
+	font-weight: bold;
+}
+
+
+
+
