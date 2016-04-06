@@ -59,6 +59,7 @@ router.post('/userpage', function(req, res) {
 				}
 				else {
 					console.log("Invalid credentials");
+					res.write('<h1>Invalid Credientials</h1>\n<a href="/login">Back to log in screen</a>');
 				}
 			});
 	});
@@ -488,7 +489,7 @@ router.get('/courses', function(req, res) {
 	var inst_course = '';
 	db.serialize( function() {
 		res.write(projectHeaderHTML("Your Assignments", 0));
-		res.write("<h2>Your Assignments</h2><br/> <ul>");
+		res.write("YOUR ASSIGNMENTS <br/> <ul>");
 		
 		// Put out rows for all courses you are a student in!
 		
@@ -501,28 +502,29 @@ router.get('/courses', function(req, res) {
 				student_course = row.course_id;
 				res.write("<li>" + row.name + ": " + row.course_title + "</li>");
 				res.write("<ul>");
+				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + "&id=" + row.work_id + "'>" + row.title + "</a></li>");
 			}
-			res.write("<li><a class='edit-ass' href='/soln?sessionId=" + req.query.sessionId + "&id=" + row.work_id + "'>" + row.title + "</a></li>");
+			else {
+				res.write("<li><a href='/soln?sessionId=" + req.query.sessionId + "&id=" + row.work_id + "'>" + row.title + "</a></li>");
+			}
 			
 		}, function() {
 			res.write("</ul>");	
-			var write_header = true;
+			res.write("Courses You Teach <ul>");
 			db.each(getCourses(req.query.sessionId, 1), function(err, row) {
 				if(err) {
 					console.log(err);
 				}
-				if(write_header === true) {
-					write_header = false;
-					res.write("Courses You Teach<ul>");
-				}
 				if(row.course_id != inst_course) {
 					res.write("</ul>");
 					inst_course = row.course_id;
-					res.write("<li>" + row.name + " <br/><div><a class='new-ass' href='edit/" + row.name+"/?sessionId="+req.query.sessionId+"'>Add new assignment</a></div><br/></li>");
+					res.write("<li>" + row.name + " <a href='edit/" + row.name+"/?sessionId="+req.query.sessionId+"'>Add new assignment</a></li>");
 					res.write("<ul>");
+					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>View submissions</a></li>");
 				}
-				res.write("<li><a class='edit-ass' href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>"+row.title+"</a> <a class='submissions' href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>(SUBMISSIONS)</a></li>");
-
+				else {
+					res.write("<li>" + row.title + "<a href='edit/"+row.name+"/"+row.work_id+"?sessionId="+req.query.sessionId+"'>EDIT</a> <a href='submissions/" + row.name + "/" + row.title + "?id=" + row.work_id + "'>View submissions</a></li>");
+				}
 			}, function() {
 				res.write("</ul>");
 				res.write(projectFooterHTML());
