@@ -549,22 +549,33 @@ router.get('/edit/:name/:work_id', function(req, res) {
 			if(err) {
 				console.log(err);
 			}
+			res.write('<h1>Editing Assignment For ' + req.params.name + '</h1><br/>');
 			res.write('<form method="post" action="/saveassign/' + req.params.name + '/' + req.params.work_id + '">');
-			res.write('<div id="title">Title:</div>');
-			res.write('<input name="save_title" type="text" value="'+ not_null(row.title) + '"/>');
-			res.write('<div id="description">Description:</div>');
-			res.write('<input type="text" name="desc" value="'+ not_null(row.contents)+'"></input>');
-
+			
+			
+			// Write Title and Description inputs
+			res.write('<div>Assignment details:</div>');
+			
+			res.write('<table>');
+			res.write('<tr><td>Title:</td><td>');
+			res.write('<input name="save_title" type="text" value="'+ not_null(row.title) + '"/></td></tr>');
+			res.write('<tr><td>Description:</td><td>');
+			res.write('<input type="text" name="desc" value="'+ not_null(row.contents)+'"></input></td></tr>');
+			
+			// Write Start and End date inputs
+			res.write('<tr><td>Start Date:</td><td>');
+			res.write('<input name="startdate" type="text" value="' + not_null(row.start_date) + '"/></td></tr>');
+			res.write('<tr><td>Due Date:</td><td>');
+			res.write('<input name="duedate" type="text" value="' + not_null(row.due_date) + '"/></td></tr>');
+			res.write('</table><br/>');
+			
+			// Write test parameter inputs table
+			res.write('<div id="test">Test Parameters: </div>');
 			res.write('<table id="test-table">');
 			res.write('<tr><td>Input:</td><td>  <input name="save_input" type="text" value="' + not_null(row.test_input) + '"/></td></tr>');
 			res.write('<tr><td>Output:</td><td> <input name="save_output" type="text" value="' + not_null(row.test_output) + '"/></td></tr>');
 			res.write('<tr><td>Code:</td><td>   <input name="save_code" type="text" value="' + not_null(row.code) + '"/></td></tr>');
 			res.write('<tr><td>Runs:</td><td>   <input name="save_runs" type="text" value="' + not_null(row.runs) + '"/></td></tr>');
-			res.write('</table>');
-			
-			res.write('<table id="dates-table">');
-			res.write('<tr><td>Start Date:</td><td><input name="startdate" type="text" value="' + not_null(row.start_date) + '"/></td></tr>');
-			res.write('<tr><td>End Date:</td><td><input name="duedate" type="text" value="' + not_null(row.due_date) + '"/></td></tr>');
 			res.write('</table>');
 			
 			
