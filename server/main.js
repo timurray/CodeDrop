@@ -67,17 +67,32 @@ router.post('/savecode', function(req, res) {
 		
 	});
 });
-
+//Gets a list of files
 router.post('/getfilelist',function(req,res){
    var uid="";
-   db.all('SELECT U.user_id FROM sessions U where U.session_id='req.body.session,function(err,rows){
+   //Html starting point of file browser
+   var returnstring='<form role="form" name="filelist" id="filelist"> <input type="hidden" name="wid" value="'+req.body.wid+'"><select id="filename" name="filename">';
+   //Get user id from session
+   db.all('SELECT U.user_id FROM sessions U where U.session_id='+req.body.session,function(err,rows){
       rows.forEach(function(row){
          uid = row.user_id;
+         console.log('uid is '+uid);
       });
    });
+   //Get file storage id
    db.all('SELECT F.fs_id FROM file_storage F WHERE F.work_id='+req.body.wid+' && F.user_id='+uid,function(err,rows){
-      rows.forEach()
+      rows.forEach(function(row){
+         //Get files
+         db.all('SELECT * FROM files WHERE fs_id='+row.fs_id,function(err,frows){
+            frows.forEach(function(frow){
+               //Add files to file browser
+               returnstring += '<option value="'+ frow.file_name +'">'+ frow.file_name +'</option>';
+            });
+         });
+      });
    });
+   returnstring += '</select></form>';
+   res.send(returnstring);
 });
 
 router.get('/register', function(req, res) {
