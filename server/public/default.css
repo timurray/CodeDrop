@@ -184,6 +184,7 @@
 
 	.button
 	{
+		width:100%;
 		display: inline-block;
 		padding: 0em 3em;
 		background: #FF6347;
@@ -675,3 +676,42 @@ img {
 #filebrowser {
 
 }
+table {
+	margin-left: auto;
+	margin-right:auto;
+}
+
+.edit-ass {
+	color: Tomato;
+	text-decoration: none;
+}
+
+.submissions {
+	color: #777;
+	text-decoration: none;
+	font-size: 12px;
+}
+
+.new-ass {
+	color: #2B3F48;
+	font-weight: bold;
+}
+
+#compile {
+	display: default;
+}
+
+.buttons-table {
+	table-layout: fixed;
+	width:75%;
+}
+.buttons-table td {
+	width: 33%;
+}
+
+#console {
+	width:80em;
+	background-color: #333;
+	color: #CCC;
+}
+

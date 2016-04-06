@@ -2,7 +2,7 @@
    <head>
       <meta charset="utf-8">
       <title>Write Code Below.</title>
-      <link type="text/css" rel="stylesheet" href="default.css">
+      <link type="text/css" rel="stylesheet" href="/default.css">
      
 	 <!-- Import for CodeMirror-->
       <link rel="stylesheet" href="CodeMirror/lib/codemirror.css">
@@ -23,13 +23,13 @@
 		
 		<div id="header-wrapper"> <div id="header" class="container">
 			<div id="logo">
-				<h1><a href="#"><img src="favicon.ico" alt=""/>Codedrop</a></h1>
+				<h1><a href="#"><img src="/favicon.ico" alt=""/>Codedrop</a></h1>
 			</div>
 			<div id="menu">
 				<ul>
-					<li class="current_page_item"><a href="index.html#" accesskey="1" title="">Home</a></li>
-					<li><a href="contact.html" accesskey="2" title="">Contact</a></li>
-					<li><a href="login.html#" accesskey="3" title="">Sign In</a></li>
+					<li class="current_page_item"><a href="/index.html#" accesskey="1" title="">Home</a></li>
+					<li><a href="/contact.html" accesskey="2" title="">Contact</a></li>
+					<li><a href="/login.html#" accesskey="3" title="">Sign In</a></li>
 				</ul>
 			</div>
 		</div></div>
@@ -52,13 +52,21 @@
                      <option value="c++">C++</option>
                   </select>
                   <br>
-                  <form id="stucodeform" enctype="multipart/form-data" role="form">
-                     <input class="button" type="submit" value="compile and run">
-                  </form>
-                  <input class="button" id="compile" name="compile" value="Compile" type="button" onclick="">
-                  <br>
-                  <button class="button" id="upload" name="upload" value="Upload">
-               
+                 <form id="stucodeform" enctype="multipart/form-data" role="form">
+				  <table class='buttons-table'>
+				  <tr>
+					<td>
+						<input class="button" type="submit" value="compile and run"/>
+					</td>
+					<td> 
+						<input class="button" id="compile" name="compile" value="Compile" type="button" onclick=""/>
+					</td>
+					<td>
+						<input class="button" id="upload" name="upload" value="Upload" type="button"/>
+					</td>
+				   </tr>
+				   </table>
+                 </form>
                </div>
             </div>
 			</td>
