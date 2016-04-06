@@ -1,14 +1,44 @@
 <html>
 	<title> Register </title>
-	<h3> Register New User <h3> 
+	<head>
+	<link rel="icon" href="favicon.ico"/>
+	<link type="text/css" rel="stylesheet" href="default.css"/>
+	<link href="fonts.css" rel="stylesheet" type="text/css" media="all" />
+	</head> 
 	<body>
-		<form method="post" action="/registered">
-			<input type="text" name="email" placeholder="Email"/><br>
-			<input type="password" name="password" placeholder="Password"/><br>
-			<input type="text" name="firstname" placeholder="First Name"/><br>
-			<input type="text" name="lastname" placeholder="Last Name"/><br>
-			<input type="text" name="phonenumber" placeholder="Phone Number"/><br>
-			<input type="submit"/>
-		</form>
+		<div id="wrapper">
+			<div id="header-wrapper"> <div id="header" class="container">
+				<div id="logo">
+					<h1><img src="favicon.ico" alt=""/> <a href="#">Codedrop</a></h1>
+				</div>
+				<div id="menu">
+					<ul>
+						<li><a href="/#" accesskey="1" title="">Home</a></li>
+						<li><a href="courses" accesskey="2" title="">Courses</a></li>
+						<li><a href="contact" accesskey="3" title="">Contact</a></li>
+						<li class="current_page_item"><a href="login" accesskey="4" title="">Sign In</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="banner">
+			<div class="container">
+				<div class="title">
+					<h3> Register New User <h3>
+					<form method="post" action="/registered">
+						<input type="text" name="email" placeholder="Email"/><br>
+						<input type="password" name="password" placeholder="Password"/><br>
+						<input type="text" name="firstname" placeholder="First Name"/><br>
+						<input type="text" name="lastname" placeholder="Last Name"/><br>
+						<input type="text" name="phonenumber" placeholder="Phone Number"/><br>
+						<input type="submit"/>
+					</form>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div id="copyright" class="container">
+			<p>Team CSSTCS4770TPAPT2016WSAMUN Winter 2016</p>
+		</div>
 	</body> 
 </html>
