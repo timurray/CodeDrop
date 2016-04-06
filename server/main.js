@@ -17,6 +17,10 @@ router.get('/login', function(req, res) {
 	res.sendFile('public/login.html', {root: __dirname });
 });
 
+router.get('/admin', function(req, res) {
+	res.sendFile('public/admin.html', {root: __dirname });
+});
+
 function session_sql(user_id, session_id) {
 	return "INSERT INTO sessions (session_id, user_id) VALUES (" + quote(session_id) + "," + user_id + ")";
 }
@@ -26,6 +30,7 @@ router.post('/userpage', function(req, res) {
 	var password = req.body.password;
 	var sessionId = '';
 	var found_user = false;
+	var isAdmin = 0;
 
 	db.serialize(function() {
 			db.each("SELECT u.* FROM users u WHERE u.email = '" + username + "' AND u.password = '" + password + "'", function(err, row) {
@@ -37,6 +42,7 @@ router.post('/userpage', function(req, res) {
 					userId = row.user_id;
 					sessionId = crypto.randomBytes(10).toString('hex');
 					db.run(session_sql(userId,sessionId));
+					isAdmin = row.role_admin;
 					
 					// puts the users session token in the database
 					return;
@@ -44,7 +50,12 @@ router.post('/userpage', function(req, res) {
 			}, function() {
 				if(found_user) {
 					req.method = 'get';
-					res.redirect('/courses?sessionId='+sessionId);
+					if(isAdmin != 0) {
+						res.redirect('/admin?sessionId='+sessionId);
+					}
+					else {
+						res.redirect('/courses?sessionId='+sessionId);
+					}
 				}
 				else {
 					console.log("Invalid credentials");
