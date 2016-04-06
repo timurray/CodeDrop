@@ -184,6 +184,7 @@
 
 	.button
 	{
+		width:100%;
 		display: inline-block;
 		padding: 0em 3em;
 		background: #FF6347;
@@ -696,6 +697,21 @@ table {
 	font-weight: bold;
 }
 
+#compile {
+	display: default;
+}
 
+.buttons-table {
+	table-layout: fixed;
+	width:75%;
+}
+.buttons-table td {
+	width: 33%;
+}
 
+#console {
+	width:80em;
+	background-color: #333;
+	color: #CCC;
+}
 

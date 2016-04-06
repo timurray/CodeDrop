@@ -396,7 +396,7 @@ router.get('/viewsoln/:title/:student', function(req, res) {
 				res.write(data);
 				
 				res.write("<div id='codeeditor'>");
-				res.write("<textarea id='codeeditarea' form='savecodeform' name='codeeditarea' rows='100'>");
+				res.write("<textarea id='codeeditarea' form='savecodeform' name='codeeditarea' rows='100' style='width:100%'>");
 				
 				res.write(contents);
 				fs.readFile('public/secondhalf-stucode.html', 'utf8', function(err, data) {
