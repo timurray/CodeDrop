@@ -51,6 +51,7 @@ r.post('/',mkdir,function(req,res){
    var filecontents="";
       db.each('"SELECT * from files where fs_id="'+req.body.fileid+'" AND file_name="'+req.body.filename+'"',function(err,row){
          filename=row.file_name;
+         console.log(filename);
          //filename= filenametemp.split('.')[0];
          filecontents=row.contents;
       });

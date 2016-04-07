@@ -40,7 +40,7 @@
             <div class="left" id="leftcontainerstucode">
                <div id="filebrowser">
                   <span>File Browser:</span>
-                  
+                  <textarea class="browser-area">
 				  </textarea>
                </div>
                <div id="commandbuttons">

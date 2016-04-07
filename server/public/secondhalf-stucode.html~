@@ -35,17 +35,17 @@
       <script>
          $(document).ready(function(){ 
             //varibles
-            //var form=$("#stucodeform");
-            var form=$("#filelist");
+            var form=$("#stucodeform");
+            //var form=$("#filelist");
             
             var comtype = $("#compiletype");
             var con = $("#console");
             form.submit(function(event){
-               //var filecon="";
-               //var filename="";
-               var wid = $("#wid");
-               var fid= $('#filename);
-               //var file = document.getElementById('file').files[0];
+               var filecon="";
+               var filename="";
+               //var wid = $("#wid");
+               //var fid= $('#filename);
+               var file = document.getElementById('file').files[0];
                
                event.preventDefault();
                console.log("form submitted");

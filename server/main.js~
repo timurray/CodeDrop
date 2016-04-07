@@ -106,16 +106,15 @@ router.post('/getfilelist',function(req,res){
                   returnstring += '<option value="'+ frow.file_name +'">'+ frow.file_name +'</option>';
                   console.log('rs='+returnstring);
                });
-               returnstring += '</select></form>';
-   res.send(returnstring);
-            });
+               });
             //});
          });
       }
       });
       
    });
-   
+   returnstring += '</select></form>';
+   res.send(returnstring);
 });
 
 router.get('/register', function(req, res) {
