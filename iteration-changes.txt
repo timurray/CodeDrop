@@ -1,5 +1,7 @@
 A list of changes made between iterations.
 
+**** Please check that Iteration 0 has been regraded since Iteration 1 was submitted, as the feedback in the repo has never changed grades. ****
+
 Iteration 0:
 	- Planning and documentation created.
 
@@ -18,5 +20,11 @@ Iteration 3:
 	- Compiler environment implemented and linked.
 	- New course page.
 
-Iteration 4:
-	- TBD
+Iteration 4 - FINAL:
+	- Compiler linked in.
+	- On-site console/terminal.
+	- Login system.
+	- Session IDs/tokens.
+	- Admin pages.
+	- User registration.
+	- Updated documentation.

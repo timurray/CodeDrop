@@ -3,11 +3,21 @@ COMP 4770 - Team C - Server Deployment
 Requirements:
 	- Tested on Ubuntu 14.04.3.
 	- Should work on any semi-recent Ubuntu or Debian system without issue.
+	- Also made to work on Mac and Windows systems with npm.
 	- Latest NodeJS/npm in Ubuntu repos.
 	- Express, bodyparse, sqlite, formidable.
 
-Steps:
+Steps (for Linux, similar ideas for other OSes):
 	1) Change to ./CodeDrop/server/
 	2) sudo apt-get install npm
 	3) sudo npm install
-	4) node server.js
+		a) 	If you get an error about sqlite3 not installing, try
+				sudo ln -s /usr/bin/nodejs /usr/bin/node
+			as there is a small naming issue between nodejs versions
+			(it's now just node, rather than node js). Linking between the two
+			fixes this for older versions of NodeJS.
+	4) nodejs server.js
+	
+Admin account:
+user: admin@microhex.net
+password: admin

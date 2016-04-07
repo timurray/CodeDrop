@@ -1,7 +1,0 @@
-Added Data Dictionary
-Updated state diagram to reflect enhanced functionality
-Added Work plan
-added domain model
-Updated wireframes
-Added test plan
-Added initial APIs (work is still needed)
